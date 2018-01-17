@@ -1,0 +1,41 @@
+apiVersion: apps/v1beta2
+kind: Deployment
+metadata:
+  name: {{ .Chart.Name }}
+spec:
+  replicas: 1
+  revisionHistoryLimit: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      run: {{ .Chart.Name }}
+  template:
+    metadata:
+      labels:
+        run: {{ .Chart.Name }}
+    spec:
+      serviceAccountName: actualizer-kubectl-proxy
+      containers:
+        - name: {{ .Chart.Name }}
+          image: '{{ .Values.images.actualizer.repository }}:{{ .Values.images.actualizer.tag }}'
+          imagePullPolicy: {{ .Values.images.actualizer.pullPolicy }}
+          env:
+            - name: DEBUG
+              value: {{ .Values.debugPattern }}
+            - name: CONFIGSTORE_URL
+              value: {{ .Values.configStore.url }}
+            - name: LBWS_VERSION
+              value: {{ .Values.versions.workspace }}
+            - name: GATEWAY_VERSION
+              value: {{ .Values.versions.gateway }}
+            - name: SLEEP_TIME
+              value: {{ .Values.configStore.sleepTime | quote }}
+            - name: WORKSPACE_API_URL_TEMPLATE
+              value: {{ .Values.workspaceAPIURLTemplate }}
+            - name: CUSTOMER_DOMAIN
+              value: {{ .Values.customerDomain }}
+        - name: kubectl-proxy
+          image: '{{ .Values.images.kubectl.repository }}:{{ .Values.images.kubectl.tag }}'
+          imagePullPolicy: {{ .Values.images.kubectl.pullPolicy }}
+          args: [proxy, --port, "8001", --logtostderr]

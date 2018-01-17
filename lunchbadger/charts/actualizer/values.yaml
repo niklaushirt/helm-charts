@@ -1,0 +1,20 @@
+rbac:
+  enabled: true
+images:
+  actualizer:
+    repository: 410240865662.dkr.ecr.us-west-2.amazonaws.com/actualizer
+    tag: rollingupdate2
+    pullPolicy: Always
+  kubectl:
+    repository: 410240865662.dkr.ecr.us-west-2.amazonaws.com/kubectl
+    tag: 1.4.6
+    pullPolicy: Always
+configStore:
+  url: http://configstore.default
+  sleepTime: 3000
+versions:
+  workspace: init-install
+  gateway: metrics
+customerDomain: lunchbadger.io
+workspaceAPIURLTemplate: 'http://workspace-$PRODUCER-$ENV.customer:81/api'
+debugPattern: 'actualizer:*'

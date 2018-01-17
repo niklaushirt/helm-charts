@@ -1,0 +1,38 @@
+apiVersion: apps/v1beta2
+kind: Deployment
+metadata:
+  name: configstore
+spec:
+  replicas: 1
+  revisionHistoryLimit: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      run: configstore
+  template:
+    metadata:
+      labels:
+        run: configstore
+    spec:
+      containers:
+        - name: configstore
+          image: ${config_store_image}
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 3002
+          volumeMounts:
+            - mountPath: ${config_store_mount_path}
+              name: data
+          resources:
+            requests:
+              memory: "768Mi"
+            limits:
+              memory: "768Mi"
+      volumes:
+        - name: data
+          awsElasticBlockStore:
+            volumeID: ${config_store_ebs_volume_id}
+            fsType: ext4
+      nodeSelector:
+        lunchbadger.com/node-type: public

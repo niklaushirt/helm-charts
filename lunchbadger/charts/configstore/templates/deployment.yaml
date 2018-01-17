@@ -1,0 +1,36 @@
+apiVersion: apps/v1beta2
+kind: Deployment
+metadata:
+  name: {{ .Chart.Name }}
+  namespace: {{ .Values.namespace }}
+spec:
+  replicas: 1
+  revisionHistoryLimit: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      run: {{ .Chart.Name }}
+  template:
+    metadata:
+      labels:
+        run: {{ .Chart.Name }}
+    spec:
+      containers:
+        - name: {{ .Chart.Name }}
+          image: '{{ .Values.image.repository }}:{{ .Values.image.tag }}'
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          ports:
+            - containerPort: 3002
+          volumeMounts:
+            - mountPath: {{ .Values.persistence.mountPath }}
+              name: data
+          resources:
+            requests:
+              memory: "768Mi"
+            limits:
+              memory: "768Mi"
+      volumes:
+        - name: data
+          persistentVolumeClaim:
+            claimName: {{ .Chart.Name }}

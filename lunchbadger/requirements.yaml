@@ -1,0 +1,10 @@
+dependencies:
+  - name: traefik
+    version: 1.0.0
+    condition: traefik.enabled
+  - name: configstore 
+    version: 1.0.0
+    condition: configstore.enabled
+  - name: actualizer
+    version: 1.0.0
+    condition: actualizer.enabled
