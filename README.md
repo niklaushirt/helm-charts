@@ -34,7 +34,7 @@ export REDIS_PASSWORD=$(kubectl get secret --namespace default eg-identity-redis
 ```
 helm install ./charts/prometheus \
 --name=monitoring \
---set rbac.create=true
+--set rbac.create=true \
 --set server.persistentVolume.storageClass=standard \
 --set alertmanager.persistentVolume.storageClass=standard \
 --namespace=kube-system
@@ -49,6 +49,6 @@ helm install . \
 --set storageClass.name=standard
 --set gateway.traefikAddress=$TRAEFIK_IP \
 --set actualizer.redisPassword=$REDIS_PASSWORD \
---set configstore.ingressHost=dev-api.lunchbadger.com
+--set configstore.ingressHost=dev-api.lunchbadger.com \
 --set configstore.persistence.storageClass=standard
 ```
