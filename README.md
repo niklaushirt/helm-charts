@@ -47,6 +47,7 @@ helm install . \
 --name=lunchbadger \
 --set storageClass.enabled=true \
 --set storageClass.name=standard \
+--set storageClass.zones="us-west-2b, us-west-2c" \
 --set gateway.traefikAddress=$TRAEFIK_IP \
 --set actualizer.redisPassword=$REDIS_PASSWORD \
 --set configstore.ingressHost=dev-api.lunchbadger.com \
