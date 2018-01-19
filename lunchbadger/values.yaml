@@ -4,6 +4,8 @@ redis:
   enabled: false
 prometheus:
   enabled: false
+grafana:
+  enabled: false
 configstore:
   enabled: true
 actualizer:

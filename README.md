@@ -40,7 +40,16 @@ helm install ./charts/prometheus \
 --namespace=kube-system
 ```
 
-5. Install LunchBadger
+6. Install Grafana
+
+```
+helm install ./charts/grafana \
+--name=monitoring-viz \
+--set server.persistentVolume.storageClass=standard \
+--namespace=kube-system
+```
+
+7. Install LunchBadger
 
 ```
 helm install . \
@@ -53,3 +62,28 @@ helm install . \
 --set configstore.ingressHost=dev-api.lunchbadger.com \
 --set configstore.persistence.storageClass=standard
 ```
+
+
+## Grafana
+
+1. Get password
+
+Note: Username is `admin`.
+
+```
+kubectl get secret --namespace kube-system monitoring-viz-grafana -o jsonpath="{.data.grafana-admin-password}" | base64 --decode ; echo
+```
+
+2. Get pod name
+
+```
+export POD_NAME=$(kubectl get pods --namespace kube-system -l "app=monitoring-viz-grafana,component=grafana" -o jsonpath="{.items[0].metadata.name}")
+```
+
+3. Forward port
+
+```
+kubectl --namespace=kube-system port-forward $POD_NAME 3000 
+```
+
+Go to http://localhost:3000 to login.

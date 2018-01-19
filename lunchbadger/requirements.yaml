@@ -17,3 +17,6 @@ dependencies:
   - name: prometheus
     version: 4.6.17
     condition: prometheus.enabled
+  - name: grafana
+    version: 0.5.5
+    condition: grafana.enabled
