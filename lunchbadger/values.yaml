@@ -6,6 +6,8 @@ prometheus:
   enabled: false
 grafana:
   enabled: false
+kubernetes-dashboard:
+  enabled: false
 configstore:
   enabled: true
 actualizer:

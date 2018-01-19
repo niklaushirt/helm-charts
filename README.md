@@ -49,7 +49,16 @@ helm install ./charts/grafana \
 --namespace=kube-system
 ```
 
-7. Install LunchBadger
+7. Install Kubernetes Dashboard
+
+```
+helm install ./charts/kubernetes-dashboard \
+--name=kubernetes-dashboard \
+--set rbac.create=true \
+--namespace=kube-system
+```
+
+8. Install LunchBadger
 
 ```
 helm install . \
@@ -87,3 +96,15 @@ kubectl --namespace=kube-system port-forward $POD_NAME 3000
 ```
 
 Go to http://localhost:3000 to login.
+
+## Kubernetes Dashboard
+
+1. Run proxy
+
+```
+kubectl proxy
+```
+
+2. Access URL
+
+http://localhost:8001/api/v1/namespaces/kube-system/services/kubernetes-dashboard:/proxy/
