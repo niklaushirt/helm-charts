@@ -1,3 +1,5 @@
+# run logic to only add tls stuff on production=true
+# Need a service of Type: LoadBalancer
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
@@ -6,18 +8,11 @@ metadata:
     producer: lunchbadger
   name: gateway-lunchbadger-dev
 spec:
-  replicas: 1
-  revisionHistoryLimit: 1
   selector:
     matchLabels:
       app: gateway
       environment: dev
       producer: lunchbadger
-  strategy:
-    rollingUpdate:
-      maxSurge: 1
-      maxUnavailable: 1
-    type: RollingUpdate
   template:
     metadata:
       labels:
@@ -29,15 +24,13 @@ spec:
       - env:
         - name: DEBUG
           value: gateway:*
-        image: 410240865662.dkr.ecr.us-west-2.amazonaws.com/gateway:0.0.4
-        imagePullPolicy: Always
+        image: '{{ .Values.image.repository }}:{{ .Values.image.tag }}'
+        imagePullPolicy: {{ .Values.image.pullPolicy }}
         name: gateway
+{{- if eq true .Values.production }}
         ports:
         - containerPort: 443
-          hostPort: 443
           protocol: TCP
-        resources: {}
-        terminationMessagePath: /dev/termination-log
         volumeMounts:
         - mountPath: /etc/lunchbadger
           name: config
@@ -45,19 +38,23 @@ spec:
         - mountPath: /etc/lunchbadger-tls
           name: lunchbadger-tls
           readOnly: true
-      dnsPolicy: ClusterFirst
-      hostNetwork: true
-      nodeSelector:
-        lunchbadger.com/node-type: public
-      restartPolicy: Always
-      securityContext: {}
-      terminationGracePeriodSeconds: 30
+{{- else }}
+        ports:
+        - containerPort: 80
+          protocol: TCP
+        volumeMounts:
+        - mountPath: /etc/lunchbadger
+          name: config
+          readOnly: true
+{{- end }}
       volumes:
       - configMap:
           defaultMode: 420
           name: gateway-lunchbadger-dev
         name: config
+{{- if eq true .Values.production }}
       - name: lunchbadger-tls
         secret:
           defaultMode: 420
           secretName: lunchbadger-tls
+{{- end }}

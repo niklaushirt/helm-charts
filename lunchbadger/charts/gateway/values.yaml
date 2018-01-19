@@ -1,0 +1,6 @@
+image:
+  repository: 410240865662.dkr.ecr.us-west-2.amazonaws.com/gateway
+  tag: 0.0.4
+  pullPolicy: Always
+
+production: false

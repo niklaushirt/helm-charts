@@ -1,10 +1,16 @@
 dependencies:
   - name: traefik
-    version: 1.0.0
+    version: 1.0.0-beta
     condition: traefik.enabled
   - name: configstore 
-    version: 1.0.0
+    version: 1.0.0-beta
     condition: configstore.enabled
   - name: actualizer
-    version: 1.0.0
+    version: 1.0.0-beta
     condition: actualizer.enabled
+  - name: gateway 
+    version: 1.0.0-beta
+    condition: gateway.enabled
+  - name: redis
+    version: 1.1.7
+    condition: redis.enabled

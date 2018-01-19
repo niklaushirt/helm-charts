@@ -1,5 +1,13 @@
 traefik:
   enabled: true
+gateway:
+  enabled: false
+configstore:
+  enabled: true
+actualizer:
+  enabled: true
+redis:
+  enabled: true
 storageClass:
   enabled: false
   name: slow
