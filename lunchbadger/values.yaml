@@ -12,6 +12,8 @@ configstore:
   enabled: true
 actualizer:
   enabled: true
+kube-watcher:
+  enabled: true 
 gateway:
   enabled: true
 storageClass:

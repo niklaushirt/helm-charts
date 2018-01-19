@@ -69,6 +69,7 @@ helm install . \
 --set gateway.traefikAddress=$TRAEFIK_IP \
 --set actualizer.redisPassword=$REDIS_PASSWORD \
 --set actualizer.customerDomain=dev.lunchbadger.io \
+--set kube-watcher.ingressHost=kube-watcher.dev-api.lunchbadger.com \
 --set configstore.ingressHost=dev-api.lunchbadger.com \
 --set configstore.persistence.storageClass=standard
 ```
