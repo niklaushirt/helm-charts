@@ -1,16 +1,18 @@
 traefik:
-  enabled: true
-gateway:
+  enabled: false
+redis:
+  enabled: false
+prometheus:
   enabled: false
 configstore:
   enabled: true
 actualizer:
   enabled: true
-redis:
+gateway:
   enabled: true
 storageClass:
   enabled: false
-  name: slow
+  name: standard
   type: gp2
   zones: 'us-west-2a, us-west-2b, us-west-2c'
   iopsPerGB: 10

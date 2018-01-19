@@ -21,6 +21,8 @@ spec:
           image: '{{ .Values.images.actualizer.repository }}:{{ .Values.images.actualizer.tag }}'
           imagePullPolicy: {{ .Values.images.actualizer.pullPolicy }}
           env:
+            - name: REDIS_PASSWORD
+              value: {{ .Values.redisPassword }}
             - name: DEBUG
               value: {{ .Values.debugPattern }}
             - name: CONFIGSTORE_URL

@@ -18,3 +18,4 @@ versions:
 customerDomain: lunchbadger.io
 workspaceAPIURLTemplate: 'http://workspace-$PRODUCER-$ENV.customer:81/api'
 debugPattern: 'actualizer:*'
+redisPassword: ''

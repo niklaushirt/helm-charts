@@ -5,7 +5,7 @@ metadata:
   name: {{ .Values.storageClass.name | quote }}
 provisioner: kubernetes.io/aws-ebs
 parameters:
-  type: {{ .Values.storageClass.type }}
+  type: {{ .Values.storageClass.type | quote }}
   zones: {{ .Values.storageClass.zones | quote }}
-  iopsPerGB: {{ .Values.storageClass.iopsPerGB }}
+  iopsPerGB: {{ .Values.storageClass.iopsPerGB | quote }}
 {{- end -}}

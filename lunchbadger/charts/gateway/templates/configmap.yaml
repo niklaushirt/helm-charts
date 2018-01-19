@@ -8,13 +8,18 @@ metadata:
 data:
   gateway.conf: |-
     {
+{{- if eq true .Values.production }}
       "bindPort": 443,
+{{- else }}
+      "bindPort": 80,
+{{- end }}
       "bindHost": "0.0.0.0",
       "privateEndpoints": {
         "backend": {
-          "url": "http://10.3.209.27"
+          "url": "http://{{ .Values.traefikAddress }}"
         }
       },
+{{- if eq true .Values.production }}
       "tls": {
         "*.lunchbadger.io": {
           "key": "/etc/lunchbadger-tls/lunchbadger.io.key.pem",
@@ -29,6 +34,7 @@ data:
           "cert": "/etc/lunchbadger-tls/lunchbadger.io.cert.pem"
         }
       },
+{{- end }}
       "pipelines": [
         {
           "name": "lunchbadger-api",
@@ -40,7 +46,7 @@ data:
               "condition": ["always"],
               "action": "cors",
               "params": {
-                "origin": ["http://localhost:8000", "https://app.lunchbadger.com"],
+                "origin": ["http://localhost:8000", "https://app.lunchbadger.com", {{ .Values.origin  | quote }}],
                 "credentials": true
               }
             },
@@ -53,6 +59,7 @@ data:
                 "redirect": 301
               }
             },
+{{- if eq true .Values.production }}
             {
               "condition": ["not",
                 ["oneOf",
@@ -74,6 +81,7 @@ data:
                 "key": "-----BEGIN PUBLIC KEY-----\nMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA7ATrA/pvXdzabRID6pBA\nA+i2zez6FG3SXw5peAV2oQUmd64JbO2vUMih4PIt5D/o6gHfzQDwI/5e8wpiNKKp\n81dpvy3uYecyfGT4x+FYQ4xj0p7dnczPlp5t1ottCXYQyyB07UZ4UsOT063CRhgi\n00HhlURBm+yjLwnlZv/VGDNzXNFX1+t+PbGC5Ab7R02Fsnp8TGfjUgzA6NDgerKi\nJcq/fSxRb5WSB/gscCGGWjvgIJrHOLI9ofaXFpoHCxePCsVkaR0JNz8Q89tIWvWv\n5msm062aD7y1ThfP6I3HeGf3dT6IavLOVD6Wk82/WN+aaQ7BKOstglWqzjJvcEvU\nOQIDAQAB\n-----END PUBLIC KEY-----"
               }
             },
+{{- end }}
             {
               "condition": ["always"],
               "action": "proxy",

@@ -4,3 +4,5 @@ image:
   pullPolicy: Always
 
 production: false
+origin: dev.lunchbadger.com
+traefikAddress: {}
