@@ -10,7 +10,7 @@ images:
     tag: 1.4.6
     pullPolicy: Always
 configStore:
-  url: http://configstore.default
+  url: http://configstore.default/api
   sleepTime: 3000
 versions:
   workspace: init-install
