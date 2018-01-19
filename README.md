@@ -45,8 +45,8 @@ helm install ./charts/prometheus \
 ```
 helm install . \
 --name=lunchbadger \
---set storageClass.enabled=true
---set storageClass.name=standard
+--set storageClass.enabled=true \
+--set storageClass.name=standard \
 --set gateway.traefikAddress=$TRAEFIK_IP \
 --set actualizer.redisPassword=$REDIS_PASSWORD \
 --set configstore.ingressHost=dev-api.lunchbadger.com \
