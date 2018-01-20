@@ -1,3 +1,5 @@
+rbac:
+  enabled: true
 ingressHost: kube-watcher.dev-api.lunchbadger.com
 images:
   kubeWatcher:
