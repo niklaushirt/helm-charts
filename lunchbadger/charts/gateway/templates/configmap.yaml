@@ -29,6 +29,10 @@ data:
           "key": "/etc/lunchbadger-tls/lunchbadger.com.key.pem",
           "cert": "/etc/lunchbadger-tls/lunchbadger.com.cert.pem"
         },
+        "kube-watcher.lunchbadger.com": {
+	  "key": "/etc/lunchbadger-tls/lunchbadger.com.key.pem",
+	  "cert": "/etc/lunchbadger-tls/lunchbadger.com.cert.pem"
+        },
         "default": {
           "key": "/etc/lunchbadger-tls/lunchbadger.io.key.pem",
           "cert": "/etc/lunchbadger-tls/lunchbadger.io.cert.pem"
