@@ -1,0 +1,86 @@
+Component: "dex"
+replicaCount: 1
+
+image:
+  repository: "quay.io/coreos/dex"
+  tag: "v2.4.1"
+  pullPolicy: "Always"
+service:
+  name: dex
+  type: NodePort
+  tls: false
+  NodePort: 30443
+  externalPort: 80
+ingress:
+  # Used to create Ingress record (should used with service.type: ClusterIP).
+  enabled: false
+  hosts:
+    - kube-1.local.io
+  annotations:
+    # kubernetes.io/ingress.class: nginx
+    # kubernetes.io/tls-acme: "true"
+  tls:
+    # Secrets must be manually created in the namespace.
+    # - secretName: chart-example-tls
+    #   hosts:
+    #     - chart-example.local
+resources:
+  limits:
+    cpu: "512m"
+    memory: "200Mi"
+  requests:
+    cpu: "512m"
+    memory: "200Mi"
+
+# If not using kube-lego set your own CA which compatible with the Issuer URI.
+# Use base64 encoded value.
+#
+# tls:
+#   ca: ""
+#   cert: ""
+#   key: ""
+
+# Must set your own credentials.
+# Use base64 encoded value.
+connector:
+  placeholder: true
+#    MockCallback: true
+#    GitHub:
+#      Name: "GitHub"
+#      ClientId: ""
+#      ClientSecret: ""
+#    Oidc:
+#      Name: "Google"
+#      Id: "google"
+#      Issuer: "https://accounts.google.com"
+#      ClientId: ""
+#      ClientSecret: ""
+#    Ldap:
+#      Name: "LDAP"
+#      Host: "openldap.kube-system.svc.cluster.io:389"
+#      InsecureNoSsl: true
+#      InsecureSkipVerify: true
+#      BindDn: "ou=users,dc=local,dc=io"
+#      BindPw: "admin"
+#      UserSearch:
+#        BaseDn: "ou=users,dc=local,dc=io"
+#        Filter: "(objectClass=posixAccount)"
+#        Username: "uid"
+#        IdAttr: "uid"
+#        EmailAttr: "mail"
+#        NameAttr: "uid"
+#      GroupSearch:
+#        BaseDn: "ou=groups,dc=local,dc=io"
+#        Filter: "(objectClass=posixGroup)"
+#        UserAttr: "uid"
+#        GroupAttr: "memberUid"
+#        NameAttr: "cn"
+StaticPassword:
+  Email: "admin@example.com"
+  Hash: "$2a$10$2b2cU8CPhOTaGrs1HRQuAueS7JTT5ZHsHSzYiFPm1leZck7Mc8T4W"
+  Username: "admin"
+  UserID: "08a8684b-db88-4b73-90a9-3cd1661f5466"
+
+dex:
+  Issuer: "https://kube-1.local.io:30443"
+  RedirectUri: "https://kube-1.local.io:30443/callback"

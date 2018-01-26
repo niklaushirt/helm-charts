@@ -8,6 +8,8 @@ grafana:
   enabled: false
 kubernetes-dashboard:
   enabled: false
+dex:
+  enabled: false
 configstore:
   enabled: true
 actualizer:
