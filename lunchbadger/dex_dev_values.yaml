@@ -1,0 +1,15 @@
+image:
+  tag: v2.9.0
+
+dex:
+  Issuer: 'https://www.lunchbadger.com'
+
+ingress:
+  enabled: true
+  hosts:
+    - dev-identity.lunchbadger.com
+  annotations:
+    kubernetes.io/ingress.class: traefik
+
+connector:
+  db: true
