@@ -31,6 +31,11 @@ spec:
             limits:
               memory: "768Mi"
       volumes:
+{{- if .Values.persistence.enabled }}
         - name: data
           persistentVolumeClaim:
             claimName: {{ .Chart.Name }}
+{{- else }}
+        - name: data
+          emptyDir: {}
+{{- end -}}
