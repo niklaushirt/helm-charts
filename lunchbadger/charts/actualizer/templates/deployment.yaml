@@ -37,6 +37,8 @@ spec:
               value: {{ .Values.workspaceAPIURLTemplate }}
             - name: CUSTOMER_DOMAIN
               value: {{ .Values.customerDomain }}
+            - name: ADMIN_CROSS_ORIGIN
+              value: {{ .Values.adminOrigin }}
         - name: kubectl-proxy
           image: '{{ .Values.images.kubectl.repository }}:{{ .Values.images.kubectl.tag }}'
           imagePullPolicy: {{ .Values.images.kubectl.pullPolicy }}

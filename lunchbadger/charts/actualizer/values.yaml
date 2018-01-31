@@ -15,6 +15,7 @@ configStore:
 versions:
   workspace: init-install
   gateway: metrics
+adminOrigin: 'http://dev.lunchbadger.com'
 customerDomain: lunchbadger.io
 workspaceAPIURLTemplate: 'http://workspace-$PRODUCER-$ENV.customer:81/api'
 debugPattern: 'actualizer:*'
