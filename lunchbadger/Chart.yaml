@@ -1,6 +1,6 @@
 name: lunchbadger
-version: '1.0.0-beta'
+version: '1.1.0-beta'
 description: LunchBadger Multi-cloud Platform for Serverless and Microservices
 home: https://www.lunchbadger.com
 icon: https://www.lunchbadger.com/wp-content/uploads/2016/10/logo.svg
-appVersion: '1.0.0-beta'
+appVersion: '1.1.0-beta'
