@@ -20,10 +20,13 @@ spec:
         environment: dev
         producer: lunchbadger
     spec:
+{{- if eq true .Values.production }}
+      hostNetwork: true
+{{- end }}
 {{- if eq true .Values.useNodeSelector }}
       nodeSelector:
         lunchbadger.com/node-type: public
-{{ - end }}
+{{- end }}
       containers:
       - env:
         - name: DEBUG

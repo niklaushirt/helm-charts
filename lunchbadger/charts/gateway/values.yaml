@@ -7,3 +7,4 @@ production: false
 origin: dev.lunchbadger.com
 traefikAddress: {}
 useNodeSelector: false
+externalIP: {}

@@ -19,7 +19,7 @@ spec:
 {{- if eq true .Values.useNodeSelector }}
       nodeSelector:
         lunchbadger.com/node-type: public
-{{ - end }}
+{{- end }}
       containers:
         - name: {{ .Chart.Name }}
           image: '{{ .Values.image.repository }}:{{ .Values.image.tag }}'
