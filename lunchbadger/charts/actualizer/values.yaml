@@ -3,7 +3,7 @@ rbac:
 images:
   actualizer:
     repository: 410240865662.dkr.ecr.us-west-2.amazonaws.com/actualizer
-    tag: latest
+    tag: sls-fix 
     pullPolicy: Always
   kubectl:
     repository: 410240865662.dkr.ecr.us-west-2.amazonaws.com/kubectl
@@ -15,6 +15,7 @@ configStore:
 versions:
   workspace: init-install
   gateway: metrics
+gitAPIURL: 'http://git-api.default'
 adminOrigin: 'http://dev.lunchbadger.com'
 customerDomain: lunchbadger.io
 workspaceAPIURLTemplate: 'http://workspace-$PRODUCER-$ENV.customer:81/api'

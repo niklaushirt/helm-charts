@@ -20,6 +20,11 @@ spec:
         - name: {{ .Chart.Name }}
           image: '{{ .Values.image.repository }}:{{ .Values.image.tag }}'
           imagePullPolicy: {{ .Values.image.pullPolicy }}
+          env:
+            - name: GIT_API_URL
+              value: {{ .Values.gitAPIURL }}
+            - name: DEBUG
+              value: {{ .Values.debugPattern }}
           ports:
             - containerPort: 3002
           volumeMounts:
