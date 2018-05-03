@@ -19,4 +19,3 @@ persistence:
   accessMode: ReadWriteOnce
   size: 10Gi
   mountPath: /var/configstore
-useNodeSelector: false
