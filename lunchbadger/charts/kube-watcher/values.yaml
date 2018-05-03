@@ -4,7 +4,7 @@ ingressHost: kube-watcher.dev-api.lunchbadger.com
 images:
   kubeWatcher:
     repository: 410240865662.dkr.ecr.us-west-2.amazonaws.com/kube-watcher
-    tag: latest
+    tag: sls
     pullPolicy: Always
   kubectl:
     repository: 410240865662.dkr.ecr.us-west-2.amazonaws.com/kubectl
