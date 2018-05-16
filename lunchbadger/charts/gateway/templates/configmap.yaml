@@ -79,21 +79,7 @@ data:
                 - {{ .Values.origin  | quote }}
               credentials: true
           - jwt:
-              - condition:
-                - not
-                - - oneOf
-                  - - allOf
-                    - - hostMatch
-                      - "*.lunchbadger.io"
-                    - - not
-                      - - hostMatch
-                        - internal-*.lunchbadger.io
-                  - - allOf
-                    - - hostMatch
-                      - api.lunchbadger.com
-                    - - pathMatch
-                      - "^/git"
-                action:
+              - action:
                   issuer: https://www.lunchbadger.com,
                   audience: 4kzhU5LqlUpQJmjbMevWkWyt9adeKK,
                   checkCredentialExistence: false
