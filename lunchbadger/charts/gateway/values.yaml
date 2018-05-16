@@ -1,6 +1,6 @@
 image:
   repository: expressgateway/express-gateway
-  tag: latest
+  tag: 1.9.0
   pullPolicy: Always
 
 production: false
