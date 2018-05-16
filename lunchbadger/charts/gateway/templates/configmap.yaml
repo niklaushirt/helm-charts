@@ -6,6 +6,32 @@ metadata:
     producer: lunchbadger
   name: gateway-lunchbadger-dev
 data:
+  system.conf: |-
+    db:
+      redis:
+        emulate: ${EG_DB_EMULATE:-true}
+        host: localhost
+        port: 6379
+        namespace: EG
+
+    cli:
+      url: http://localhost:9876
+
+    crypto:
+      cipherKey: sensitiveKey
+      algorithm: aes256
+      saltRounds: 10
+    session:
+      secret: keyboard cat
+      resave: false
+      saveUninitialized: false
+    accessTokens:
+      timeToExpiry: 7200000
+    refreshTokens:
+      timeToExpiry: 7200000
+    authorizationCodes:
+      timeToExpiry: 300000
+
   gateway.conf: |-
     {{- if eq true .Values.production }}
     http:
