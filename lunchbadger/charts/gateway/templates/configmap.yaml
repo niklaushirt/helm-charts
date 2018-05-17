@@ -85,7 +85,7 @@ data:
                   checkCredentialExistence: false
                   algorithms:
                     - RS256
-                  key: -----BEGIN PUBLIC KEY-----\nMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA7ATrA/pvXdzabRID6pBA\nA+i2zez6FG3SXw5peAV2oQUmd64JbO2vUMih4PIt5D/o6gHfzQDwI/5e8wpiNKKp\n81dpvy3uYecyfGT4x+FYQ4xj0p7dnczPlp5t1ottCXYQyyB07UZ4UsOT063CRhgi\n00HhlURBm+yjLwnlZv/VGDNzXNFX1+t+PbGC5Ab7R02Fsnp8TGfjUgzA6NDgerKi\nJcq/fSxRb5WSB/gscCGGWjvgIJrHOLI9ofaXFpoHCxePCsVkaR0JNz8Q89tIWvWv\n5msm062aD7y1ThfP6I3HeGf3dT6IavLOVD6Wk82/WN+aaQ7BKOstglWqzjJvcEvU\nOQIDAQAB\n-----END PUBLIC KEY-----
+                  key: {{ .Values.jwtPublicKey }}
 
           - proxy:
               - action:
