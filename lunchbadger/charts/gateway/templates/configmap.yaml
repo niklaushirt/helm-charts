@@ -61,7 +61,7 @@ data:
         path: '/'
     serviceEndpoints:
       backend:
-        url: "http://{{ .Values.traefikAddress }}"
+        url: "http://traefik-ingress-service"
     policies:
       - proxy
       - jwt
