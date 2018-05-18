@@ -6,7 +6,7 @@ metadata:
     producer: lunchbadger
   name: gateway-lunchbadger-dev
 data:
-  system.conf: |-
+  system.config.yml: |-
     db:
       redis:
         emulate: true
@@ -32,7 +32,7 @@ data:
     authorizationCodes:
       timeToExpiry: 300000
 
-  gateway.conf: |-
+  gateway.config.yml: |-
     {{- if eq true .Values.production }}
     https:
       port: 443
