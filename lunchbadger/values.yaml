@@ -1,7 +1,7 @@
 traefik:
-  enabled: true
+  enabled: false
 redis:
-  enabled: true
+  enabled: false
 prometheus:
   enabled: false
 grafana:
