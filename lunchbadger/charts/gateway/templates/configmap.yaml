@@ -61,7 +61,7 @@ data:
         path: '/'
     serviceEndpoints:
       backend:
-        url: "http://traefik-ingress-service"
+        url: "http://traefik-ingress-service.kube-system"
     policies:
       - proxy
       - jwt
