@@ -28,12 +28,14 @@ spec:
         lunchbadger.com/node-type: public
 {{- end }}
       containers:
-      - env:
-        - name: DEBUG
-          value: gateway:*
-        image: '{{ .Values.image.repository }}:{{ .Values.image.tag }}'
+      - image: '{{ .Values.image.repository }}:{{ .Values.image.tag }}'
         imagePullPolicy: {{ .Values.image.pullPolicy }}
         name: gateway
+{{- if eq true .Values.production }}
+        env:
+        - name: LOG_LEVEL
+          value: debug
+{{- end }}
 {{- if eq true .Values.production }}
         ports:
         - containerPort: 443
