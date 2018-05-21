@@ -151,27 +151,34 @@ data:
       - proxy
       - jwt
       - cors
-      - rewrite
+      - terminate
     pipelines:
       adminAPI:
         apiEndpoints:
           - api
         policies:
           - cors:
-              origin:
-                - http://localhost:8000
-                - https://app.lunchbadger.com
-                - {{ .Values.origin  | quote }}
-              credentials: true
+            - action:
+                origin:
+                  - http://localhost:8000
+                  - https://app.lunchbadger.com
+                  - {{ .Values.origin  | quote }}
+                credentials: true
           - jwt:
-              - action:
-                  issuer: https://www.lunchbadger.com,
-                  audience: 4kzhU5LqlUpQJmjbMevWkWyt9adeKK,
-                  checkCredentialExistence: false
-                  algorithms:
-                    - RS256
-                  key: {{ .Values.jwtPublicKey }}
-
+            - action:
+                issuer: https://www.lunchbadger.com,
+                audience: 4kzhU5LqlUpQJmjbMevWkWyt9adeKK,
+                checkCredentialExistence: false
+                algorithms:
+                  - RS256
+                key: {{ .Values.jwtPublicKey }}
+          - terminate:
+            - condition:
+                name: expression
+                expression: "req.user.sub !== req.url.split('-')[1]"
+              action:
+                statusCode: 401
+                message: Unmatching sub claim
           - proxy:
               - action:
                   serviceEndpoint: backend
