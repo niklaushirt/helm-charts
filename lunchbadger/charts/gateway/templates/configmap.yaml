@@ -180,8 +180,12 @@ data:
                   conditions:
                     - name: expression
                       expression: 'req.user && req.user.sub'
-                    - name: expression
-                      expression: "var urlParts = req.url.split('-'); return req.user.sub !== urlParts[1] || req.user.sub !== urlParts[2]"
+                    - name: oneOf
+                      conditions:
+                        - name: expression
+                          expression: "var hostParts = req.host.split('-'); return req.user.sub !== hostParts[0] ||req.user.sub !== hostParts[1] || req.user.sub !== hostParts[2]"
+                        - name: expression
+                          expression: "var urlParts = req.url.split('-'); return req.user.sub !== urlParts[1]"
               action:
                 statusCode: 401
                 message: Unmatching sub claim
