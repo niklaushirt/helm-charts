@@ -183,9 +183,16 @@ data:
                     - name: oneOf
                       conditions:
                         - name: expression
-                          expression: "var hostParts = req.host.split('-'); return req.user.sub !== hostParts[0] ||req.user.sub !== hostParts[1] || req.user.sub !== hostParts[2]"
+                          expression: |
+                            const hostParts = req.host.split('-');
+                            return req.user.sub !== hostParts[0] ||
+                                   req.user.sub !== hostParts[1] ||
+                                   req.user.sub !== hostParts[2];
+
                         - name: expression
-                          expression: "var urlParts = req.url.split('-'); return req.user.sub !== urlParts[1]"
+                          expression: |
+                            const urlParts = req.url.split('-');
+                            return req.user.sub !== urlParts[1];
               action:
                 statusCode: 401
                 message: Unmatching sub claim
