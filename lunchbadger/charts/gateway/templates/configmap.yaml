@@ -185,14 +185,14 @@ data:
                         - name: expression
                           expression: |
                             const hostParts = req.host.split('-');
-                            return req.user.sub !== hostParts[0] ||
-                                   req.user.sub !== hostParts[1] ||
-                                   req.user.sub !== hostParts[2];
+                            return req.user.sub === hostParts[0] ||
+                                   req.user.sub === hostParts[1] ||
+                                   req.user.sub === hostParts[2];
 
                         - name: expression
                           expression: |
                             const urlParts = req.url.split('-');
-                            return req.user.sub !== urlParts[1];
+                            return req.user.sub === urlParts[1];
               action:
                 statusCode: 401
                 message: Unmatching sub claim
