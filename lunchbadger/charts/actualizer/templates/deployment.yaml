@@ -31,6 +31,8 @@ spec:
               value: {{ .Values.configStore.url }}
             - name: LBWS_VERSION
               value: {{ .Values.versions.workspace }}
+            - name: LBSLS_VERSION
+              value: {{ .Values.versions.serverless }}
             - name: GATEWAY_VERSION
               value: {{ .Values.versions.gateway }}
             - name: SLEEP_TIME

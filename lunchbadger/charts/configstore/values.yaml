@@ -2,6 +2,7 @@ namespace: default
 ingressHost: dev-api.lunchbadger.com
 gitAPIURL: 'http://git-api.default'
 debugPattern: 'configstore:*'
+useNodeSelector: true
 image:
   repository: 410240865662.dkr.ecr.us-west-2.amazonaws.com/configstore
   tag: real-git

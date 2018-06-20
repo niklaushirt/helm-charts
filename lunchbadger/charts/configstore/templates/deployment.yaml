@@ -16,6 +16,10 @@ spec:
       labels:
         run: {{ .Chart.Name }}
     spec:
+      {{- if eq true .Values.useNodeSelector }}
+      nodeSelector:
+        lunchbadger.com/node-type: public
+      {{- end }}
       containers:
         - name: {{ .Chart.Name }}
           image: '{{ .Values.image.repository }}:{{ .Values.image.tag }}'

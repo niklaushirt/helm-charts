@@ -6,6 +6,91 @@ metadata:
     producer: lunchbadger
   name: gateway-lunchbadger-dev
 data:
+{{- if eq true .Values.useOldConfig }}
+  gateway.conf: |-
+    {
+      "bindPort": 443,
+      "bindHost": "0.0.0.0",
+      "privateEndpoints": {
+        "backend": {
+          "url": "http://10.3.209.27"
+        }
+      },
+      "tls": {
+        "*.lunchbadger.io": {
+          "key": "/etc/lunchbadger-tls/lunchbadger.io.key.pem",
+          "cert": "/etc/lunchbadger-tls/lunchbadger.io.cert.pem"
+        },
+        "api.lunchbadger.com": {
+          "key": "/etc/lunchbadger-tls/lunchbadger.com.key.pem",
+          "cert": "/etc/lunchbadger-tls/lunchbadger.com.cert.pem"
+        },
+        "kube-watcher.lunchbadger.com": {
+          "key": "/etc/lunchbadger-tls/lunchbadger.com.key.pem",
+          "cert": "/etc/lunchbadger-tls/lunchbadger.com.cert.pem"
+        },
+        "default": {
+          "key": "/etc/lunchbadger-tls/lunchbadger.io.key.pem",
+          "cert": "/etc/lunchbadger-tls/lunchbadger.io.cert.pem"
+        }
+      },
+      "pipelines": [
+        {
+          "name": "lunchbadger-api",
+          "publicEndpoints": [
+            { "path": "/" }
+          ],
+          "processors": [
+            {
+              "condition": ["always"],
+              "action": "cors",
+              "params": {
+                "origin": ["http://localhost:8000", "https://app.lunchbadger.com", "https://app.lunchbadger.com"],
+                "credentials": true
+              }
+            },
+            {
+              "condition": ["pathMatch", "/[^/]+/explorer$"],
+              "action": "rewrite",
+              "params": {
+                "match": "/explorer$",
+                "replace": "/explorer/",
+                "redirect": 301
+              }
+            },
+            {
+              "condition": ["not",
+                ["oneOf",
+                  ["allOf",
+                    ["hostMatch", "*.lunchbadger.io"],
+                    ["not", ["hostMatch", "internal-*.lunchbadger.io"]]
+                  ],
+                  ["allOf",
+                    ["hostMatch", "api.lunchbadger.com"],
+                    ["pathMatch", "^/git"]
+                  ]
+                ]
+              ],
+              "action": "jwt",
+              "params": {
+                "issuer": "https://www.lunchbadger.com",
+                "audience": "4kzhU5LqlUpQJmjbMevWkWyt9adeKK",
+                "algorithms": ["RS256"],
+                "key": "-----BEGIN PUBLIC KEY-----\nMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA7ATrA/pvXdzabRID6pBA\nA+i2zez6FG3SXw5peAV2oQUmd64JbO2vUMih4PIt5D/o6gHfzQDwI/5e8wpiNKKp\n81dpvy3uYecyfGT4x+FYQ4xj0p7dnczPlp5t1ottCXYQyyB07UZ4UsOT063CRhgi\n00HhlURBm+yjLwnlZv/VGDNzXNFX1+t+PbGC5Ab7R02Fsnp8TGfjUgzA6NDgerKi\nJcq/fSxRb5WSB/gscCGGWjvgIJrHOLI9ofaXFpoHCxePCsVkaR0JNz8Q89tIWvWv\n5msm062aD7y1ThfP6I3HeGf3dT6IavLOVD6Wk82/WN+aaQ7BKOstglWqzjJvcEvU\nOQIDAQAB\n-----END PUBLIC KEY-----"
+              }
+            },
+            {
+              "condition": ["always"],
+              "action": "proxy",
+              "params": {
+                "privateEndpoint": "backend"
+              }
+            }
+          ]
+        }
+      ]
+    }
+{{- else }}
   system.config.yml: |-
     db:
       redis:
@@ -90,3 +175,4 @@ data:
           - proxy:
               - action:
                   serviceEndpoint: backend
+{{- end }}
