@@ -147,7 +147,7 @@ data:
         path: '*'
     serviceEndpoints:
       backend:
-        url: "http://traefik-ingress-service.kube-system"
+        url: {{ .Values.traefikAddress | quote }}
     policies:
       - proxy
       - jwt
@@ -172,7 +172,8 @@ data:
                 checkCredentialExistence: false
                 algorithms:
                   - RS256
-                secretOrPublicKey: {{ .Values.jwtPublicKey }}
+                secretOrPublicKey: | {{ range .Values.jwtPublicKey | split "\\n" }}
+                  {{ . }}{{ end }}
           - terminate:
             - condition:
                 name: not
@@ -192,12 +193,13 @@ data:
 
                         - name: expression
                           expression: |
-                            const urlParts = req.url.split('-');
-                            req.user.sub === urlParts[1];
+                            const urlParts = req.url.split('/');
+                            req.user.sub === urlParts[2];
               action:
                 statusCode: 401
                 message: Unmatching sub claim
           - proxy:
               - action:
                   serviceEndpoint: backend
+                  changeOrigin: false
 {{- end }}

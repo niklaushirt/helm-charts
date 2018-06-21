@@ -3,6 +3,7 @@ image:
   tag: v1.9.1
   pullPolicy: Always
 
+traefikAddress: 'http://traefik-ingress-service.kube-system'
 useOldConfig: false
 production: false
 origin: dev.lunchbadger.com
