@@ -8,7 +8,7 @@ production: false
 origin: dev.lunchbadger.com
 useNodeSelector: false
 externalIP: {}
-jwtPublicKey: |-
+jwtPublicKey: |
   -----BEGIN PUBLIC KEY-----
   MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA7ATrA/pvXdzabRID6pBA
   A+i2zez6FG3SXw5peAV2oQUmd64JbO2vUMih4PIt5D/o6gHfzQDwI/5e8wpiNKKp
