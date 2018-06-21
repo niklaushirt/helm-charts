@@ -35,26 +35,33 @@ spec:
         env:
         - name: LOG_LEVEL
           value: debug
+        - name: EG_CONFIG_DIR
+          value: /var/lib/eg
 {{- end }}
 {{- if eq true .Values.production }}
         ports:
         - containerPort: 443
           protocol: TCP
         volumeMounts:
-        - mountPath: /etc/lunchbadger
-          name: config
-          readOnly: true
         - mountPath: /etc/lunchbadger-tls
           name: lunchbadger-tls
-          readOnly: true
+        - mountPath: /var/lib/eg/system.config.yml
+          name: config
+          subPath: system.config.yml
+        - mountPath: /var/lib/eg/gateway.config.yml
+          name: config
+          subPath: gateway.config.yml
 {{- else }}
         ports:
         - containerPort: 80
           protocol: TCP
         volumeMounts:
-        - mountPath: /etc/lunchbadger
+        - mountPath: /var/lib/eg/system.config.yml
           name: config
-          readOnly: true
+          subPath: system.config.yml
+        - mountPath: /var/lib/eg/gateway.config.yml
+          name: config
+          subPath: gateway.config.yml
 {{- end }}
       volumes:
       - configMap:

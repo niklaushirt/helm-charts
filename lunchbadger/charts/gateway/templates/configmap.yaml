@@ -123,16 +123,16 @@ data:
       port: 443
       tls:
         "*.lunchbadger.io":
-          key: "/etc/lunchbadger-tls/lunchbadger.io.key.pem",
+          key: "/etc/lunchbadger-tls/lunchbadger.io.key.pem"
           cert: "/etc/lunchbadger-tls/lunchbadger.io.cert.pem"
         "api.lunchbadger.com":
-          key: "/etc/lunchbadger-tls/lunchbadger.com.key.pem",
+          key: "/etc/lunchbadger-tls/lunchbadger.com.key.pem"
           cert: "/etc/lunchbadger-tls/lunchbadger.com.cert.pem"
         "kube-watcher.lunchbadger.com":
-          key: "/etc/lunchbadger-tls/lunchbadger.com.key.pem",
+          key: "/etc/lunchbadger-tls/lunchbadger.com.key.pem"
           cert: "/etc/lunchbadger-tls/lunchbadger.com.cert.pem"
         "default":
-          key: "/etc/lunchbadger-tls/lunchbadger.io.key.pem",
+          key: "/etc/lunchbadger-tls/lunchbadger.io.key.pem"
           cert: "/etc/lunchbadger-tls/lunchbadger.io.cert.pem"
     {{- else }}
     http:
@@ -143,7 +143,8 @@ data:
       hostname: localhost
     apiEndpoints:
       lunchbadger-api:
-        path: '/'
+        host: '*'
+        path: '*'
     serviceEndpoints:
       backend:
         url: "http://traefik-ingress-service.kube-system"
@@ -155,7 +156,7 @@ data:
     pipelines:
       adminAPI:
         apiEndpoints:
-          - api
+          - lunchbadger-api
         policies:
           - cors:
             - action:
@@ -171,7 +172,7 @@ data:
                 checkCredentialExistence: false
                 algorithms:
                   - RS256
-                key: {{ .Values.jwtPublicKey }}
+                secretOrPublicKey: {{ .Values.jwtPublicKey }}
           - terminate:
             - condition:
                 name: not
@@ -185,14 +186,14 @@ data:
                         - name: expression
                           expression: |
                             const hostParts = req.host.split('-');
-                            return req.user.sub === hostParts[0] ||
-                                   req.user.sub === hostParts[1] ||
-                                   req.user.sub === hostParts[2];
+                            return req.user.sub !== hostParts[0] ||
+                                   req.user.sub !== hostParts[1] ||
+                                   req.user.sub !== hostParts[2];
 
                         - name: expression
                           expression: |
                             const urlParts = req.url.split('-');
-                            return req.user.sub === urlParts[1];
+                            return req.user.sub !== urlParts[1];
               action:
                 statusCode: 401
                 message: Unmatching sub claim
