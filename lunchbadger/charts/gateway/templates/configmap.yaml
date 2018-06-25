@@ -123,16 +123,16 @@ data:
       port: 443
       tls:
         "*.lunchbadger.io":
-          key: "/etc/lunchbadger-tls/lunchbadger.io.key.pem",
+          key: "/etc/lunchbadger-tls/lunchbadger.io.key.pem"
           cert: "/etc/lunchbadger-tls/lunchbadger.io.cert.pem"
         "api.lunchbadger.com":
-          key: "/etc/lunchbadger-tls/lunchbadger.com.key.pem",
+          key: "/etc/lunchbadger-tls/lunchbadger.com.key.pem"
           cert: "/etc/lunchbadger-tls/lunchbadger.com.cert.pem"
         "kube-watcher.lunchbadger.com":
-          key: "/etc/lunchbadger-tls/lunchbadger.com.key.pem",
+          key: "/etc/lunchbadger-tls/lunchbadger.com.key.pem"
           cert: "/etc/lunchbadger-tls/lunchbadger.com.cert.pem"
         "default":
-          key: "/etc/lunchbadger-tls/lunchbadger.io.key.pem",
+          key: "/etc/lunchbadger-tls/lunchbadger.io.key.pem"
           cert: "/etc/lunchbadger-tls/lunchbadger.io.cert.pem"
     {{- else }}
     http:
@@ -143,36 +143,90 @@ data:
       hostname: localhost
     apiEndpoints:
       lunchbadger-api:
-        path: '/'
+        host: 'api.lunchbadger.com'
+        path: '*'
+      kube-watcher-api:
+        host: 'kube-watcher.lunchbadger.com'
+        path: '*'
+      internal-api:
+        host: 'internal-*-dev.lunchbadger.io'
+        path: '*'
+      serverless-api:
+        host: 'sls-*-dev.lunchbadger.io'
+        path: '*'
+      admin-gateway-api:
+        host: 'admin-*-*-dev.lunchbadger.io'
+        path: '*'
+      gateway-traffic:
+        host: '*-*-dev.lunchbadger.io'
+        path: '*'
     serviceEndpoints:
       backend:
-        url: "http://traefik-ingress-service.kube-system"
+        url: {{ .Values.traefikAddress | quote }}
     policies:
       - proxy
       - jwt
       - cors
-      - rewrite
+      - terminate
     pipelines:
       adminAPI:
         apiEndpoints:
-          - api
+          - lunchbadger-api
+          - kube-watcher-api
+          - internal-api
+          - serverless-api
+          - admin-gateway-api
         policies:
           - cors:
-              origin:
-                - http://localhost:8000
-                - https://app.lunchbadger.com
-                - {{ .Values.origin  | quote }}
-              credentials: true
+            - action:
+                origin:
+                  - http://localhost:8000
+                  - https://app.lunchbadger.com
+                  - {{ .Values.origin  | quote }}
+                credentials: true
           - jwt:
-              - action:
-                  issuer: https://www.lunchbadger.com,
-                  audience: 4kzhU5LqlUpQJmjbMevWkWyt9adeKK,
-                  checkCredentialExistence: false
-                  algorithms:
-                    - RS256
-                  key: {{ .Values.jwtPublicKey }}
+            - action:
+                issuer: https://www.lunchbadger.com
+                audience: 4kzhU5LqlUpQJmjbMevWkWyt9adeKK
+                checkCredentialExistence: false
+                algorithms:
+                  - RS256
+                secretOrPublicKey: | {{ range .Values.jwtPublicKey | split "\\n" }}
+                  {{ . }}{{ end }}
+          - terminate:
+            - condition:
+                name: not
+                condition:
+                  name: allOf
+                  conditions:
+                    - name: expression
+                      expression: 'req.user && req.user.sub'
+                    - name: oneOf
+                      conditions:
+                        - name: expression
+                          expression: |
+                            const hostParts = req.host.split('-');
+                            req.user.sub === hostParts[0] ||
+                                   req.user.sub === hostParts[1] ||
+                                   req.user.sub === hostParts[2];
 
+                        - name: expression
+                          expression: |
+                            const urlParts = req.url.split('/');
+                            req.user.sub === urlParts[2];
+              action:
+                statusCode: 401
+                message: Unmatching sub claim
           - proxy:
               - action:
                   serviceEndpoint: backend
+                  changeOrigin: false
+      gatewayTraffic:
+        apiEndpoints:
+          - gateway-traffic
+        policies:
+          - proxy:
+              - action:
+                  serviceEndpoint: backend
+                  changeOrigin: false
 {{- end }}
