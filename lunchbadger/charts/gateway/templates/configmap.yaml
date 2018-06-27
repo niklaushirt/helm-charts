@@ -169,9 +169,43 @@ data:
       - cors
       - terminate
     pipelines:
-      adminAPI:
+      producersAPI:
         apiEndpoints:
           - lunchbadger-api
+        policies:
+          - cors:
+            - action:
+                origin:
+                  - http://localhost:8000
+                  - https://app.lunchbadger.com
+                  - {{ .Values.origin  | quote }}
+                credentials: true
+          - jwt:
+            - action:
+                issuer: https://www.lunchbadger.com
+                audience: 4kzhU5LqlUpQJmjbMevWkWyt9adeKK
+                checkCredentialExistence: false
+                algorithms:
+                  - RS256
+                secretOrPublicKey: | {{ range .Values.jwtPublicKey | split "\\n" }}
+                  {{ . }}{{ end }}
+          - terminate:
+            - condition:
+                name: not
+                condition:
+                  name: allOf
+                  conditions:
+                    - name: expression
+                      expression: 'req.user && req.user.sub'
+              action:
+                statusCode: 401
+                message: Unmatching sub claim
+          - proxy:
+              - action:
+                  serviceEndpoint: backend
+                  changeOrigin: false
+      adminAPI:
+        apiEndpoints:
           - kube-watcher-api
           - internal-api
           - serverless-api
