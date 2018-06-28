@@ -16,13 +16,10 @@ spec:
   template:
     metadata:
       labels:
-        app: gateway
+        app: {{ .Chart.Name }}
         environment: dev
         producer: lunchbadger
     spec:
-{{- if eq true .Values.production }}
-      hostNetwork: true
-{{- end }}
 {{- if eq true .Values.useNodeSelector }}
       nodeSelector:
         lunchbadger.com/node-type: public
