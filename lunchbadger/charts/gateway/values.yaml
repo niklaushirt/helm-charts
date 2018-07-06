@@ -4,10 +4,28 @@ image:
   pullPolicy: Always
 
 traefikAddress: 'http://traefik-ingress-service.kube-system'
-useOldConfig: false
 production: false
 origin: dev.lunchbadger.com
-useNodeSelector: false
+hosts:
+  api: 'api.lunchbadger.com'
+  kubeWatcher: 'kube-watcher.lunchbadger.com'
+  internal: 'internal-*-dev.lunchbadger.io'
+  serverless: 'sls-*-dev.lunchbadger.io'
+  gatewayAdmin: 'admin-*-*-dev.lunchbadger.io'
+  gatewayAccess: '*-*-dev.lunchbadger.io'
+jwt:
+  issuer: 'https://www.lunchbadger.com'
+  audience: '4kzhU5LqlUpQJmjbMevWkWyt9adeKK'
+  publicKey: |
+    -----BEGIN PUBLIC KEY-----
+    MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA7ATrA/pvXdzabRID6pBA
+    A+i2zez6FG3SXw5peAV2oQUmd64JbO2vUMih4PIt5D/o6gHfzQDwI/5e8wpiNKKp
+    81dpvy3uYecyfGT4x+FYQ4xj0p7dnczPlp5t1ottCXYQyyB07UZ4UsOT063CRhgi
+    00HhlURBm+yjLwnlZv/VGDNzXNFX1+t+PbGC5Ab7R02Fsnp8TGfjUgzA6NDgerKi
+    Jcq/fSxRb5WSB/gscCGGWjvgIJrHOLI9ofaXFpoHCxePCsVkaR0JNz8Q89tIWvWv
+    5msm062aD7y1ThfP6I3HeGf3dT6IavLOVD6Wk82/WN+aaQ7BKOstglWqzjJvcEvU
+    OQIDAQAB
+    -----END PUBLIC KEY-----
 jwtPublicKey: |
   -----BEGIN PUBLIC KEY-----
   MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA7ATrA/pvXdzabRID6pBA
