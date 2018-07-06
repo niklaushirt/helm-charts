@@ -43,6 +43,8 @@ spec:
               value: {{ .Values.customerDomain }}
             - name: ADMIN_CROSS_ORIGIN
               value: {{ .Values.adminOrigin }}
+            - name: SLS_API_URL_TEMPLATE
+              value: {{ .Values.serverlessAPIURLTemplate }}
         - name: kubectl-proxy
           image: '{{ .Values.images.kubectl.repository }}:{{ .Values.images.kubectl.tag }}'
           imagePullPolicy: {{ .Values.images.kubectl.pullPolicy }}
