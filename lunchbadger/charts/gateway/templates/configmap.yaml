@@ -165,8 +165,9 @@ data:
         url: {{ .Values.traefikAddress | quote }}
     policies:
       - proxy
-      - jwt
       - cors
+      - expression
+      - jwt
       - terminate
     pipelines:
       producersAPI:
@@ -180,8 +181,23 @@ data:
                   - https://app.lunchbadger.com
                   - {{ .Values.origin  | quote }}
                 credentials: true
-          - jwt:
+          - expression:
             - action:
+                jscode: |
+                  const parts = (req.headers['authorization'] || '').split(' '); // '
+                  const authenticated = parts.length === 2 && parts[0].toLowerCase() === 'bearer' && parts[1] === {{ quote .Values.producersAPIKey }};
+
+                  req.parts = parts[1];
+                  req.authkey = {{ quote .Values.producersAPIKey }};
+                  req.authenticated = authenticated;
+                  if (authenticated) {
+                    req.user = { sub: 'wordpress' };
+                  }
+          - jwt:
+            - condition:
+                name: expression
+                expression: '!req.user'
+              action:
                 issuer: https://www.lunchbadger.com
                 audience: 4kzhU5LqlUpQJmjbMevWkWyt9adeKK
                 checkCredentialExistence: false
@@ -191,12 +207,8 @@ data:
                   {{ . }}{{ end }}
           - terminate:
             - condition:
-                name: not
-                condition:
-                  name: allOf
-                  conditions:
-                    - name: expression
-                      expression: 'req.user && req.user.sub'
+                name: expression
+                expression: '!req.user || !req.user.sub'
               action:
                 statusCode: 401
                 message: Unmatching sub claim
