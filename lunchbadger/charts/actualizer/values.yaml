@@ -19,5 +19,6 @@ gitAPIURL: 'http://git-api.default'
 adminOrigin: 'http://dev.lunchbadger.com'
 customerDomain: lunchbadger.io
 workspaceAPIURLTemplate: 'http://workspace-$PRODUCER-$ENV.customer:81/api'
+serverlessAPIURLTemplate: 'http://sls-api-$PRODUCER-$ENV.customer'
 debugPattern: 'actualizer:*'
 redisPassword: ''
