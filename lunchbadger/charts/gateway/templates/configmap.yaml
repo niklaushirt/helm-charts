@@ -173,8 +173,6 @@ data:
           - cors:
             - action:
                 origin:
-                  - http://localhost:8000
-                  - https://app.lunchbadger.com
                   - {{ .Values.origin  | quote }}
                 credentials: true
           - expression:
@@ -183,9 +181,6 @@ data:
                   const parts = (req.headers['authorization'] || '').split(' '); // '
                   const authenticated = parts.length === 2 && parts[0].toLowerCase() === 'bearer' && parts[1] === {{ quote .Values.producersAPIKey }};
 
-                  req.parts = parts[1];
-                  req.authkey = {{ quote .Values.producersAPIKey }};
-                  req.authenticated = authenticated;
                   if (authenticated) {
                     req.user = { sub: 'wordpress' };
                   }
@@ -279,12 +274,18 @@ data:
         host: '*'
         path: '*'
     policies:
+      - cors
       - proxy
     pipelines:
       all:
         apiEndpoints:
           - all
         policies:
+          - cors:
+            - action:
+                origin:
+                  - http://localhost:8000
+                  - {{ .Values.origin  | quote }}
           - proxy:
             - action:
                 serviceEndpoint: backend
