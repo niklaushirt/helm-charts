@@ -118,6 +118,12 @@ data:
       timeToExpiry: 300000
 
   gateway.config.yml: |-
+    admin:
+      port: 9876
+      hostname: localhost
+    serviceEndpoints:
+      backend:
+        url: {{ .Values.traefikAddress | quote }}
     {{- if eq true .Values.production }}
     https:
       port: 443
@@ -134,13 +140,6 @@ data:
         "default":
           key: "/etc/lunchbadger-tls/lunchbadger.io.key.pem"
           cert: "/etc/lunchbadger-tls/lunchbadger.io.cert.pem"
-    {{- else }}
-    http:
-      port: 80
-    {{- end }}
-    admin:
-      port: 9876
-      hostname: localhost
     apiEndpoints:
       lunchbadger-api:
         host: 'api.lunchbadger.com'
@@ -160,9 +159,6 @@ data:
       gateway-traffic:
         host: '*-*-dev.lunchbadger.io'
         path: '*'
-    serviceEndpoints:
-      backend:
-        url: {{ .Values.traefikAddress | quote }}
     policies:
       - proxy
       - cors
@@ -275,4 +271,23 @@ data:
               - action:
                   serviceEndpoint: backend
                   changeOrigin: false
+    {{- else }}
+    http:
+      port: 80
+    apiEndpoints:
+      all:
+        host: '*'
+        path: '*'
+    policies:
+      - proxy
+    pipelines:
+      all:
+        apiEndpoints:
+          - all
+        policies:
+          - proxy:
+            - action:
+                serviceEndpoint: backend
+                changeOrigin: false
+    {{- end }}
 {{- end }}
