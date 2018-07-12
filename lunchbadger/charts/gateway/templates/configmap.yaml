@@ -6,91 +6,6 @@ metadata:
     producer: lunchbadger
   name: gateway-lunchbadger-dev
 data:
-{{- if eq true .Values.useOldConfig }}
-  gateway.conf: |-
-    {
-      "bindPort": 443,
-      "bindHost": "0.0.0.0",
-      "privateEndpoints": {
-        "backend": {
-          "url": "http://10.3.209.27"
-        }
-      },
-      "tls": {
-        "*.lunchbadger.io": {
-          "key": "/etc/lunchbadger-tls/lunchbadger.io.key.pem",
-          "cert": "/etc/lunchbadger-tls/lunchbadger.io.cert.pem"
-        },
-        "api.lunchbadger.com": {
-          "key": "/etc/lunchbadger-tls/lunchbadger.com.key.pem",
-          "cert": "/etc/lunchbadger-tls/lunchbadger.com.cert.pem"
-        },
-        "kube-watcher.lunchbadger.com": {
-          "key": "/etc/lunchbadger-tls/lunchbadger.com.key.pem",
-          "cert": "/etc/lunchbadger-tls/lunchbadger.com.cert.pem"
-        },
-        "default": {
-          "key": "/etc/lunchbadger-tls/lunchbadger.io.key.pem",
-          "cert": "/etc/lunchbadger-tls/lunchbadger.io.cert.pem"
-        }
-      },
-      "pipelines": [
-        {
-          "name": "lunchbadger-api",
-          "publicEndpoints": [
-            { "path": "/" }
-          ],
-          "processors": [
-            {
-              "condition": ["always"],
-              "action": "cors",
-              "params": {
-                "origin": ["http://localhost:8000", "https://app.lunchbadger.com", "https://app.lunchbadger.com"],
-                "credentials": true
-              }
-            },
-            {
-              "condition": ["pathMatch", "/[^/]+/explorer$"],
-              "action": "rewrite",
-              "params": {
-                "match": "/explorer$",
-                "replace": "/explorer/",
-                "redirect": 301
-              }
-            },
-            {
-              "condition": ["not",
-                ["oneOf",
-                  ["allOf",
-                    ["hostMatch", "*.lunchbadger.io"],
-                    ["not", ["hostMatch", "internal-*.lunchbadger.io"]]
-                  ],
-                  ["allOf",
-                    ["hostMatch", "api.lunchbadger.com"],
-                    ["pathMatch", "^/git"]
-                  ]
-                ]
-              ],
-              "action": "jwt",
-              "params": {
-                "issuer": "https://www.lunchbadger.com",
-                "audience": "4kzhU5LqlUpQJmjbMevWkWyt9adeKK",
-                "algorithms": ["RS256"],
-                "key": "-----BEGIN PUBLIC KEY-----\nMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA7ATrA/pvXdzabRID6pBA\nA+i2zez6FG3SXw5peAV2oQUmd64JbO2vUMih4PIt5D/o6gHfzQDwI/5e8wpiNKKp\n81dpvy3uYecyfGT4x+FYQ4xj0p7dnczPlp5t1ottCXYQyyB07UZ4UsOT063CRhgi\n00HhlURBm+yjLwnlZv/VGDNzXNFX1+t+PbGC5Ab7R02Fsnp8TGfjUgzA6NDgerKi\nJcq/fSxRb5WSB/gscCGGWjvgIJrHOLI9ofaXFpoHCxePCsVkaR0JNz8Q89tIWvWv\n5msm062aD7y1ThfP6I3HeGf3dT6IavLOVD6Wk82/WN+aaQ7BKOstglWqzjJvcEvU\nOQIDAQAB\n-----END PUBLIC KEY-----"
-              }
-            },
-            {
-              "condition": ["always"],
-              "action": "proxy",
-              "params": {
-                "privateEndpoint": "backend"
-              }
-            }
-          ]
-        }
-      ]
-    }
-{{- else }}
   system.config.yml: |-
     db:
       redis:
@@ -118,6 +33,12 @@ data:
       timeToExpiry: 300000
 
   gateway.config.yml: |-
+    admin:
+      port: 9876
+      hostname: localhost
+    serviceEndpoints:
+      backend:
+        url: {{ .Values.traefikAddress | quote }}
     {{- if eq true .Values.production }}
     https:
       port: 443
@@ -134,13 +55,6 @@ data:
         "default":
           key: "/etc/lunchbadger-tls/lunchbadger.io.key.pem"
           cert: "/etc/lunchbadger-tls/lunchbadger.io.cert.pem"
-    {{- else }}
-    http:
-      port: 80
-    {{- end }}
-    admin:
-      port: 9876
-      hostname: localhost
     apiEndpoints:
       lunchbadger-api:
         host: 'api.lunchbadger.com'
@@ -160,13 +74,11 @@ data:
       gateway-traffic:
         host: '*-*-dev.lunchbadger.io'
         path: '*'
-    serviceEndpoints:
-      backend:
-        url: {{ .Values.traefikAddress | quote }}
     policies:
       - proxy
-      - jwt
       - cors
+      - expression
+      - jwt
       - terminate
     pipelines:
       producersAPI:
@@ -176,30 +88,23 @@ data:
           - cors:
             - action:
                 origin:
-                  - http://localhost:8000
-                  - https://app.lunchbadger.com
                   - {{ .Values.origin  | quote }}
                 credentials: true
-          - jwt:
+          - expression:
             - action:
-                issuer: https://www.lunchbadger.com
-                audience: 4kzhU5LqlUpQJmjbMevWkWyt9adeKK
-                checkCredentialExistence: false
-                algorithms:
-                  - RS256
-                secretOrPublicKey: | {{ range .Values.jwtPublicKey | split "\\n" }}
-                  {{ . }}{{ end }}
+                jscode: |
+                  const parts = (req.headers['authorization'] || '').split(' '); // '
+                  const authenticated = parts.length === 2 && parts[0].toLowerCase() === 'bearer' && parts[1] === {{ quote .Values.producersAPIKey }};
+
+                  if (authenticated) {
+                    req.user = { sub: 'wordpress' };
+                  }
           - terminate:
             - condition:
-                name: not
-                condition:
-                  name: allOf
-                  conditions:
-                    - name: expression
-                      expression: 'req.user && req.user.sub'
+                name: expression
+                expression: '!req.user'
               action:
                 statusCode: 401
-                message: Unmatching sub claim
           - proxy:
               - action:
                   serviceEndpoint: backend
@@ -214,8 +119,6 @@ data:
           - cors:
             - action:
                 origin:
-                  - http://localhost:8000
-                  - https://app.lunchbadger.com
                   - {{ .Values.origin  | quote }}
                 credentials: true
           - jwt:
@@ -263,4 +166,28 @@ data:
               - action:
                   serviceEndpoint: backend
                   changeOrigin: false
-{{- end }}
+    {{- else }}
+    http:
+      port: 80
+    apiEndpoints:
+      all:
+        host: '*'
+        path: '*'
+    policies:
+      - cors
+      - proxy
+    pipelines:
+      all:
+        apiEndpoints:
+          - all
+        policies:
+          - cors:
+            - action:
+                origin:
+                  - http://localhost:8000
+                  - {{ .Values.origin  | quote }}
+          - proxy:
+            - action:
+                serviceEndpoint: backend
+                changeOrigin: false
+    {{- end }}

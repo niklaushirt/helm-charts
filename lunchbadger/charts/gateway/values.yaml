@@ -4,10 +4,10 @@ image:
   pullPolicy: Always
 
 traefikAddress: 'http://traefik-ingress-service.kube-system'
-useOldConfig: false
 production: false
 origin: dev.lunchbadger.com
 useNodeSelector: false
+producersAPIKey: {}
 jwtPublicKey: |
   -----BEGIN PUBLIC KEY-----
   MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA7ATrA/pvXdzabRID6pBA

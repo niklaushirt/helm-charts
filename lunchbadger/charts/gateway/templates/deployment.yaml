@@ -15,6 +15,8 @@ spec:
       producer: lunchbadger
   template:
     metadata:
+      annotations:
+        checksum/config: {{ include (print $.Template.BasePath "/configmap.yaml") . | sha256sum }}
       labels:
         app: {{ .Chart.Name }}
         environment: dev
@@ -28,13 +30,11 @@ spec:
       - image: '{{ .Values.image.repository }}:{{ .Values.image.tag }}'
         imagePullPolicy: {{ .Values.image.pullPolicy }}
         name: gateway
-{{- if eq true .Values.production }}
         env:
         - name: LOG_LEVEL
           value: debug
         - name: EG_CONFIG_DIR
           value: /var/lib/eg
-{{- end }}
 {{- if eq true .Values.production }}
         ports:
         - containerPort: 443

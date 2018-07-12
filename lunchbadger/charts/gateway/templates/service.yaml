@@ -10,10 +10,17 @@ metadata:
     service.beta.kubernetes.io/aws-load-balancer-backend-protocol: tcp
 spec:
   ports:
+    {{- if eq true .Values.production }}
     - name: http
       port: 443
       targetPort: 443
       protocol: TCP
+    {{- else }}
+    - name: http
+      port: 80
+      targetPort: 80
+      protocol: TCP
+    {{- end }}
   selector:
     app: {{ .Chart.Name }}
     environment: dev
