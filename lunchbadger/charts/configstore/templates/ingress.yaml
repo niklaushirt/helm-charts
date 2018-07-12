@@ -8,5 +8,9 @@ spec:
     http:
       paths:
       - backend:
+          serviceName: git-api
+          servicePort: 80
+        path: /users  
+      - backend:
           serviceName: {{ .Chart.Name }}
           servicePort: 80
