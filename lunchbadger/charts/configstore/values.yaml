@@ -5,7 +5,7 @@ debugPattern: 'configstore:*'
 useNodeSelector: true
 image:
   repository: 410240865662.dkr.ecr.us-west-2.amazonaws.com/configstore
-  tag: real-git
+  tag: external_push
   pullPolicy: Always
 persistence:
   enabled: true
