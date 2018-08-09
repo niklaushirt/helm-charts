@@ -33,8 +33,10 @@ spec:
               value: {{ .Values.versions.workspace }}
             - name: LBSLS_VERSION
               value: {{ .Values.versions.serverless }}
+            - name: GATEWAY_IMAGE
+              value: {{ .Values.images.eg.repository }}
             - name: GATEWAY_VERSION
-              value: {{ .Values.versions.gateway }}
+              value: {{ .Values.images.eg.tag }}
             - name: SLEEP_TIME
               value: {{ .Values.configStore.sleepTime | quote }}
             - name: WORKSPACE_API_URL_TEMPLATE

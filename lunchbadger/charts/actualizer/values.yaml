@@ -3,8 +3,11 @@ rbac:
 images:
   actualizer:
     repository: 410240865662.dkr.ecr.us-west-2.amazonaws.com/actualizer
-    tag: sls-fix 
+    tag: gw_id_label
     pullPolicy: Always
+  eg:
+    repository: 'expressgateway/express-gateway'
+    tag: feat_proxy-routing-strip-d
   kubectl:
     repository: 410240865662.dkr.ecr.us-west-2.amazonaws.com/kubectl
     tag: 1.4.6
@@ -13,12 +16,13 @@ configStore:
   url: http://configstore.default/api
   sleepTime: 3000
 versions:
-  workspace: init-install
-  gateway: metrics
+  workspace: fn_watch
+  serverless: lb_id_label
 gitAPIURL: 'http://git-api.default'
 adminOrigin: 'http://dev.lunchbadger.com'
 customerDomain: lunchbadger.io
 workspaceAPIURLTemplate: 'http://workspace-$PRODUCER-$ENV.customer:81/api'
 serverlessAPIURLTemplate: 'http://sls-api-$PRODUCER-$ENV.customer'
+
 debugPattern: 'actualizer:*'
 redisPassword: ''
