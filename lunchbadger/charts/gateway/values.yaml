@@ -6,7 +6,6 @@ image:
 traefikAddress: 'http://traefik-ingress-service.kube-system'
 production: false
 origin: dev.lunchbadger.com
-useNodeSelector: false
 producersAPIKey: {}
 jwtPublicKey: |
   -----BEGIN PUBLIC KEY-----
