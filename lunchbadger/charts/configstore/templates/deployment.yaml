@@ -31,15 +31,8 @@ spec:
               value: {{ .Values.debugPattern }}
           ports:
             - containerPort: 3002
-          volumeMounts:
-            - mountPath: {{ .Values.persistence.mountPath }}
-              name: data
           resources:
             requests:
-              memory: "768Mi"
+              memory: "128Mi"
             limits:
-              memory: "768Mi"
-      volumes:
-        - name: data
-          emptyDir: {}
-{{- end -}}
+              memory: "128Mi"
