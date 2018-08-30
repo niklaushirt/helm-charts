@@ -1,3 +1,0 @@
-[submodule "lunchbadger/charts/gitea"]
-	path = lunchbadger/charts/gitea
-	url = git@github.com:jfelten/gitea-helm-chart.git
