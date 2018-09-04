@@ -45,11 +45,10 @@ service:
 resources:
   gitea:
     requests:
-      memory: 100Mi
-      cpu: 500m
+      memory: 500Mi
     limits:
       memory: 2Gi
-      cpu: 1
+      cpu: 2
   postgres:
     requests:
       memory: 256Mi
