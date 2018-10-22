@@ -150,7 +150,7 @@ data:
                         - name: expression
                           expression: |
                             const urlParts = req.url.split('/');
-                            req.user.sub === urlParts[2];
+                            req.user.sub===urlParts[2] || req.user.sub===(urlParts[3] || '').split('-')[0];
               action:
                 statusCode: 401
                 message: Unmatching sub claim
