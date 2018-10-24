@@ -8,44 +8,11 @@ rules:
   - apiGroups:
       - ""
     resources:
-      - ingresses
-      - deployments
-      - services
-      - configmaps
       - pods
+      - endpoints
     verbs:
       - get
       - list
-      - create
-      - update
-      - patch
-      - delete
-      - watch
-  - apiGroups:
-      - extensions
-    resources:
-      - ingresses
-    verbs:
-      - get
-      - list
-      - watch
-      - create
-      - update
-      - patch
-      - delete
-  - apiGroups:
-      - extensions
-      - apps
-    resources:
-      - deployments
-      - configmaps
-    verbs:
-      - get
-      - list
-      - create
-      - update
-      - patch
-      - delete
       - watch
 ---
 kind: ClusterRoleBinding
@@ -67,4 +34,3 @@ metadata:
   name: kube-watcher-kubectl-proxy
   namespace: default
 {{- end }}
-
