@@ -1,0 +1,94 @@
+actualizer:
+  adminOrigin: ""
+  configStore:
+    sleepTime: 3000
+    url: http://configstore.default
+  customerDomain: staging.lunchbadger.io
+  debugPattern: actualizer:*
+  enabled: true
+  gitAPIURL: http://git-api.default
+  global: {}
+  images:
+    actualizer:
+      pullPolicy: Always
+      repository: 410240865662.dkr.ecr.us-west-2.amazonaws.com/actualizer
+      tag: debug_mode_2
+    kubectl:
+      pullPolicy: Always
+      repository: 410240865662.dkr.ecr.us-west-2.amazonaws.com/kubectl
+      tag: 1.4.6
+  rbac:
+    enabled: true
+  redisPassword: OVFxWshanL
+  serverlessAPIURLTemplate: http://sls-api-$PRODUCER-$ENV.customer
+  versions:
+    gateway: withMetrics
+    serverless: git_push
+    workspace: async_push_2
+  workspaceAPIURLTemplate: http://workspace-$PRODUCER-$ENV.customer:81/api
+configstore:
+  debugPattern: configstore:*
+  enabled: true
+  gitAPIURL: http://git-api.default
+  global: {}
+  image:
+    pullPolicy: Always
+    repository: 410240865662.dkr.ecr.us-west-2.amazonaws.com/configstore
+    tag: real-git
+  ingressHost: staging-api.lunchbadger.com
+  namespace: default
+  persistence:
+    accessMode: ReadWriteOnce
+    enabled: false
+    mountPath: /var/configstore
+    size: 10Gi
+  useNodeSelector: false
+gateway:
+  enabled: true
+  global: {}
+  image:
+    pullPolicy: Always
+    repository: expressgateway/express-gateway
+    tag: v1.9.1
+  jwtPublicKey: |
+    -----BEGIN PUBLIC KEY-----
+    MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA7ATrA/pvXdzabRID6pBA
+    A+i2zez6FG3SXw5peAV2oQUmd64JbO2vUMih4PIt5D/o6gHfzQDwI/5e8wpiNKKp
+    81dpvy3uYecyfGT4x+FYQ4xj0p7dnczPlp5t1ottCXYQyyB07UZ4UsOT063CRhgi
+    00HhlURBm+yjLwnlZv/VGDNzXNFX1+t+PbGC5Ab7R02Fsnp8TGfjUgzA6NDgerKi
+    Jcq/fSxRb5WSB/gscCGGWjvgIJrHOLI9ofaXFpoHCxePCsVkaR0JNz8Q89tIWvWv
+    5msm062aD7y1ThfP6I3HeGf3dT6IavLOVD6Wk82/WN+aaQ7BKOstglWqzjJvcEvU
+    OQIDAQAB
+    -----END PUBLIC KEY-----
+  origin: http://staging.lunchbadger.com
+  producersAPIKey: {}
+  production: false
+  traefikAddress: http://10.3.18.145
+  useNodeSelector: false
+grafana:
+  enabled: false
+kube-watcher:
+  enabled: true
+  global: {}
+  images:
+    kubeWatcher:
+      pullPolicy: Always
+      repository: 410240865662.dkr.ecr.us-west-2.amazonaws.com/kube-watcher
+      tag: sls
+    kubectl:
+      pullPolicy: Always
+      repository: 410240865662.dkr.ecr.us-west-2.amazonaws.com/kubectl
+      tag: 1.4.6
+  ingressHost: staging-kube-watcher.lunchbadger.com
+  rbac:
+    enabled: true
+kubernetes-dashboard:
+  enabled: false
+prometheus:
+  enabled: false
+redis:
+  enabled: false
+storageClass:
+  enabled: false
+traefik:
+  enabled: false

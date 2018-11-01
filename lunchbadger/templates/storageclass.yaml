@@ -9,3 +9,23 @@ parameters:
   zones: {{ .Values.storageClass.zones | quote }}
   iopsPerGB: {{ .Values.storageClass.iopsPerGB | quote }}
 {{- end -}}
+
+
+# TODO add ceph storageclass
+# kind: StorageClass
+# apiVersion: storage.k8s.io/v1
+# metadata:
+#   name: ceph
+# provisioner: kubernetes.io/rbd
+# parameters:
+#   monitors: 10.0.0.203:6789,10.0.0.204:6789,10.0.0.205:6789
+#   adminId: admin
+#   adminSecretName: ceph-secret
+#   adminSecretNamespace: kube-system
+#   pool: rbd
+#   userId: admin
+#   userSecretName: ceph-secret-user
+#   userSecretNamespace: default
+#   fsType: ext4
+#   imageFormat: "2"
+#   imageFeatures: "layering"

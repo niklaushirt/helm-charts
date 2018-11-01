@@ -62,7 +62,7 @@ persistence:
   enabled: true
   giteaSize: 10Gi
   postgresSize: 5Gi
-  storageClass: glusterfs
+  storageClass: rbd
   accessMode: ReadWriteMany
   annotations:
     "helm.sh/resource-policy": keep
