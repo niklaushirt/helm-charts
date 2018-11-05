@@ -368,4 +368,4 @@ spec:
         imagePullPolicy: IfNotPresent
         name: kubeless-controller-manager
       serviceAccountName: controller-acct
-{{- end -}}}}
+{{- end -}}
