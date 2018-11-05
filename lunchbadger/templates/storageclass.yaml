@@ -8,8 +8,6 @@ parameters:
   type: {{ .Values.storageClass.type | quote }}
   zones: {{ .Values.storageClass.zones | quote }}
   iopsPerGB: {{ .Values.storageClass.iopsPerGB | quote }}
-{{- end -}}
-
 
 # TODO add ceph storageclass
 # kind: StorageClass
@@ -29,3 +27,4 @@ parameters:
 #   fsType: ext4
 #   imageFormat: "2"
 #   imageFeatures: "layering"
+{{- end -}}

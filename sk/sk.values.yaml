@@ -28,23 +28,25 @@ actualizer:
   workspaceAPIURLTemplate: http://workspace-$PRODUCER-$ENV.customer:81/api
 configstore:
   debugPattern: configstore:*
-  enabled: true
+  enabled: false
   gitAPIURL: http://git-api.default
   global: {}
   image:
     pullPolicy: Always
     repository: 410240865662.dkr.ecr.us-west-2.amazonaws.com/configstore
     tag: real-git
-  ingressHost: staging-api.lunchbadger.com
+  ingressHost: api.cluster.local
   namespace: default
-  persistence:
-    accessMode: ReadWriteOnce
-    enabled: false
-    mountPath: /var/configstore
-    size: 10Gi
-  useNodeSelector: false
+
+gitea:
+  enabled: false
+
+# kubeless:
+#   enabled: false
+git-api:
+  enabled: false
 gateway:
-  enabled: true
+  enabled: false
   global: {}
   image:
     pullPolicy: Always
@@ -68,7 +70,7 @@ gateway:
 grafana:
   enabled: false
 kube-watcher:
-  enabled: true
+  enabled: false
   global: {}
   images:
     kubeWatcher:
@@ -79,7 +81,7 @@ kube-watcher:
       pullPolicy: Always
       repository: 410240865662.dkr.ecr.us-west-2.amazonaws.com/kubectl
       tag: 1.4.6
-  ingressHost: staging-kube-watcher.lunchbadger.com
+  ingressHost: kube-watcher.cluster.local
   rbac:
     enabled: true
 kubernetes-dashboard:

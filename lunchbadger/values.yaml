@@ -8,6 +8,12 @@ grafana:
   enabled: false
 kubernetes-dashboard:
   enabled: false
+gitea:
+  enabled: false
+kubeless:
+  enabled: false
+git-api:
+  enabled: false
 configstore:
   enabled: true
 actualizer:

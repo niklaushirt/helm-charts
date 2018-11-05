@@ -1,3 +1,4 @@
+{{- if .Values.kubeless.enabled -}}
 ---
 apiVersion: v1
 kind: ServiceAccount
@@ -367,3 +368,4 @@ spec:
         imagePullPolicy: IfNotPresent
         name: kubeless-controller-manager
       serviceAccountName: controller-acct
+{{- end -}}}}

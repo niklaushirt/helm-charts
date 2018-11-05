@@ -8,6 +8,15 @@ dependencies:
   - name: actualizer
     version: 1.0.0-beta
     condition: actualizer.enabled
+  - name: gitea
+    version: 1.0.0-beta
+    condition: gitea.enabled
+  - name: git-api
+    version: 1.0.0-beta
+    condition: git-api.enabled
+  # - name: kubeless
+  #   version: 1.0.0-beta
+  #   condition: kubeless.enabled
   - name: gateway 
     version: 1.0.0-beta
     condition: gateway.enabled
