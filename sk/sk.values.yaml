@@ -12,19 +12,20 @@ actualizer:
     actualizer:
       pullPolicy: Always
       repository: 410240865662.dkr.ecr.us-west-2.amazonaws.com/actualizer
-      tag: debug_mode_2
+      tag: 0.2.0
     kubectl:
       pullPolicy: Always
       repository: 410240865662.dkr.ecr.us-west-2.amazonaws.com/kubectl
       tag: 1.4.6
   rbac:
     enabled: true
+    pullSecret: awsecr-cred
   redisPassword: OVFxWshanL
   serverlessAPIURLTemplate: http://sls-api-$PRODUCER-$ENV.customer
   versions:
-    gateway: withMetrics
-    serverless: git_push
-    workspace: async_push_2
+    gateway: master
+    serverless: validation
+    workspace: "0.1.464"
   workspaceAPIURLTemplate: http://workspace-$PRODUCER-$ENV.customer:81/api
 configstore:
   debugPattern: configstore:*
