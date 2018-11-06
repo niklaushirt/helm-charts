@@ -3,9 +3,9 @@ actualizer:
   configStore:
     sleepTime: 3000
     url: http://configstore.default
-  customerDomain: staging.lunchbadger.io
+  customerDomain: cluster.local
   debugPattern: actualizer:*
-  enabled: true
+  enabled: false
   gitAPIURL: http://git-api.default
   global: {}
   images:
@@ -35,12 +35,12 @@ configstore:
   image:
     pullPolicy: Always
     repository: 410240865662.dkr.ecr.us-west-2.amazonaws.com/configstore
-    tag: real-git
+    tag: external_push
   ingressHost: api.cluster.local
   namespace: default
 
 gitea:
-  enabled: false
+  enabled: true
 
 # kubeless:
 #   enabled: false

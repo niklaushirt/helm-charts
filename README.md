@@ -1,3 +1,6 @@
+#Automation TODO
+- Create lunchbadger SA instead of default
+
 # lunchbadger helm-charts
 
 ## Installation Steps
