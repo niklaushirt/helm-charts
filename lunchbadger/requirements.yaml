@@ -32,20 +32,17 @@ dependencies:
     version: 1.2.0
     condition: kube-watcher.enabled
   - name: redis
-    repository: file://./redis
-    version: 1.1.7
+    repository: "@stable"
+    version: 4.2.7
     condition: redis.enabled
   - name: prometheus
-    repository: file://./prometheus
-    version: 4.6.17
+    repository: "@stable"
+    version: 7.4.0
     condition: prometheus.enabled
   - name: grafana
-    repository: file://./grafana
-    version: 0.5.5
+    repository: "@stable"
+    version: 1.17.3
     condition: grafana.enabled
-  # - name: mysql
-  #   repository: 'mysql'
-  #   version: 0.2.1 
   - name: kubernetes-dashboard
     repository: "@stable"
     version: 0.8.0

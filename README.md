@@ -1,6 +1,7 @@
 #Automation TODO
 - Create lunchbadger SA instead of default
-
+- remove traefik
+- migrate kubeless to k8s chart
 # lunchbadger helm-charts
 
 ## Installation Steps

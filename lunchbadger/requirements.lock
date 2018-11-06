@@ -24,16 +24,16 @@ dependencies:
   repository: file://./kube-watcher
   version: 1.2.0
 - name: redis
-  repository: file://./redis
-  version: 1.1.7
+  repository: https://kubernetes-charts.storage.googleapis.com/
+  version: 4.2.7
 - name: prometheus
-  repository: file://./prometheus
-  version: 4.6.17
+  repository: https://kubernetes-charts.storage.googleapis.com/
+  version: 7.4.0
 - name: grafana
-  repository: file://./grafana
-  version: 0.5.5
+  repository: https://kubernetes-charts.storage.googleapis.com/
+  version: 1.17.3
 - name: kubernetes-dashboard
   repository: https://kubernetes-charts.storage.googleapis.com/
   version: 0.8.0
-digest: sha256:13aa713619f5139ab6bb55fe251d54ca2f8d280863a19a0ba2da42688eed5a3f
-generated: 2018-11-07T01:05:12.415401+02:00
+digest: sha256:19adb8bd5e9d5e0879148303837ce20183d235d9805e74ae3e5056f1ef58f330
+generated: 2018-11-07T01:25:05.148896+02:00
