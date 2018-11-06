@@ -4,6 +4,11 @@
 # lunchbadger helm-charts
 
 ## Installation Steps
+0. Configure helm 
+`helm repo add incubator https://kubernetes-charts-incubator.storage.googleapis.com/`
+`helm repo add jfelten https://jfelten.github.io/helm-charts/charts`
+`cd helm-charts/lunchbadger`
+`helm dependency update`
 
 1. Install Traefik
 
