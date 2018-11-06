@@ -1,37 +1,49 @@
 dependencies:
   - name: traefik
-    version: 1.0.0-beta
+    repository: http://localhost:8879/charts
+    version: 1.0.0
     condition: traefik.enabled
   - name: configstore 
+    repository: http://localhost:8879/charts
     version: 1.0.0-beta
     condition: configstore.enabled
   - name: actualizer
+    repository: http://localhost:8879/charts
     version: 1.0.0-beta
     condition: actualizer.enabled
   - name: gitea
-    version: 1.0.0-beta
+    version: 1.6.0
+    repository: https://jfelten.github.io/helm-charts/charts
     condition: gitea.enabled
   - name: git-api
+    repository: http://localhost:8879/charts
     version: 1.0.0-beta
     condition: git-api.enabled
   # - name: kubeless
+   # repository: http://localhost:8879/charts
   #   version: 1.0.0-beta
   #   condition: kubeless.enabled
   - name: gateway 
+    repository: http://localhost:8879/charts
     version: 1.0.0-beta
     condition: gateway.enabled
   - name: kube-watcher 
+    repository: http://localhost:8879/charts
     version: 1.0.0-beta
     condition: kube-watcher.enabled
   - name: redis
+    repository: http://localhost:8879/charts
     version: 1.1.7
     condition: redis.enabled
   - name: prometheus
+    repository: http://localhost:8879/charts
     version: 4.6.17
     condition: prometheus.enabled
   - name: grafana
+    repository: http://localhost:8879/charts
     version: 0.5.5
     condition: grafana.enabled
   - name: kubernetes-dashboard
+    repository: http://localhost:8879/charts
     version: 0.4.4
     condition: kubernetes-dashboard.enabled
