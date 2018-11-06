@@ -42,8 +42,8 @@ configstore:
 gitea:
   enabled: true
 
-# kubeless:
-#   enabled: false
+kubeless:
+  enabled: false
 git-api:
   enabled: false
 gateway:
