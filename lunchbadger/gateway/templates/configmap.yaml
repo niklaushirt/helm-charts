@@ -38,7 +38,7 @@ data:
       hostname: localhost
     serviceEndpoints:
       backend:
-        url: {{ .Values.traefikAddress | quote }}
+        url: {{ .Values.ingressAddress | quote }}
     {{- if eq true .Values.production }}
     https:
       port: 443

@@ -15,10 +15,6 @@ dependencies:
     version: 1.6.0
     repository: https://jfelten.github.io/helm-charts/charts
     condition: gitea.enabled
-  - name: git-api
-    repository: file://./git-api
-    version: 1.2.0
-    condition: git-api.enabled
   - name: kubeless
     repository: file://./kubeless
     version: 1.2.0
@@ -47,3 +43,11 @@ dependencies:
     repository: "@stable"
     version: 0.8.0
     condition: kubernetes-dashboard.enabled
+  - name: git-api
+    repository: file://./git-api
+    version: 1.2.0
+    condition: git-api.enabled
+  - name: logging
+    repository: file://./logging
+    version: 1.2.0
+    condition: logging.enabled

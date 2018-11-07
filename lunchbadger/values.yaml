@@ -15,13 +15,16 @@ kubeless:
 git-api:
   enabled: false
 configstore:
-  enabled: true
+  enabled: false
 actualizer:
-  enabled: true
+  enabled: false
 kube-watcher:
-  enabled: true
+  enabled: false
 gateway:
-  enabled: true
+  enabled: false
+logging:
+  enabled: false
+
 storageClassCeph:
   enabled: false
 storageClass:

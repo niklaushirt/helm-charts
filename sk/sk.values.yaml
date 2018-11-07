@@ -35,8 +35,7 @@ gitea:
       "helm.sh/resource-policy": keep
 kubeless:
   enabled: true
-git-api:
-  enabled: false
+
 gateway:
   enabled: false
   global: {}
@@ -57,18 +56,17 @@ gateway:
   origin: http://staging.lunchbadger.com
   producersAPIKey: {}
   production: false
-  traefikAddress: http://10.3.18.145
+  ingressAddress: http://10.3.18.145
   useNodeSelector: false
 grafana:
   enabled: false
 kube-watcher:
   enabled: false
-  global: {}
   images:
     kubeWatcher:
       pullPolicy: Always
       repository: 410240865662.dkr.ecr.us-west-2.amazonaws.com/kube-watcher
-      tag: sls
+      tag: v2.0.2
     kubectl:
       pullPolicy: Always
       repository: 410240865662.dkr.ecr.us-west-2.amazonaws.com/kubectl
@@ -87,11 +85,16 @@ redis:
   master:
     persistence:
       storageClass: standard
+
 storageClass:
   enabled: false
 
 storageClassCeph:
   enabled: true
   name: standard
+
 traefik:
+  enabled: false
+
+git-api:
   enabled: false
