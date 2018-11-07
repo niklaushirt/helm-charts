@@ -24,7 +24,18 @@ spec:
             - name: GIT_API_URL
               value: {{ .Values.gitAPIURL }}
             - name: REDIS_PASSWORD
+{{- $cmName := or (.Values.redisConfigMapName) ( printf "%s-redis" .Release.Name) -}}
+{{ if .Values.redisPassword }}
               value: {{ .Values.redisPassword }}
+{{ else }}
+              valueFrom:
+                secretKeyRef:
+                  name: {{ $cmName |quote}}
+                  key: "redis-password"
+{{- end -}}
+{{ $redisHost := or (.Values.redisHost) ( printf "%s-redis-master" .Release.Name) }}
+            - name: REDIS_HOST
+              value: {{ $redisHost }}
             - name: DEBUG
               value: {{ .Values.debugPattern }}
             - name: CONFIGSTORE_URL

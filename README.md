@@ -4,12 +4,18 @@
 - migrate kubeless to k8s chart
 # lunchbadger helm-charts
 
+
 ## Installation Steps
 0. Configure helm 
 `helm repo add incubator https://kubernetes-charts-incubator.storage.googleapis.com/`
 `helm repo add jfelten https://jfelten.github.io/helm-charts/charts`
 `cd helm-charts/lunchbadger`
-`helm dependency update`
+`helm dependency update`  - this is to load all updated dependencies
+
+0A. Run in test mode:
+
+`helm dependency update ./lunchbadger && helm install -f ./sk/sk.values.yaml --debug  --name lb  ./lunchbadger --dry-run`
+
 
 1. Install Traefik
 
@@ -23,20 +29,7 @@ helm install ./charts/traefik --name=traefik
 ```
 export TRAEFIK_IP=$(kubectl get svc traefik-ingress-service -n kube-system -o jsonpath="{.spec.clusterIP}")
 ```
-
-3. Install Redis
-
-```
-helm install ./charts/redis \
---name=eg-identity \
---set persistence.storageClass=standard
-```
-
-4. Grab Redis password
-
-```
-export REDIS_PASSWORD=$(kubectl get secret --namespace default eg-identity-redis -o jsonpath="{.data.redis-password}" | base64 --decode)
-```
+3. Redacted: Redis secret is now mounted to actualizer
 
 5. Install Prometheus
 

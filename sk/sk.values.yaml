@@ -1,26 +1,16 @@
 actualizer:
+  enabled: true
   adminOrigin: ""
-  configStore:
-    sleepTime: 3000
-    url: http://configstore.default
   customerDomain: cluster.local
-  debugPattern: actualizer:*
-  enabled: false
   gitAPIURL: http://git-api.default
-  global: {}
   images:
     actualizer:
-      pullPolicy: Always
-      repository: 410240865662.dkr.ecr.us-west-2.amazonaws.com/actualizer
       tag: 0.2.0
     kubectl:
-      pullPolicy: Always
-      repository: 410240865662.dkr.ecr.us-west-2.amazonaws.com/kubectl
       tag: 1.4.6
   rbac:
     enabled: true
     pullSecret: awsecr-cred
-  redisPassword: OVFxWshanL
   serverlessAPIURLTemplate: http://sls-api-$PRODUCER-$ENV.customer
   versions:
     gateway: master
@@ -93,7 +83,6 @@ prometheus:
 # check values here: https://github.com/helm/charts/tree/master/stable/redis
 redis:
   enabled: true
-  name: eg-identity
   master:
     persistence:
       storageClass: standard
