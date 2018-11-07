@@ -9,4 +9,3 @@ images:
   kubectl:
     repository: 410240865662.dkr.ecr.us-west-2.amazonaws.com/kubectl
     tag: 1.4.6
-    pullPolicy: Always
