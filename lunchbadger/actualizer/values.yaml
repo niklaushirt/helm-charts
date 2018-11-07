@@ -24,6 +24,3 @@ customerDomain: lunchbadger.io
 workspaceAPIURLTemplate: 'http://workspace-$PRODUCER-$ENV.customer:81/api'
 serverlessAPIURLTemplate: 'http://sls-api-$PRODUCER-$ENV.customer'
 debugPattern: "actualizer:*"
-#redisConfigMapName: 
-#redisHost: {{ .Release.Name | quote}} 
-#-redis-master.default

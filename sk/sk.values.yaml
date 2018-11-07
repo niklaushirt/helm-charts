@@ -18,22 +18,23 @@ actualizer:
     workspace: "0.1.464"
   workspaceAPIURLTemplate: http://workspace-$PRODUCER-$ENV.customer:81/api
 configstore:
-  debugPattern: configstore:*
-  enabled: false
-  gitAPIURL: http://git-api.default
-  global: {}
+  enabled: true
   image:
-    pullPolicy: Always
-    repository: 410240865662.dkr.ecr.us-west-2.amazonaws.com/configstore
     tag: external_push
   ingressHost: api.cluster.local
-  namespace: default
 
 gitea:
-  enabled: false
-
+  enabled: true
+  persistence:
+    enabled: true
+    giteaSize: 40Gi
+    postgresSize: 5Gi
+    storageClass: standard
+    accessMode: ReadWriteOnce
+    annotations:
+      "helm.sh/resource-policy": keep
 kubeless:
-  enabled: false
+  enabled: true
 git-api:
   enabled: false
 gateway:
