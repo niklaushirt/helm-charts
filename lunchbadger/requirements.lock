@@ -11,9 +11,6 @@ dependencies:
 - name: gitea
   repository: https://jfelten.github.io/helm-charts/charts
   version: 1.6.0
-- name: git-api
-  repository: file://./git-api
-  version: 1.2.0
 - name: kubeless
   repository: file://./kubeless
   version: 1.2.0
@@ -35,5 +32,11 @@ dependencies:
 - name: kubernetes-dashboard
   repository: https://kubernetes-charts.storage.googleapis.com/
   version: 0.8.0
-digest: sha256:19adb8bd5e9d5e0879148303837ce20183d235d9805e74ae3e5056f1ef58f330
-generated: 2018-11-07T01:25:05.148896+02:00
+- name: git-api
+  repository: file://./git-api
+  version: 1.2.0
+- name: logging
+  repository: file://./logging
+  version: 1.2.0
+digest: sha256:1f77ed4acb18f32c0a7791c3ec1d8609c5319f287665d1ed20c8f4e9101a2eff
+generated: 2018-11-07T22:26:45.046295+02:00

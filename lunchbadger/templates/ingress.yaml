@@ -1,3 +1,5 @@
+# this should contain all routes to internal services
+# another variant is to move it to EG
 apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:

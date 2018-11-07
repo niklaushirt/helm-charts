@@ -60,5 +60,4 @@ spec:
               value: {{ .Values.serverlessAPIURLTemplate }}
         - name: kubectl-proxy
           image: '{{ .Values.images.kubectl.repository }}:{{ .Values.images.kubectl.tag }}'
-          imagePullPolicy: {{ .Values.images.kubectl.pullPolicy }}
           args: [proxy, --port, "8001", --logtostderr]

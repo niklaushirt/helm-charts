@@ -6,8 +6,6 @@ actualizer:
   images:
     actualizer:
       tag: 0.2.0
-    kubectl:
-      tag: 1.4.6
   rbac:
     enabled: true
     pullSecret: awsecr-cred
