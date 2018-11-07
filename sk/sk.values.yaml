@@ -40,7 +40,7 @@ configstore:
   namespace: default
 
 gitea:
-  enabled: true
+  enabled: false
 
 kubeless:
   enabled: false
@@ -89,9 +89,19 @@ kubernetes-dashboard:
   enabled: false
 prometheus:
   enabled: false
+
+# check values here: https://github.com/helm/charts/tree/master/stable/redis
 redis:
-  enabled: false
+  enabled: true
+  name: eg-identity
+  master:
+    persistence:
+      storageClass: standard
 storageClass:
   enabled: false
+
+storageClassCeph:
+  enabled: true
+  name: standard
 traefik:
   enabled: false

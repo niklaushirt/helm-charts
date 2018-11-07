@@ -22,6 +22,8 @@ kube-watcher:
   enabled: true
 gateway:
   enabled: true
+storageClassCeph:
+  enabled: false
 storageClass:
   enabled: false
   name: standard
