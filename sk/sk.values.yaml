@@ -41,11 +41,21 @@ gitea:
     accessMode: ReadWriteOnce
     annotations:
       "helm.sh/resource-policy": keep
+    config:
+      disableInstaller: true
+        
+    ## automatically creates admin user
+    ## requires config.disableInstaller:true and valid config.secretKey
+    adminUser:
+      enabled: false
+      username: test
+      passwrord: test
+      email: test@test.com
 kubeless:
-  enabled: true
+  enabled: false
 
 gateway:
-  enabled: true
+  enabled: false
   global: {}
   image:
     pullPolicy: Always
@@ -102,3 +112,4 @@ traefik:
 
 git-api:
   enabled: true
+  pullSecret: awsecr-cred
