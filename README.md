@@ -16,8 +16,17 @@
 
 `helm dependency update ./lunchbadger && helm install -f ./sk/sk.values.yaml --debug  --name lb  ./lunchbadger --dry-run`
 
+0B Gitea after install 
+# create admin user:
+# ssh into pod : gitea admin create-user --name=test --password=test --email=test@xx.com --admin
 
-1. Install Traefik
+# generate token
+# curl -X POST "http://localhost:3000/api/v1/users/test/tokens" -H "accept: application/x-www-form-urlencoded" -H "authorization: Basic dGVzdDp0ZXN0" -F name=ttxxx
+
+# response sha1 is the access key
+# {"id":7,"name":"ttxxx","sha1":"2283d9f73439c7b34a644197875e1bf84923a960"}
+
+1. Install Traefik (not required. should work with nginx)
 
 ```
 helm install ./charts/traefik --name=traefik
