@@ -25,6 +25,7 @@
 
 # response sha1 is the access key
 # {"id":7,"name":"ttxxx","sha1":"2283d9f73439c7b34a644197875e1bf84923a960"}
+# update git-api deployment manually
 
 1. Install Traefik (not required. should work with nginx)
 
