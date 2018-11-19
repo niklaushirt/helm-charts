@@ -113,3 +113,4 @@ traefik:
 git-api:
   enabled: true
   pullSecret: awsecr-cred
+  giteaSecret: eefa9049f13b49b1e120d8b6a9e8b88917e60122
