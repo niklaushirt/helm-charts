@@ -59,7 +59,7 @@ spec:
             - name: SLS_API_URL_TEMPLATE
               value: {{ .Values.serverlessAPIURLTemplate }}
             - name: GIT_API_HOST
-              value: http://{{ .Release.Name }}-git-api.default
+              value: {{ .Release.Name }}-git-api.default
             - name: GIT_REPO_HOST
               value: {{ .Release.Name }}-gitea-ssh.default
         - name: kubectl-proxy
