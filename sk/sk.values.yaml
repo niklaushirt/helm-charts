@@ -2,7 +2,6 @@ actualizer:
   enabled: true
   adminOrigin: ""
   customerDomain: cluster.local
-  gitAPIURL: http://git-api.default
   images:
     actualizer:
       tag: 0.2.0

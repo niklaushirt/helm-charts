@@ -22,7 +22,7 @@ spec:
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           env:
             - name: GIT_API_URL
-              value: {{ .Values.gitAPIURL }}
+              value: {{ .Release.Name }}-git-api.default
             - name: DEBUG
               value: {{ .Values.debugPattern }}
           ports:

@@ -22,7 +22,7 @@ spec:
           imagePullPolicy: {{ .Values.images.actualizer.pullPolicy }}
           env:
             - name: GIT_API_URL
-              value: {{ .Values.gitAPIURL }}
+              value: {{ .Release.Name }}-git-api.default
             - name: REDIS_PASSWORD
 {{- $cmName := or (.Values.redisConfigMapName) ( printf "%s-redis" .Release.Name) -}}
 {{ if .Values.redisPassword }}
