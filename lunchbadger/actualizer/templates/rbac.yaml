@@ -129,4 +129,8 @@ kind: ServiceAccount
 metadata:
   name: sls-api
   namespace: customer
+  {{ if .Values.rbac.pullSecret }}
+imagePullSecrets:
+  - name: {{ .Values.rbac.pullSecret | }}
+  {{ end }}
 {{- end }}
