@@ -58,6 +58,10 @@ spec:
               value: {{ .Values.adminOrigin }}
             - name: SLS_API_URL_TEMPLATE
               value: {{ .Values.serverlessAPIURLTemplate }}
+            - name: GIT_API_HOST
+              value: http://{{ .Release.Name }}-git-api.default
+            - name: GIT_REPO_HOST
+              value: {{ .Release.Name }}-gitea-ssh.default
         - name: kubectl-proxy
           image: '{{ .Values.images.kubectl.repository }}:{{ .Values.images.kubectl.tag }}'
           args: [proxy, --port, "8001", --logtostderr]
