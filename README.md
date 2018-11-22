@@ -1,12 +1,17 @@
+
+# short version
+`cd helm-charts`
+`helm dependency update ./lunchbadger && helm upgrade -f path/to/values.yaml --debug lb  ./lunchbadger`
+
 #Automation TODO
 - Create lunchbadger SA instead of default
 - remove traefik
-- migrate kubeless to k8s chart
+- migrate kubeless to official k8s chart
 # lunchbadger helm-charts
 
 
 ## Installation Steps
-0. Configure helm 
+0. Configure helm
 `helm repo add incubator https://kubernetes-charts-incubator.storage.googleapis.com/`
 `helm repo add jfelten https://jfelten.github.io/helm-charts/charts`
 `cd helm-charts/lunchbadger`
