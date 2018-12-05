@@ -4,7 +4,7 @@ actualizer:
   customerDomain: cluster.local
   images:
     actualizer:
-      tag: 0.2.1
+      tag: 0.2.13
   rbac:
     enabled: true
     pullSecret: awsecr-cred
@@ -36,7 +36,7 @@ gitea:
     enabled: true
     giteaSize: 40Gi
     postgresSize: 5Gi
-    storageClass: standard
+    storageClass: zonec
     accessMode: ReadWriteOnce
   config:
     disableInstaller: true
@@ -45,9 +45,9 @@ gitea:
     ## requires config.disableInstaller:true and valid config.secretKey
   adminUser:
     enabled: false
-    username: test
-    passwrord: test
-    email: test@test.com
+    username: lunchbadger
+    passwrord: lunchbadger
+    email: lunchbadger@lunchbadger.com
 kubeless:
   enabled: false
 
@@ -84,7 +84,6 @@ kube-watcher:
   ingressHost: kube-watcher.cluster.local
   rbac:
     enabled: true
-    pullSecret: awsecr-cred
 kubernetes-dashboard:
   enabled: false
 prometheus:
@@ -98,7 +97,11 @@ redis:
       storageClass: standard
 
 storageClass:
-  enabled: false
+  enabled: true
+
+storageClass2:
+  enabled: true
+
 
 #storageClassCeph:
 #  enabled: true
@@ -109,5 +112,4 @@ traefik:
 
 git-api:
   enabled: true
-  pullSecret: awsecr-cred
-  giteaSecret: eefa9049f13b49b1e120d8b6a9e8b88917e60122
+  giteaSecret: 9ed8c58701197315d0a14ce4d961b1f9f13dfc5a

@@ -4,7 +4,7 @@ actualizer:
   customerDomain: cluster.local
   images:
     actualizer:
-      tag: 0.2.1
+      tag: 0.2.13
   rbac:
     enabled: true
     pullSecret: awsecr-cred
@@ -23,10 +23,10 @@ configstore:
 # custom config need to be mounted in order to skip web install screen
 
 # create admin user:
-# gitea admin create-user --name=test --password=test --email=test@xx.com --admin
+# gitea admin create-user --name=lunchbadger --password=lunchbadger --email=lunchbadger@xx.com --admin
 
 # generate token
-# curl -X POST "http://localhost:3000/api/v1/users/test/tokens" -H "accept: application/x-www-form-urlencoded" -H "authorization: Basic dGVzdDp0ZXN0" -F name=ttxxx
+# curl -X POST "http://localhost:3000/api/v1/users/lunchbadger/tokens" -H "accept: application/x-www-form-urlencoded" -H "authorization: Basic bHVuY2hiYWRnZXI6bHVuY2hiYWRnZXI=" -F name=git-api
 
 # response sha1 is the access key
 # {"id":7,"name":"ttxxx","sha1":"2283d9f73439c7b34a644197875e1bf84923a960"}
@@ -100,6 +100,9 @@ redis:
       storageClass: standard
 
 storageClass:
+  enabled: false
+
+storageClass2:
   enabled: false
 
 storageClassCeph:
