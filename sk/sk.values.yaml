@@ -4,7 +4,7 @@ actualizer:
   customerDomain: cluster.local
   images:
     actualizer:
-      tag: 0.2.13
+      tag: 0.2.20
   rbac:
     enabled: true
     pullSecret: awsecr-cred

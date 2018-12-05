@@ -1,24 +1,23 @@
 actualizer:
   enabled: true
   adminOrigin: ""
-  customerDomain: cluster.local
+  customerDomain: staging.lunchbadger.io
   images:
     actualizer:
-      tag: 0.2.13
+      tag: 0.2.20
   rbac:
     enabled: true
-    pullSecret: awsecr-cred
   serverlessAPIURLTemplate: http://sls-api-$PRODUCER-$ENV.customer
   versions:
     gateway: master
     serverless: validation
-    workspace: "0.1.464"
+    workspace: "0.2.4"
   workspaceAPIURLTemplate: http://workspace-$PRODUCER-$ENV.customer:81/api
 configstore:
   enabled: true
   image:
     tag: external_push
-  ingressHost: api.cluster.local
+  ingressHost: api.staging.lunchbadger.io
 
 # custom config need to be mounted in order to skip web install screen
 
@@ -80,8 +79,8 @@ kube-watcher:
     kubeWatcher:
       pullPolicy: Always
       repository: 410240865662.dkr.ecr.us-west-2.amazonaws.com/kube-watcher
-      tag: v2.0.2
-  ingressHost: kube-watcher.cluster.local
+      tag: state_fix
+  ingressHost: kube-watcher.staging.lunchbadger.io
   rbac:
     enabled: true
 kubernetes-dashboard:
