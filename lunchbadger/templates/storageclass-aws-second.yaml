@@ -1,0 +1,11 @@
+{{- if .Values.storageClass2.enabled -}}
+kind: StorageClass
+apiVersion: storage.k8s.io/v1
+metadata:
+  name: {{ .Values.storageClass2.name | quote }}
+provisioner: kubernetes.io/aws-ebs
+parameters:
+  type: {{ .Values.storageClass2.type | quote }}
+  zones: {{ .Values.storageClass2.zones | quote }}
+  iopsPerGB: {{ .Values.storageClass2.iopsPerGB | quote }}
+{{- end -}}
