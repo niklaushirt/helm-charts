@@ -1,0 +1,193 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  labels:
+    environment: dev
+    producer: lunchbadger
+  name: gateway-lunchbadger-dev
+data:
+  system.config.yml: |-
+    db:
+      redis:
+        emulate: true
+        host: localhost
+        port: 6379
+        namespace: EG
+
+    cli:
+      url: http://localhost:9876
+
+    crypto:
+      cipherKey: sensitiveKey
+      algorithm: aes256
+      saltRounds: 10
+    session:
+      secret: keyboard cat
+      resave: false
+      saveUninitialized: false
+    accessTokens:
+      timeToExpiry: 7200000
+    refreshTokens:
+      timeToExpiry: 7200000
+    authorizationCodes:
+      timeToExpiry: 300000
+
+  gateway.config.yml: |-
+    admin:
+      port: 9876
+      hostname: localhost
+    serviceEndpoints:
+      backend:
+        url: {{ .Values.ingressAddress | quote }}
+    {{- if eq true .Values.production }}
+    https:
+      port: 443
+      tls:
+        "*.lunchbadger.io":
+          key: "/etc/lunchbadger-tls/lunchbadger.io.key.pem"
+          cert: "/etc/lunchbadger-tls/lunchbadger.io.cert.pem"
+        "api.lunchbadger.com":
+          key: "/etc/lunchbadger-tls/lunchbadger.com.key.pem"
+          cert: "/etc/lunchbadger-tls/lunchbadger.com.cert.pem"
+        "kube-watcher.lunchbadger.com":
+          key: "/etc/lunchbadger-tls/lunchbadger.com.key.pem"
+          cert: "/etc/lunchbadger-tls/lunchbadger.com.cert.pem"
+        "default":
+          key: "/etc/lunchbadger-tls/lunchbadger.io.key.pem"
+          cert: "/etc/lunchbadger-tls/lunchbadger.io.cert.pem"
+    apiEndpoints:
+      lunchbadger-api:
+        host: 'api.lunchbadger.com'
+        path: '*'
+      kube-watcher-api:
+        host: 'kube-watcher.lunchbadger.com'
+        path: '*'
+      internal-api:
+        host: 'internal-*-dev.lunchbadger.io'
+        path: '*'
+      serverless-api:
+        host: 'sls-*-dev.lunchbadger.io'
+        path: '*'
+      admin-gateway-api:
+        host: 'admin-*-*-dev.lunchbadger.io'
+        path: '*'
+      gateway-traffic:
+        host: '*-*-dev.lunchbadger.io'
+        path: '*'
+    policies:
+      - proxy
+      - cors
+      - expression
+      - jwt
+      - terminate
+    pipelines:
+      producersAPI:
+        apiEndpoints:
+          - lunchbadger-api
+        policies:
+          - cors:
+            - action:
+                origin:
+                  - {{ .Values.origin  | quote }}
+                credentials: true
+          - expression:
+            - action:
+                jscode: |
+                  const parts = (req.headers['authorization'] || '').split(' '); // '
+                  const authenticated = parts.length === 2 && parts[0].toLowerCase() === 'bearer' && parts[1] === {{ quote .Values.producersAPIKey }};
+
+                  if (authenticated) {
+                    req.user = { sub: 'wordpress' };
+                  }
+          - terminate:
+            - condition:
+                name: expression
+                expression: '!req.user'
+              action:
+                statusCode: 401
+          - proxy:
+              - action:
+                  serviceEndpoint: backend
+                  changeOrigin: false
+      adminAPI:
+        apiEndpoints:
+          - kube-watcher-api
+          - internal-api
+          - serverless-api
+          - admin-gateway-api
+        policies:
+          - cors:
+            - action:
+                origin:
+                  - {{ .Values.origin  | quote }}
+                credentials: true
+          - jwt:
+            - action:
+                issuer: https://www.lunchbadger.com
+                audience: 4kzhU5LqlUpQJmjbMevWkWyt9adeKK
+                checkCredentialExistence: false
+                algorithms:
+                  - RS256
+                secretOrPublicKey: | {{ range .Values.jwtPublicKey | split "\\n" }}
+                  {{ . }}{{ end }}
+          - terminate:
+            - condition:
+                name: not
+                condition:
+                  name: allOf
+                  conditions:
+                    - name: expression
+                      expression: 'req.user && req.user.sub'
+                    - name: oneOf
+                      conditions:
+                        - name: expression
+                          expression: |
+                            const hostParts = req.host.split('-');
+                            req.user.sub === hostParts[0] ||
+                                   req.user.sub === hostParts[1] ||
+                                   req.user.sub === hostParts[2];
+
+                        - name: expression
+                          expression: |
+                            const urlParts = req.url.split('/');
+                            req.user.sub===urlParts[2] || req.user.sub===(urlParts[3] || '').split('-')[0];
+              action:
+                statusCode: 401
+                message: Unmatching sub claim
+          - proxy:
+              - action:
+                  serviceEndpoint: backend
+                  changeOrigin: false
+      gatewayTraffic:
+        apiEndpoints:
+          - gateway-traffic
+        policies:
+          - proxy:
+              - action:
+                  serviceEndpoint: backend
+                  changeOrigin: false
+    {{- else }}
+    http:
+      port: 80
+    apiEndpoints:
+      all:
+        host: '*'
+        path: '*'
+    policies:
+      - cors
+      - proxy
+    pipelines:
+      all:
+        apiEndpoints:
+          - all
+        policies:
+          - cors:
+            - action:
+                origin:
+                  - http://localhost:8000
+                  - {{ .Values.origin  | quote }}
+          - proxy:
+            - action:
+                serviceEndpoint: backend
+                changeOrigin: false
+    {{- end }}

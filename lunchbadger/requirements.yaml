@@ -1,28 +1,53 @@
 dependencies:
   - name: traefik
-    version: 1.0.0-beta
+    repository: file://./traefik
+    version: 1.0.0
     condition: traefik.enabled
-  - name: configstore 
-    version: 1.0.0-beta
+  - name: configstore
+    repository: file://./configstore
+    version: 1.2.0
     condition: configstore.enabled
   - name: actualizer
-    version: 1.0.0-beta
+    repository: file://./actualizer
+    version: 1.2.0
     condition: actualizer.enabled
+  - name: gitea
+    version: 1.6.0
+    repository: https://jfelten.github.io/helm-charts/charts
+    condition: gitea.enabled
+  - name: kubeless
+    repository: file://./kubeless
+    version: 1.2.0
+    condition: kubeless.enabled
   - name: gateway 
-    version: 1.0.0-beta
+    repository: file://./gateway
+    version: 1.2.0
     condition: gateway.enabled
   - name: kube-watcher 
-    version: 1.0.0-beta
+    repository: file://./kube-watcher
+    version: 1.2.0
     condition: kube-watcher.enabled
   - name: redis
-    version: 1.1.7
+    repository: "@stable"
+    version: 4.2.7
     condition: redis.enabled
   - name: prometheus
-    version: 4.6.17
+    repository: "@stable"
+    version: 7.4.0
     condition: prometheus.enabled
   - name: grafana
-    version: 0.5.5
+    repository: "@stable"
+    version: 1.17.3
     condition: grafana.enabled
   - name: kubernetes-dashboard
-    version: 0.4.4
+    repository: "@stable"
+    version: 0.8.0
     condition: kubernetes-dashboard.enabled
+  - name: git-api
+    repository: file://./git-api
+    version: 1.2.0
+    condition: git-api.enabled
+  - name: logging
+    repository: file://./logging
+    version: 1.2.0
+    condition: logging.enabled

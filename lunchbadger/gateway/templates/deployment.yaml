@@ -1,0 +1,69 @@
+# run logic to only add tls stuff on production=true
+# Need a service of Type: LoadBalancer
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  labels:
+    environment: dev
+    producer: lunchbadger
+  name: gateway-lunchbadger-dev
+spec:
+  selector:
+    matchLabels:
+      app: gateway
+      environment: dev
+      producer: lunchbadger
+  template:
+    metadata:
+      annotations:
+        checksum/config: {{ include (print $.Template.BasePath "/configmap.yaml") . | sha256sum }}
+      labels:
+        app: {{ .Chart.Name }}
+        environment: dev
+        producer: lunchbadger
+    spec:
+      containers:
+      - image: '{{ .Values.image.repository }}:{{ .Values.image.tag }}'
+        imagePullPolicy: {{ .Values.image.pullPolicy }}
+        name: gateway
+        env:
+        - name: LOG_LEVEL
+          value: debug
+        - name: EG_CONFIG_DIR
+          value: /var/lib/eg
+{{- if eq true .Values.production }}
+        ports:
+        - containerPort: 443
+          protocol: TCP
+        volumeMounts:
+        - mountPath: /etc/lunchbadger-tls
+          name: lunchbadger-tls
+        - mountPath: /var/lib/eg/system.config.yml
+          name: config
+          subPath: system.config.yml
+        - mountPath: /var/lib/eg/gateway.config.yml
+          name: config
+          subPath: gateway.config.yml
+{{- else }}
+        ports:
+        - containerPort: 80
+          protocol: TCP
+        volumeMounts:
+        - mountPath: /var/lib/eg/system.config.yml
+          name: config
+          subPath: system.config.yml
+        - mountPath: /var/lib/eg/gateway.config.yml
+          name: config
+          subPath: gateway.config.yml
+{{- end }}
+      volumes:
+      - configMap:
+          defaultMode: 420
+          name: gateway-lunchbadger-dev
+        name: config
+{{- if eq true .Values.production }}
+      - name: lunchbadger-tls
+        secret:
+          defaultMode: 420
+          secretName: lunchbadger-tls
+{{- end }}

@@ -1,0 +1,28 @@
+---
+apiVersion: apps/v1beta2
+kind: Deployment
+metadata:
+  name: {{ .Chart.Name }}
+spec:
+  replicas: 1
+  revisionHistoryLimit: 1
+  selector:
+    matchLabels:
+      run: {{ .Chart.Name }}
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        run: {{ .Chart.Name }}
+    spec:
+      serviceAccountName: kube-watcher-kubectl-proxy
+      containers:
+        - name: {{ .Chart.Name }} 
+          image: '{{ .Values.images.kubeWatcher.repository }}:{{ .Values.images.kubeWatcher.tag }}'
+          imagePullPolicy: {{ .Values.images.kubeWatcher.pullPolicy }}
+          ports:
+            - containerPort: 7788
+        - name: kubectl-proxy
+          image: '{{ .Values.images.kubectl.repository }}:{{ .Values.images.kubectl.tag }}'
+          args: [proxy, --port, "8001", --logtostderr]

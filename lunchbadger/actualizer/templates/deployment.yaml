@@ -1,0 +1,67 @@
+apiVersion: apps/v1beta2
+kind: Deployment
+metadata:
+  name: {{ .Chart.Name }}
+spec:
+  replicas: 1
+  revisionHistoryLimit: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      run: {{ .Chart.Name }}
+  template:
+    metadata:
+      labels:
+        run: {{ .Chart.Name }}
+    spec:
+      serviceAccountName: actualizer-kubectl-proxy
+      containers:
+        - name: {{ .Chart.Name }}
+          image: '{{ .Values.images.actualizer.repository }}:{{ .Values.images.actualizer.tag }}'
+          imagePullPolicy: {{ .Values.images.actualizer.pullPolicy }}
+          env:
+            - name: GIT_API_URL
+              value: http://{{ .Release.Name }}-git-api.default
+            - name: REDIS_PASSWORD
+{{- $cmName := or (.Values.redisConfigMapName) ( printf "%s-redis" .Release.Name) -}}
+{{ if .Values.redisPassword }}
+              value: {{ .Values.redisPassword }}
+{{ else }}
+              valueFrom:
+                secretKeyRef:
+                  name: {{ $cmName |quote}}
+                  key: "redis-password"
+{{- end -}}
+{{ $redisHost := or (.Values.redisHost) ( printf "%s-redis-master" .Release.Name) }}
+            - name: REDIS_HOST
+              value: {{ $redisHost }}
+            - name: DEBUG
+              value: {{ .Values.debugPattern }}
+            - name: CONFIGSTORE_URL
+              value: {{ .Values.configStore.url }}
+            - name: LBWS_VERSION
+              value: {{ .Values.versions.workspace }}
+            - name: LBSLS_VERSION
+              value: {{ .Values.versions.serverless }}
+            - name: GATEWAY_IMAGE
+              value: {{ .Values.images.eg.repository }}
+            - name: GATEWAY_VERSION
+              value: {{ .Values.images.eg.tag }}
+            - name: SLEEP_TIME
+              value: {{ .Values.configStore.sleepTime | quote }}
+            - name: WORKSPACE_API_URL_TEMPLATE
+              value: {{ .Values.workspaceAPIURLTemplate }}
+            - name: CUSTOMER_DOMAIN
+              value: {{ .Values.customerDomain }}
+            - name: ADMIN_CROSS_ORIGIN
+              value: {{ .Values.adminOrigin }}
+            - name: SLS_API_URL_TEMPLATE
+              value: {{ .Values.serverlessAPIURLTemplate }}
+            - name: GIT_API_HOST
+              value: {{ .Release.Name }}-git-api.default
+            - name: GIT_REPO_HOST
+              value: {{ .Release.Name }}-gitea-ssh.default
+        - name: kubectl-proxy
+          image: '{{ .Values.images.kubectl.repository }}:{{ .Values.images.kubectl.tag }}'
+          args: [proxy, --port, "8001", --logtostderr]

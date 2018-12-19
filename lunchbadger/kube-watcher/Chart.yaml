@@ -1,6 +1,6 @@
-name: lunchbadger
+name: kube-watcher 
 version: '1.2.0'
-description: LunchBadger Multi-cloud Platform for Serverless and Microservices
 home: https://www.lunchbadger.com
 icon: https://www.lunchbadger.com/wp-content/uploads/2016/10/logo.svg
 appVersion: '1.2.0'
+

@@ -1,8 +1,38 @@
+
+# short version
+`cd helm-charts`
+`helm dependency update ./lunchbadger && helm upgrade -f path/to/values.yaml --debug lb  ./lunchbadger`
+
+#Automation TODO
+- Create lunchbadger SA instead of default
+- remove traefik
+- migrate kubeless to official k8s chart
 # lunchbadger helm-charts
 
-## Installation Steps
 
-1. Install Traefik
+## Installation Steps
+0. Configure helm
+`helm repo add incubator https://kubernetes-charts-incubator.storage.googleapis.com/`
+`helm repo add jfelten https://jfelten.github.io/helm-charts/charts`
+`cd helm-charts/lunchbadger`
+`helm dependency update`  - this is to load all updated dependencies
+
+0A. Run in test mode:
+
+`helm dependency update ./lunchbadger && helm install -f ./sk/sk.values.yaml --debug  --name lb  ./lunchbadger --dry-run`
+
+0B Gitea after install 
+# create admin user:
+# ssh into pod : gitea admin create-user --name=test --password=test --email=test@xx.com --admin
+
+# generate token
+# curl -X POST "http://localhost:3000/api/v1/users/test/tokens" -H "accept: application/x-www-form-urlencoded" -H "authorization: Basic dGVzdDp0ZXN0" -F name=ttxxx
+
+# response sha1 is the access key
+# {"id":7,"name":"ttxxx","sha1":"2283d9f73439c7b34a644197875e1bf84923a960"}
+# update git-api deployment manually
+
+1. Install Traefik (not required. should work with nginx)
 
 ```
 helm install ./charts/traefik --name=traefik
@@ -14,20 +44,7 @@ helm install ./charts/traefik --name=traefik
 ```
 export TRAEFIK_IP=$(kubectl get svc traefik-ingress-service -n kube-system -o jsonpath="{.spec.clusterIP}")
 ```
-
-3. Install Redis
-
-```
-helm install ./charts/redis \
---name=eg-identity \
---set persistence.storageClass=standard
-```
-
-4. Grab Redis password
-
-```
-export REDIS_PASSWORD=$(kubectl get secret --namespace default eg-identity-redis -o jsonpath="{.data.redis-password}" | base64 --decode)
-```
+3. Redacted: Redis secret is now mounted to actualizer
 
 5. Install Prometheus
 
@@ -66,7 +83,7 @@ helm install . \
 --set storageClass.enabled=true \
 --set storageClass.name=standard \
 --set "storageClass.zones=us-west-2b\, us-west-2c" \
---set gateway.traefikAddress=$TRAEFIK_IP \
+--set gateway.ingressAddress=$TRAEFIK_IP \
 --set actualizer.redisPassword=$REDIS_PASSWORD \
 --set actualizer.customerDomain=dev.lunchbadger.io \
 --set kube-watcher.ingressHost=kube-watcher.dev-api.lunchbadger.com \

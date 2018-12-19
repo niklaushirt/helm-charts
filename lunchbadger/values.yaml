@@ -8,17 +8,35 @@ grafana:
   enabled: false
 kubernetes-dashboard:
   enabled: false
+gitea:
+  enabled: false
+kubeless:
+  enabled: false
+git-api:
+  enabled: false
 configstore:
-  enabled: true
+  enabled: false
 actualizer:
-  enabled: true
+  enabled: false
 kube-watcher:
-  enabled: true
+  enabled: false
 gateway:
-  enabled: true
+  enabled: false
+logging:
+  enabled: false
+
+storageClassCeph:
+  enabled: false
 storageClass:
   enabled: false
   name: standard
   type: gp2
-  zones: 'us-west-2a, us-west-2b, us-west-2c'
+  zones: 'us-west-2a, us-west-2b'
+  iopsPerGB: 10
+
+storageClass2:
+  enabled: false
+  name: zonec
+  type: gp2
+  zones: us-west-2c
   iopsPerGB: 10
