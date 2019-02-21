@@ -1,0 +1,67 @@
+kind: Deployment
+apiVersion: extensions/v1beta1
+metadata:
+  name: {{ .Chart.Name }}-deployment
+  namespace: {{ .Values.namespace }}
+  selfLink: /apis/extensions/v1beta1/namespaces/{{ .Values.namespace }}/deployments/{{ .Chart.Name }}-deployment
+  uid: 7a75f427-2bb9-11e9-aef6-0ac4997a9b84
+  resourceVersion: 378229312
+  generation: 4
+  creationTimestamp: 2019-02-08T15:52:03Z
+  labels:
+    app: {{ .Chart.Name }}
+  annotations:
+    deployment.kubernetes.io/revision: 4
+    kubectl.kubernetes.io/last-applied-configuration: {\"apiVersion\":\"apps/v1beta2\\"kind\":\"Deployment\\"metadata\":{\"annotations\":{},\"name\":\"graphql-gateway-deployment\\"namespace\":\"default\"},\"spec\":{\"replicas\":1,\"selector\":{\"matchLabels\":{\"app\":\"graphql-gateway\"}},\"template\":{\"metadata\":{\"labels\":{\"app\":\"graphql-gateway\"}},\"spec\":{\"containers\":[{\"image\":\"410240865662.dkr.ecr.us-west-2.amazonaws.com/graphql:0.1.0\\"name\":\"graphql-gateway\\"ports\":[{\"containerPort\":4000}]}]}}}}\n
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app: {{ .Chart.Name }}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: {{ .Chart.Name }}
+    spec:
+      containers: [
+        - name: {{ .Chart.Name }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          ports:
+            - containerPort: {{ .Values.service.containerPort }}
+              protocol: {{ .Values.service.protocol }}
+          resources: {}
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+      restartPolicy: Always
+      terminationGracePeriodSeconds: 30
+      dnsPolicy: ClusterFirst
+      securityContext: {}
+      schedulerName: default-scheduler
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 25%
+      maxSurge: 25%
+  revisionHistoryLimit: 10
+  progressDeadlineSeconds: 600
+status:
+  observedGeneration: 4
+  replicas: 1
+  updatedReplicas: 1
+  readyReplicas: 1
+  availableReplicas: 1
+  conditions:
+    - type: Available
+      status: True
+      lastUpdateTime: 2019-02-08T15:54:18Z
+      lastTransitionTime: 2019-02-08T15:54:18Z
+      reason: MinimumReplicasAvailable
+      message: Deployment has minimum availability.
+    - type: Progressing
+      status: True
+      lastUpdateTime: 2019-02-18T21:23:03Z
+      lastTransitionTime: 2019-02-08T15:52:05Z
+      reason: NewReplicaSetAvailable
+      message: ReplicaSet "graphql-gateway-deployment-57754dd845" has successfully progressed.
