@@ -2,9 +2,9 @@
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
 
-namespace: default
+# namespace: default
 
-replicaCount: 1
+# replicaCount: 1
 
 image:
   repository: 410240865662.dkr.ecr.us-west-2.amazonaws.com/graphql
@@ -14,12 +14,12 @@ image:
 # nameOverride: ""
 # fullnameOverride: ""
 
-service:
-  type: ClusterIP
-  port: 80
-  containerPort: 4000
-  protocol: TCP
-  clusterIP: 10.3.22.23
+# service:
+#   type: ClusterIP
+#   port: 80
+#   containerPort: 4000
+#   protocol: TCP
+#   clusterIP: 10.3.22.23
 
 # ingress:
   # enabled: false
