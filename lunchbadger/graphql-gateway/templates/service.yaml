@@ -1,11 +1,11 @@
 kind: Service
 apiVersion: v1
 metadata:
-  name: graphql-service
+  name: {{ .Chart.Name }}-service
 spec:
   selector:
-    app: graphql-gateway
+    app: {{ .Chart.Name }}
   ports:
-  - protocol: TCP
-    port: 80
-    targetPort: 4000
+  - protocol: {{ .Values.service.protocol }}
+    port: {{ .Values.service.port }}
+    targetPort: {{ .Values.service.targetPort }}
