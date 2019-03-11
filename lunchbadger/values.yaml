@@ -24,7 +24,12 @@ gateway:
   enabled: false
 logging:
   enabled: false
-
+graphql:
+  enabled: false
+mainIngress:
+  enabled: false
+customerNamespace:
+  enabled: false
 storageClassCeph:
   enabled: false
 storageClass:

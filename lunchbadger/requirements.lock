@@ -31,12 +31,15 @@ dependencies:
   version: 1.17.3
 - name: kubernetes-dashboard
   repository: https://kubernetes-charts.storage.googleapis.com/
-  version: 0.8.0
+  version: 1.2.0
 - name: git-api
   repository: file://./git-api
   version: 1.2.0
 - name: logging
   repository: file://./logging
   version: 1.2.0
-digest: sha256:1f77ed4acb18f32c0a7791c3ec1d8609c5319f287665d1ed20c8f4e9101a2eff
-generated: 2018-11-07T22:26:45.046295+02:00
+- name: graphql-gateway
+  repository: file://./graphql-gateway
+  version: 1.2.0
+digest: sha256:6ce63fbb909da5753108820e58efdcf597e18acbe2828f86e233884d3f4e28ac
+generated: 2019-03-11T19:13:14.468424+02:00
