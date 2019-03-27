@@ -41,7 +41,7 @@ dependencies:
     condition: grafana.enabled
   - name: kubernetes-dashboard
     repository: "@stable"
-    version: 0.8.0
+    version: 1.2.0
     condition: kubernetes-dashboard.enabled
   - name: git-api
     repository: file://./git-api
@@ -51,3 +51,7 @@ dependencies:
     repository: file://./logging
     version: 1.2.0
     condition: logging.enabled
+  - name: graphql-gateway
+    repository: file://./graphql-gateway
+    version: 1.2.0
+    condition: graphql.enabled

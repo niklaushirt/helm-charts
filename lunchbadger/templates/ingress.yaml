@@ -1,3 +1,4 @@
+{{- if .Values.mainIngress.enabled -}}
 # this should contain all routes to internal services
 # another variant is to move it to EG
 apiVersion: extensions/v1beta1
@@ -20,4 +21,4 @@ spec:
       - backend:
           serviceName: configstore
           servicePort: 80
-
+{{- end -}}

@@ -17,6 +17,11 @@
 `cd helm-charts/lunchbadger`
 `helm dependency update`  - this is to load all updated dependencies
 
+# if it is not installed on the server 
+`kubectl create serviceaccount tiller --namespace kube-system`
+`kubectl apply -f tiller-rbac-config.yaml`
+`helm init --service-account tiller`
+
 0A. Run in test mode:
 
 `helm dependency update ./lunchbadger && helm install -f ./sk/sk.values.yaml --debug  --name lb  ./lunchbadger --dry-run`

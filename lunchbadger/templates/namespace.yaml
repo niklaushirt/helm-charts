@@ -1,4 +1,6 @@
+{{- if .Values.customerNamespace.enabled -}}
 apiVersion: v1
 kind: Namespace
 metadata:
   name: customer # Create the namespace first.
+{{- end -}}
