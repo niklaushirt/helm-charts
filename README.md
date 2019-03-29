@@ -132,3 +132,14 @@ kubectl proxy
 2. Access URL
 
 http://localhost:8001/api/v1/namespaces/kube-system/services/kubernetes-dashboard:/proxy/
+
+## AWS Load Balancers:
+SSH for git clone, https and http for client and k8s APIs must be exposed via AWS loadbalancer otherwise it is not accessible 
+
+For current staging they have been created by hand (I guess)
+
+In this helm chart check for exposure via ALB attibutes
+https://github.com/LunchBadger/helm-charts/blob/cb53fa320fd3234d7d3c44e6ff717764ed68bf81/lunchbadger/gateway/templates/service.yaml#L10
+
+Most likely it means that gitea must have same approace for SSH.
+K8s API when done via EKS is no longer a problem, since it will be exposed automatically on cluster provisioning
