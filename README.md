@@ -143,3 +143,11 @@ https://github.com/LunchBadger/helm-charts/blob/cb53fa320fd3234d7d3c44e6ff717764
 
 Most likely it means that gitea must have same approace for SSH.
 K8s API when done via EKS is no longer a problem, since it will be exposed automatically on cluster provisioning
+
+## Snapshots
+Once volume are created ensure (and automate in future) rule to snapshot volumes.
+ensure those volumes are added: Redis, Gitea-Postgress, Gitea-actual git data 
+
+Manual Rule creation guide
+https://docs.aws.amazon.com/AmazonCloudWatch/latest/events/TakeScheduledSnapshot.html
+
