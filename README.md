@@ -11,31 +11,32 @@
 
 
 ## Installation Steps
-0. Configure helm
+### Configure helm
 `helm repo add incubator https://kubernetes-charts-incubator.storage.googleapis.com/`
 `helm repo add jfelten https://jfelten.github.io/helm-charts/charts`
 `cd helm-charts/lunchbadger`
 `helm dependency update`  - this is to load all updated dependencies
 
-# if it is not installed on the server 
+if it is not installed on the server 
+
 `kubectl create serviceaccount tiller --namespace kube-system`
 `kubectl apply -f tiller-rbac-config.yaml`
 `helm init --service-account tiller`
 
-0A. Run in test mode:
+### Run in test mode:
 
 `helm dependency update ./lunchbadger && helm install -f ./sk/sk.values.yaml --debug  --name lb  ./lunchbadger --dry-run`
 
-0B Gitea after install 
-# create admin user:
-# ssh into pod : gitea admin create-user --name=test --password=test --email=test@xx.com --admin
+### Gitea after install 
+#### create admin user:
+ssh into pod : `gitea admin create-user --name=test --password=test --email=test@xx.com --admin`
 
-# generate token
-# curl -X POST "http://localhost:3000/api/v1/users/test/tokens" -H "accept: application/x-www-form-urlencoded" -H "authorization: Basic dGVzdDp0ZXN0" -F name=ttxxx
+#### generate token
+`curl -X POST "http://localhost:3000/api/v1/users/test/tokens" -H "accept: application/x-www-form-urlencoded" -H "authorization: Basic dGVzdDp0ZXN0" -F name=ttxxx`
 
-# response sha1 is the access key
-# {"id":7,"name":"ttxxx","sha1":"2283d9f73439c7b34a644197875e1bf84923a960"}
-# update git-api deployment manually
+response sha1 is the access key
+`{"id":7,"name":"ttxxx","sha1":"2283d9f73439c7b34a644197875e1bf84923a960"}`
+update git-api deployment manually
 
 1. Install Traefik (not required. should work with nginx)
 
