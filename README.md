@@ -51,21 +51,22 @@ response sha1 is the access key (example below)
 ```
 update git-api deployment manually
 
-1. Install Traefik (not required. should work with nginx)
+
+### Install Traefik (not required. should work with nginx)
 
 ```
 helm install ./charts/traefik --name=traefik
 ```
 
-
-2. Grab Traefik IP.
+Grab Traefik IP.
 
 ```
 export TRAEFIK_IP=$(kubectl get svc traefik-ingress-service -n kube-system -o jsonpath="{.spec.clusterIP}")
 ```
-3. Redacted: Redis secret is now mounted to actualizer
 
-5. Install Prometheus
+### Redacted: Redis secret is now mounted to actualizer
+
+### Install Prometheus
 
 ```
 helm install ./charts/prometheus \
@@ -76,7 +77,7 @@ helm install ./charts/prometheus \
 --namespace=kube-system
 ```
 
-6. Install Grafana
+### Install Grafana
 
 ```
 helm install ./charts/grafana \
@@ -85,7 +86,7 @@ helm install ./charts/grafana \
 --namespace=kube-system
 ```
 
-7. Install Kubernetes Dashboard
+### Install Kubernetes Dashboard
 
 ```
 helm install ./charts/kubernetes-dashboard \
@@ -94,7 +95,7 @@ helm install ./charts/kubernetes-dashboard \
 --namespace=kube-system
 ```
 
-8. Install LunchBadger
+### Install LunchBadger
 
 ```
 helm install . \
