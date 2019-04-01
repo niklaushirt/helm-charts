@@ -1,41 +1,54 @@
 
 # short version
-`cd helm-charts`
-`helm dependency update ./lunchbadger && helm upgrade -f path/to/values.yaml --debug lb  ./lunchbadger`
+```
+cd helm-charts
+helm dependency update ./lunchbadger && helm upgrade -f path/to/values.yaml --debug lb  ./lunchbadger
+```
 
-#Automation TODO
+# Automation TODO
 - Create lunchbadger SA instead of default
 - remove traefik
 - migrate kubeless to official k8s chart
-# lunchbadger helm-charts
 
+# lunchbadger helm-charts
 
 ## Installation Steps
 ### Configure helm
-`helm repo add incubator https://kubernetes-charts-incubator.storage.googleapis.com/`
-`helm repo add jfelten https://jfelten.github.io/helm-charts/charts`
-`cd helm-charts/lunchbadger`
-`helm dependency update`  - this is to load all updated dependencies
+```
+helm repo add incubator https://kubernetes-charts-incubator.storage.googleapis.com/
+helm repo add jfelten https://jfelten.github.io/helm-charts/charts
+cd helm-charts/lunchbadger
+helm dependency update  - this is to load all updated dependencies
+```
 
 if it is not installed on the server 
-
-`kubectl create serviceaccount tiller --namespace kube-system`
-`kubectl apply -f tiller-rbac-config.yaml`
-`helm init --service-account tiller`
+```
+kubectl create serviceaccount tiller --namespace kube-system
+kubectl apply -f tiller-rbac-config.yaml
+helm init --service-account tiller
+```
 
 ### Run in test mode:
-
-`helm dependency update ./lunchbadger && helm install -f ./sk/sk.values.yaml --debug  --name lb  ./lunchbadger --dry-run`
+```
+helm dependency update ./lunchbadger && helm install -f ./sk/sk.values.yaml --debug  --name lb  ./lunchbadger --dry-run
+```
 
 ### Gitea after install 
 #### create admin user:
-ssh into pod : `gitea admin create-user --name=test --password=test --email=test@xx.com --admin`
+ssh into pod : 
+```
+gitea admin create-user --name=test --password=test --email=test@xx.com --admin
+```
 
 #### generate token
-`curl -X POST "http://localhost:3000/api/v1/users/test/tokens" -H "accept: application/x-www-form-urlencoded" -H "authorization: Basic dGVzdDp0ZXN0" -F name=ttxxx`
+```
+curl -X POST "http://localhost:3000/api/v1/users/test/tokens" -H "accept: application/x-www-form-urlencoded" -H "authorization: Basic dGVzdDp0ZXN0" -F name=ttxxx
+```
 
-response sha1 is the access key
-`{"id":7,"name":"ttxxx","sha1":"2283d9f73439c7b34a644197875e1bf84923a960"}`
+response sha1 is the access key (example below)
+```
+{"id":7,"name":"ttxxx","sha1":"2283d9f73439c7b34a644197875e1bf84923a960"}
+```
 update git-api deployment manually
 
 1. Install Traefik (not required. should work with nginx)
