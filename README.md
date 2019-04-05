@@ -49,8 +49,11 @@ response sha1 is the access key (example below)
 ```
 {"id":7,"name":"ttxxx","sha1":"2283d9f73439c7b34a644197875e1bf84923a960"}
 ```
-update git-api deployment manually
-
+update the GITEA_TOKEN value in git-api deployment manually
+```
+- name: GITEA_TOKEN
+  value: d856f693f7601820fae38e0e42bfa55ccf14df36
+```
 
 ### Install Traefik (not required. should work with nginx)
 
