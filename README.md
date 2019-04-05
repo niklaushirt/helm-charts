@@ -1,3 +1,6 @@
+# Requirments:
+It is unfinished work, some adjustmets may be needed
+Targeted for EKS, should work with k8s 1.10+
 
 # short version
 ```
@@ -68,6 +71,8 @@ export TRAEFIK_IP=$(kubectl get svc traefik-ingress-service -n kube-system -o js
 ```
 
 ### Redacted: Redis secret is now mounted to actualizer
+Installation is done via included helm chart 
+https://github.com/LunchBadger/helm-charts/blob/master/sk/sk.values.yaml#L96
 
 ### Install Prometheus
 
