@@ -1,0 +1,2513 @@
+[debug] Created tunnel using local port: '53856'
+
+[debug] SERVER: "127.0.0.1:53856"
+
+[debug] Original chart version: ""
+[debug] CHART PATH: /Users/altsang/Dropbox/workspace/helm-charts/lunchbadger
+
+NAME:   lb
+REVISION: 1
+RELEASED: Thu Jun  6 12:55:21 2019
+CHART: lunchbadger-1.2.0
+USER-SUPPLIED VALUES:
+actualizer:
+  adminOrigin: ""
+  customerDomain: cluster.local
+  enabled: true
+  images:
+    actualizer:
+      tag: 0.2.50
+  rbac:
+    enabled: true
+    pullSecret: awsecr-cred
+  serverlessAPIURLTemplate: http://sls-api-$PRODUCER-$ENV.customer
+  versions:
+    gateway: master
+    serverless: validation
+    workspace: 0.2.6
+  workspaceAPIURLTemplate: http://workspace-$PRODUCER-$ENV.customer:81/api
+configstore:
+  enabled: true
+  image:
+    tag: external_push
+  ingressHost: api.cluster.local
+customerNamespace:
+  enabled: true
+gateway:
+  enabled: false
+  global: {}
+  image:
+    pullPolicy: Always
+    repository: expressgateway/express-gateway
+    tag: v1.9.1
+  ingressAddress: http://10.3.18.145
+  jwtPublicKey: |
+    -----BEGIN PUBLIC KEY-----
+    MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA7ATrA/pvXdzabRID6pBA
+    A+i2zez6FG3SXw5peAV2oQUmd64JbO2vUMih4PIt5D/o6gHfzQDwI/5e8wpiNKKp
+    81dpvy3uYecyfGT4x+FYQ4xj0p7dnczPlp5t1ottCXYQyyB07UZ4UsOT063CRhgi
+    00HhlURBm+yjLwnlZv/VGDNzXNFX1+t+PbGC5Ab7R02Fsnp8TGfjUgzA6NDgerKi
+    Jcq/fSxRb5WSB/gscCGGWjvgIJrHOLI9ofaXFpoHCxePCsVkaR0JNz8Q89tIWvWv
+    5msm062aD7y1ThfP6I3HeGf3dT6IavLOVD6Wk82/WN+aaQ7BKOstglWqzjJvcEvU
+    OQIDAQAB
+    -----END PUBLIC KEY-----
+  origin: http://staging.lunchbadger.com
+  producersAPIKey: {}
+  production: false
+git-api:
+  enabled: true
+  giteaSecret: eefa9049f13b49b1e120d8b6a9e8b88917e60122
+  pullSecret: awsecr-cred
+gitea:
+  adminUser:
+    email: test@test.com
+    enabled: true
+    password: test
+    username: test
+  config:
+    disableInstaller: true
+  enabled: true
+  persistence:
+    accessMode: ReadWriteOnce
+    annotations:
+      helm.sh/resource-policy: keep
+    enabled: true
+    giteaSize: 40Gi
+    postgresSize: 5Gi
+    storageClass: standard
+grafana:
+  enabled: false
+graphql-gateway:
+  enabled: true
+kube-watcher:
+  enabled: true
+  images:
+    kubeWatcher:
+      pullPolicy: Always
+      repository: 410240865662.dkr.ecr.us-west-2.amazonaws.com/kube-watcher
+      tag: v2.0.2
+  ingressHost: kube-watcher.cluster.local
+  rbac:
+    enabled: true
+    pullSecret: awsecr-cred
+kubeless:
+  enabled: true
+kubernetes-dashboard:
+  enabled: false
+prometheus:
+  enabled: false
+redis:
+  enabled: true
+  master:
+    persistence:
+      storageClass: standard
+storageClass:
+  enabled: false
+storageClass2:
+  enabled: false
+storageClassCeph:
+  enabled: false
+  name: standard
+traefik:
+  enabled: false
+
+COMPUTED VALUES:
+actualizer:
+  adminOrigin: ""
+  configStore:
+    sleepTime: 3000
+    url: http://configstore.default/api
+  customerDomain: cluster.local
+  debugPattern: actualizer:*
+  enabled: true
+  global: {}
+  images:
+    actualizer:
+      pullPolicy: Always
+      repository: 410240865662.dkr.ecr.us-west-2.amazonaws.com/actualizer
+      tag: 0.2.50
+    eg:
+      repository: expressgateway/express-gateway
+      tag: latest
+    kubectl:
+      repository: 410240865662.dkr.ecr.us-west-2.amazonaws.com/kubectl
+      tag: 1.4.6
+  rbac:
+    enabled: true
+    pullSecret: awsecr-cred
+  serverlessAPIURLTemplate: http://sls-api-$PRODUCER-$ENV.customer
+  versions:
+    gateway: master
+    serverless: validation
+    workspace: 0.2.6
+  workspaceAPIURLTemplate: http://workspace-$PRODUCER-$ENV.customer:81/api
+configstore:
+  debugPattern: configstore:*
+  enabled: true
+  global: {}
+  image:
+    pullPolicy: Always
+    repository: 410240865662.dkr.ecr.us-west-2.amazonaws.com/configstore
+    tag: external_push
+  ingressHost: api.cluster.local
+  namespace: default
+customerNamespace:
+  enabled: true
+gateway:
+  enabled: false
+  global: {}
+  image:
+    pullPolicy: Always
+    repository: expressgateway/express-gateway
+    tag: v1.9.1
+  ingressAddress: http://10.3.18.145
+  jwtPublicKey: |
+    -----BEGIN PUBLIC KEY-----
+    MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA7ATrA/pvXdzabRID6pBA
+    A+i2zez6FG3SXw5peAV2oQUmd64JbO2vUMih4PIt5D/o6gHfzQDwI/5e8wpiNKKp
+    81dpvy3uYecyfGT4x+FYQ4xj0p7dnczPlp5t1ottCXYQyyB07UZ4UsOT063CRhgi
+    00HhlURBm+yjLwnlZv/VGDNzXNFX1+t+PbGC5Ab7R02Fsnp8TGfjUgzA6NDgerKi
+    Jcq/fSxRb5WSB/gscCGGWjvgIJrHOLI9ofaXFpoHCxePCsVkaR0JNz8Q89tIWvWv
+    5msm062aD7y1ThfP6I3HeGf3dT6IavLOVD6Wk82/WN+aaQ7BKOstglWqzjJvcEvU
+    OQIDAQAB
+    -----END PUBLIC KEY-----
+  origin: http://staging.lunchbadger.com
+  producersAPIKey: {}
+  production: false
+git-api:
+  enabled: true
+  giteaSecret: eefa9049f13b49b1e120d8b6a9e8b88917e60122
+  global: {}
+  image:
+    pullPolicy: Always
+    repository: 410240865662.dkr.ecr.us-west-2.amazonaws.com/git-api
+    tag: latest
+  pullSecret: awsecr-cred
+  replicaCount: 1
+  resources: {}
+  service:
+    externalPort: 80
+    internalPort: 8080
+    name: git-api
+    type: ClusterIP
+gitea:
+  adminUser:
+    email: test@test.com
+    enabled: true
+    password: test
+    username: test
+  affinity: {}
+  config:
+    disableInstaller: true
+    disableRegistration: false
+    offlineMode: false
+    openidSignin: true
+    requireSignin: false
+  dbType: postgres
+  deploymentAnnotations: {}
+  enabled: true
+  global: {}
+  images:
+    gitea: gitea/gitea:1.6.1
+    imagePullPolicy: Always
+    memcached: memcached:1.5.6-alpine
+    postgres: postgres:11
+  inPodPostgres:
+    dataMountPath: /var/lib/postgresql/data/pgdata
+    postgresDatabase: gitea
+    secret: postgresecrets
+    subPath: postgresql-db
+    usePasswordFile: false
+  ingress:
+    enabled: false
+  memcached:
+    extendedOptions: modern
+    maxItemMemory: 64
+    verbosity: v
+  nodeSelector: {}
+  persistence:
+    accessMode: ReadWriteOnce
+    annotations:
+      helm.sh/resource-policy: keep
+    enabled: true
+    giteaSize: 40Gi
+    postgresSize: 5Gi
+    storageClass: standard
+  podAnnotations: {}
+  resources:
+    gitea:
+      limits:
+        cpu: 1
+        memory: 2Gi
+      requests:
+        cpu: 1000m
+        memory: 500Mi
+    memcached:
+      requests:
+        cpu: 50m
+        memory: 64Mi
+    postgres:
+      limits:
+        cpu: 1
+        memory: 2Gi
+      requests:
+        cpu: 200m
+        memory: 200Mi
+  service:
+    http:
+      externalHost: git.example.com
+      externalPort: 8280
+      port: 3000
+      serviceType: ClusterIP
+    ssh:
+      port: 22
+      serviceType: ClusterIP
+  tolerations: []
+  useInPodPostgres: true
+grafana:
+  enabled: false
+graphql:
+  enabled: false
+graphql-gateway:
+  enabled: true
+kube-watcher:
+  enabled: true
+  global: {}
+  images:
+    kubeWatcher:
+      pullPolicy: Always
+      repository: 410240865662.dkr.ecr.us-west-2.amazonaws.com/kube-watcher
+      tag: v2.0.2
+    kubectl:
+      repository: 410240865662.dkr.ecr.us-west-2.amazonaws.com/kubectl
+      tag: 1.4.6
+  ingressHost: kube-watcher.cluster.local
+  rbac:
+    enabled: true
+    pullSecret: awsecr-cred
+kubeless:
+  enabled: true
+  global: {}
+  rbac:
+    enabled: true
+kubernetes-dashboard:
+  enabled: false
+logging:
+  enabled: false
+mainIngress:
+  enabled: false
+prometheus:
+  enabled: false
+redis:
+  cluster:
+    enabled: true
+    slaveCount: 1
+  configmap: ""
+  enabled: true
+  global: {}
+  image:
+    pullPolicy: Always
+    registry: docker.io
+    repository: bitnami/redis
+    tag: 4.0.11
+  master:
+    affinity: {}
+    args: []
+    disableCommands: FLUSHDB,FLUSHALL
+    extraFlags: []
+    livenessProbe:
+      enabled: true
+      failureThreshold: 5
+      initialDelaySeconds: 30
+      periodSeconds: 10
+      successThreshold: 1
+      timeoutSeconds: 5
+    persistence:
+      accessModes:
+      - ReadWriteOnce
+      enabled: true
+      path: /bitnami/redis/data
+      size: 8Gi
+      storageClass: standard
+      subPath: ""
+    podAnnotations: {}
+    podLabels: {}
+    port: 6379
+    readinessProbe:
+      enabled: true
+      failureThreshold: 5
+      initialDelaySeconds: 5
+      periodSeconds: 10
+      successThreshold: 1
+      timeoutSeconds: 1
+    securityContext:
+      enabled: true
+      fsGroup: 1001
+      runAsUser: 1001
+    service:
+      annotations: {}
+      loadBalancerIP: null
+      port: 6379
+      type: ClusterIP
+    statefulset:
+      updateStrategy: RollingUpdate
+  metrics:
+    enabled: false
+    image:
+      pullPolicy: IfNotPresent
+      registry: docker.io
+      repository: oliver006/redis_exporter
+      tag: v0.20.2
+    service:
+      annotations: {}
+      type: ClusterIP
+  networkPolicy:
+    enabled: false
+  persistence: {}
+  rbac:
+    create: false
+    role:
+      rules: []
+  serviceAccount:
+    create: false
+    name: null
+  slave:
+    affinity: {}
+    service:
+      annotations: {}
+      loadBalancerIP: null
+      type: ClusterIP
+  usePassword: true
+  volumePermissions:
+    image:
+      pullPolicy: IfNotPresent
+      registry: docker.io
+      repository: bitnami/minideb
+      tag: latest
+storageClass:
+  enabled: false
+  iopsPerGB: 10
+  name: standard
+  type: gp2
+  zones: us-west-2a, us-west-2b
+storageClass2:
+  enabled: false
+  iopsPerGB: 10
+  name: zonec
+  type: gp2
+  zones: us-west-2c
+storageClassCeph:
+  enabled: false
+  name: standard
+traefik:
+  enabled: false
+
+HOOKS:
+MANIFEST:
+
+---
+# Source: lunchbadger/charts/kubeless/templates/namespace.yaml
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: kubeless # Create the namespace first.
+---
+# Source: lunchbadger/templates/namespace.yaml
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: customer # Create the namespace first.
+---
+# Source: lunchbadger/charts/gitea/templates/db-secret.yaml
+apiVersion: v1
+kind: Secret
+metadata:
+  name: lb-db
+  labels:
+    app: postgres
+    chart: lb-gitea
+    release: lb
+    heritage: Tiller
+type: Opaque
+data:
+ 
+  
+  dbPassword: "eDNvYldlaVZrSw=="
+---
+# Source: lunchbadger/charts/redis/templates/secret.yaml
+apiVersion: v1
+kind: Secret
+metadata:
+  name: lb-redis
+  labels:
+    app: redis
+    chart: redis-4.2.7
+    release: "lb"
+    heritage: "Tiller"
+type: Opaque
+data:
+  redis-password: "WjRLbUszbnNjdQ=="
+---
+# Source: lunchbadger/charts/gitea/templates/gitea/gitea-config.yaml
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: lb-gitea
+  labels:
+    app: lb-gitea
+    chart: "gitea-1.6.1"
+    release: "lb"
+    heritage: "Tiller"
+data:
+  app.ini: |-
+    ; This file lists the default values used by Gitea
+    ; Copy required sections to your own app.ini (default is custom/conf/app.ini)
+    ; and modify as needed.
+
+    ; see https://docs.gitea.io/en-us/config-cheat-sheet/ for additional documentation.
+
+    ; App name that shows in every page title
+    APP_NAME = Gitea: Git with a cup of tea
+    ; Change it if you run locally
+    RUN_USER = git
+    ; Either "dev", "prod" or "test", default is "dev"
+    RUN_MODE = dev
+
+    [repository]
+    ROOT =
+    SCRIPT_TYPE = bash
+    ; Default ANSI charset
+    ANSI_CHARSET =
+    ; Force every new repository to be private
+    FORCE_PRIVATE = false
+    ; Default privacy setting when creating a new repository, allowed values: last, private, public. Default is last which means the last setting used.
+    DEFAULT_PRIVATE = last
+    ; Global limit of repositories per user, applied at creation time. -1 means no limit
+    MAX_CREATION_LIMIT = -1
+    ; Mirror sync queue length, increase if mirror syncing starts hanging
+    MIRROR_QUEUE_LENGTH = 1000
+    ; Patch test queue length, increase if pull request patch testing starts hanging
+    PULL_REQUEST_QUEUE_LENGTH = 1000
+    ; Preferred Licenses to place at the top of the List
+    ; The name here must match the filename in conf/license or custom/conf/license
+    PREFERRED_LICENSES = Apache License 2.0,MIT License
+    ; Disable the ability to interact with repositories using the HTTP protocol
+    DISABLE_HTTP_GIT = false
+    ; Force ssh:// clone url instead of scp-style uri when default SSH port is used
+    USE_COMPAT_SSH_URI = false
+
+    [repository.editor]
+    ; List of file extensions for which lines should be wrapped in the CodeMirror editor
+    ; Separate extensions with a comma. To line wrap files without an extension, just put a comma
+    LINE_WRAP_EXTENSIONS = .txt,.md,.markdown,.mdown,.mkd,
+    ; Valid file modes that have a preview API associated with them, such as api/v1/markdown
+    ; Separate the values by commas. The preview tab in edit mode won't be displayed if the file extension doesn't match
+    PREVIEWABLE_FILE_MODES = markdown
+
+    [repository.local]
+    ; Path for local repository copy. Defaults to `tmp/local-repo`
+    LOCAL_COPY_PATH = tmp/local-repo
+    ; Path for local wiki copy. Defaults to `tmp/local-wiki`
+    LOCAL_WIKI_PATH = tmp/local-wiki
+
+    [repository.upload]
+    ; Whether repository file uploads are enabled. Defaults to `true`
+    ENABLED = true
+    ; Path for uploads. Defaults to `data/tmp/uploads` (tmp gets deleted on gitea restart)
+    TEMP_PATH = data/tmp/uploads
+    ; One or more allowed types, e.g. image/jpeg|image/png. Nothing means any file type
+    ALLOWED_TYPES =
+    ; Max size of each file in megabytes. Defaults to 3MB
+    FILE_MAX_SIZE = 3
+    ; Max number of files per upload. Defaults to 5
+    MAX_FILES = 5
+
+    [repository.pull-request]
+    ; List of prefixes used in Pull Request title to mark them as Work In Progress
+    WORK_IN_PROGRESS_PREFIXES=WIP:,[WIP]
+
+    [ui]
+    ; Number of repositories that are displayed on one explore page
+    EXPLORE_PAGING_NUM = 20
+    ; Number of issues that are displayed on one page
+    ISSUE_PAGING_NUM = 10
+    ; Number of maximum commits displayed in one activity feed
+    FEED_MAX_COMMIT_NUM = 5
+    ; Number of maximum commits displayed in commit graph.
+    GRAPH_MAX_COMMIT_NUM = 100
+    ; Number of line of codes shown for a code comment
+    CODE_COMMENT_LINES = 4
+    ; Value of `theme-color` meta tag, used by Android >= 5.0
+    ; An invalid color like "none" or "disable" will have the default style
+    ; More info: https://developers.google.com/web/updates/2014/11/Support-for-theme-color-in-Chrome-39-for-Android
+    THEME_COLOR_META_TAG = `#6cc644`
+    ; Max size of files to be displayed (default is 8MiB)
+    MAX_DISPLAY_FILE_SIZE = 8388608
+    ; Whether the email of the user should be shown in the Explore Users page
+    SHOW_USER_EMAIL = true
+    ; Set the default theme for the Gitea install
+    DEFAULT_THEME = gitea
+
+
+    [ui.admin]
+    ; Number of users that are displayed on one page
+    USER_PAGING_NUM = 50
+    ; Number of repos that are displayed on one page
+    REPO_PAGING_NUM = 50
+    ; Number of notices that are displayed on one page
+    NOTICE_PAGING_NUM = 25
+    ; Number of organizations that are displayed on one page
+    ORG_PAGING_NUM = 50
+
+    [ui.user]
+    ; Number of repos that are displayed on one page
+    REPO_PAGING_NUM = 15
+
+    [ui.meta]
+    AUTHOR = Gitea - Git with a cup of tea
+    DESCRIPTION = Gitea (Git with a cup of tea) is a painless self-hosted Git service written in Go
+    KEYWORDS = go,git,self-hosted,gitea
+
+    [markdown]
+    ; Enable hard line break extension
+    ENABLE_HARD_LINE_BREAK = false
+    ; List of custom URL-Schemes that are allowed as links when rendering Markdown
+    ; for example git,magnet
+    CUSTOM_URL_SCHEMES =
+    ; List of file extensions that should be rendered/edited as Markdown
+    ; Separate the extensions with a comma. To render files without any extension as markdown, just put a comma
+    FILE_EXTENSIONS = .md,.markdown,.mdown,.mkd
+
+    [server]
+    ; The protocol the server listens on. One of 'http', 'https', 'unix' or 'fcgi'.
+
+    ; PROTOCOL hardcoded to http since tls is delegated to ingress
+    PROTOCOL = http
+    DOMAIN = git.example.com
+    ROOT_URL = http://git.example.com:8280/; The address to listen on. Either a IPv4/IPv6 address or the path to a unix socket.
+    HTTP_ADDR = 0.0.0.0
+    HTTP_PORT = 3000
+    ; If REDIRECT_OTHER_PORT is true, and PROTOCOL is set to https an http server
+    ; will be started on PORT_TO_REDIRECT and it will redirect plain, non-secure http requests to the main
+    ; ROOT_URL.  Defaults are false for REDIRECT_OTHER_PORT and 80 for
+    ; PORT_TO_REDIRECT.
+    REDIRECT_OTHER_PORT = false
+    PORT_TO_REDIRECT = 80
+    ; Permission for unix socket
+    UNIX_SOCKET_PERMISSION = 666
+    ; Local (DMZ) URL for Gitea workers (such as SSH update) accessing web service.
+    ; In most cases you do not need to change the default value.
+    ; Alter it only if your SSH server node is not the same as HTTP node.
+    ; Do not set this variable if PROTOCOL is set to 'unix'.
+    LOCAL_ROOT_URL = %(PROTOCOL)s://%(HTTP_ADDR)s:%(HTTP_PORT)s/
+    ; Disable SSH feature when not available
+    DISABLE_SSH = false
+    ; Whether to use the builtin SSH server or not.
+    START_SSH_SERVER = false
+    ; Username to use for the builtin SSH server. If blank, then it is the value of RUN_USER.
+    BUILTIN_SSH_SERVER_USER =
+    ; Domain name to be exposed in clone URL
+    SSH_DOMAIN = lb-gitea-ssh.default.svc.cluster.local
+    ; THe network interface the builtin SSH server should listen on
+    SSH_LISTEN_HOST =
+    ; Port number to be exposed in clone URL
+    SSH_PORT = 22
+    ; The port number the builtin SSH server should listen on
+    SSH_LISTEN_PORT = 22
+    ; Root path of SSH directory, default is '~/.ssh', but you have to use '/home/git/.ssh'.
+    SSH_ROOT_PATH =
+    ; Gitea will create a authorized_keys file by default when it is not using the internal ssh server
+    ; If you intend to use the AuthorizedKeysCommand functionality then you should turn this off.
+    SSH_CREATE_AUTHORIZED_KEYS_FILE = true
+    ; For the built-in SSH server, choose the ciphers to support for SSH connections,
+    ; for system SSH this setting has no effect
+    SSH_SERVER_CIPHERS = aes128-ctr, aes192-ctr, aes256-ctr, aes128-gcm@openssh.com, arcfour256, arcfour128
+    ; For the built-in SSH server, choose the key exchange algorithms to support for SSH connections,
+    ; for system SSH this setting has no effect
+    SSH_SERVER_KEY_EXCHANGES = diffie-hellman-group1-sha1, diffie-hellman-group14-sha1, ecdh-sha2-nistp256, ecdh-sha2-nistp384, ecdh-sha2-nistp521, curve25519-sha256@libssh.org
+    ; For the built-in SSH server, choose the MACs to support for SSH connections,
+    ; for system SSH this setting has no effect
+    SSH_SERVER_MACS = hmac-sha2-256-etm@openssh.com, hmac-sha2-256, hmac-sha1, hmac-sha1-96
+    ; Directory to create temporary files in when testing public keys using ssh-keygen,
+    ; default is the system temporary directory.
+    SSH_KEY_TEST_PATH =
+    ; Path to ssh-keygen, default is 'ssh-keygen' which means the shell is responsible for finding out which one to call.
+    SSH_KEYGEN_PATH = ssh-keygen
+    ; Enable SSH Authorized Key Backup when rewriting all keys, default is true
+    SSH_BACKUP_AUTHORIZED_KEYS = true
+    ; Enable exposure of SSH clone URL to anonymous visitors, default is false
+    SSH_EXPOSE_ANONYMOUS = false
+    ; Indicate whether to check minimum key size with corresponding type
+    MINIMUM_KEY_SIZE_CHECK = false
+    ; Disable CDN even in "prod" mode
+    OFFLINE_MODE = false
+    DISABLE_ROUTER_LOG = false
+    ; Generate steps:
+    ; $ ./gitea cert -ca=true -duration=8760h0m0s -host=myhost.example.com
+    ;
+    ; Or from a .pfx file exported from the Windows certificate store (do
+    ; not forget to export the private key):
+    ; $ openssl pkcs12 -in cert.pfx -out cert.pem -nokeys
+    ; $ openssl pkcs12 -in cert.pfx -out key.pem -nocerts -nodes
+    CERT_FILE = custom/https/cert.pem
+    KEY_FILE = custom/https/key.pem
+    ; Root directory containing templates and static files.
+    ; default is the path where Gitea is executed
+    STATIC_ROOT_PATH =
+    ; Default path for App data
+    APP_DATA_PATH = data
+    ; Application level GZIP support
+    ENABLE_GZIP = false
+    ; Application profiling (memory and cpu)
+    ; For "web" command it listens on localhost:6060
+    ; For "serve" command it dumps to disk at PPROF_DATA_PATH as (cpuprofile|memprofile)_<username>_<temporary id>
+    ENABLE_PPROF = false
+    ; PPROF_DATA_PATH, use an absolute path when you start gitea as service
+    PPROF_DATA_PATH = data/tmp/pprof
+    ; Landing page, can be "home", "explore", or "organizations"
+    LANDING_PAGE = home
+    ; Enables git-lfs support. true or false, default is false.
+    LFS_START_SERVER = false
+    ; Where your lfs files reside, default is data/lfs.
+    LFS_CONTENT_PATH = data/lfs
+    ; LFS authentication secret, change this yourself
+    LFS_JWT_SECRET =
+    ; LFS authentication validity period (in time.Duration), pushes taking longer than this may fail.
+    LFS_HTTP_AUTH_EXPIRY = 20m
+
+
+    ; Define allowed algorithms and their minimum key length (use -1 to disable a type)
+    [ssh.minimum_key_sizes]
+    ED25519 = 256
+    ECDSA = 256
+    RSA = 2048
+    DSA = 1024
+
+    [database]
+    
+    ; Either "mysql", "postgres", "mssql" or "sqlite3", it's your choice
+    DB_TYPE = postgres
+    HOST = 127.0.0.1:5432
+    NAME = gitea
+    USER = postgres
+    ; Use PASSWD = `your password` for quoting if you use special characters in the password.
+    PASSWD = POSTGRES_PASSWORD
+    
+    ; For "postgres" only, either "disable", "require" or "verify-full"
+    SSL_MODE = disable
+    ; For "sqlite3" and "tidb", use an absolute path when you start gitea as service
+    PATH = data/gitea.db
+    ; For "sqlite3" only. Query timeout
+    SQLITE_TIMEOUT = 500
+    ; For iterate buffer, default is 50
+    ITERATE_BUFFER_SIZE = 50
+    ; Show the database generated SQL
+    LOG_SQL = true
+
+    [indexer]
+    ISSUE_INDEXER_PATH = indexers/issues.bleve
+    ; repo indexer by default disabled, since it uses a lot of disk space
+    REPO_INDEXER_ENABLED = false
+    REPO_INDEXER_PATH = indexers/repos.bleve
+    UPDATE_BUFFER_LEN = 20
+    MAX_FILE_SIZE = 1048576
+
+    [admin]
+    ; Disallow regular (non-admin) users from creating organizations.
+    DISABLE_REGULAR_ORG_CREATION = false
+
+    [security]
+    ; Whether the installer is disabled
+    INSTALL_LOCK = true
+    ; !!CHANGE THIS TO KEEP YOUR USER DATA SAFE!!
+    
+    SECRET_KEY = "6UF819LuanaHZMoxV4JZXduaJPa9yg5pcJZXCYCKGW29OaPiq6hKw9PhFcfaLaJi"
+    
+
+
+    ; How long to remember that an user is logged in before requiring relogin (in days)
+    LOGIN_REMEMBER_DAYS = 7
+    COOKIE_USERNAME = gitea_awesome
+    COOKIE_REMEMBER_NAME = gitea_incredible
+    ; Reverse proxy authentication header name of user name
+    REVERSE_PROXY_AUTHENTICATION_USER = X-WEBAUTH-USER
+    ; The minimum password length for new Users
+    MIN_PASSWORD_LENGTH = 6
+    ; Set to true to allow users to import local server paths
+    IMPORT_LOCAL_PATHS = false
+    ; Set to true to prevent all users (including admin) from creating custom git hooks
+    DISABLE_GIT_HOOKS = false
+
+    [openid]
+    ;
+    ; OpenID is an open, standard and decentralized authentication protocol.
+    ; Your identity is the address of a webpage you provide, which describes
+    ; how to prove you are in control of that page.
+    ;
+    ; For more info: https://en.wikipedia.org/wiki/OpenID
+    ;
+    ; Current implementation supports OpenID-2.0
+    ;
+    ; Tested to work providers at the time of writing:
+    ;  - Any GNUSocial node (your.hostname.tld/username)
+    ;  - Any SimpleID provider (http://simpleid.koinic.net)
+    ;  - http://openid.org.cn/
+    ;  - openid.stackexchange.com
+    ;  - login.launchpad.net
+    ;  - <username>.livejournal.com
+    ;
+    ; Whether to allow signin in via OpenID
+    ENABLE_OPENID_SIGNIN = true
+    ; Whether to allow registering via OpenID
+    ; Do not include to rely on rhw DISABLE_REGISTRATION setting
+    ;ENABLE_OPENID_SIGNUP = true
+    ; Allowed URI patterns (POSIX regexp).
+    ; Space separated.
+    ; Only these would be allowed if non-blank.
+    ; Example value: trusted.domain.org trusted.domain.net
+    WHITELISTED_URIS =
+    ; Forbidden URI patterns (POSIX regexp).
+    ; Space separated.
+    ; Only used if WHITELISTED_URIS is blank.
+    ; Example value: loadaverage.org/badguy stackexchange.com/.*spammer
+    BLACKLISTED_URIS =
+
+    [service]
+    ; Time limit to confirm account/email registration
+    ACTIVE_CODE_LIVE_MINUTES = 180
+    ; Time limit to perform the reset of a forgotten password
+    RESET_PASSWD_CODE_LIVE_MINUTES = 180
+    ; Whether a new user needs to confirm their email when registering.
+    REGISTER_EMAIL_CONFIRM = false
+    ; List of domain names that are allowed to be used to register on a Gitea instance
+    ; gitea.io,example.com
+    EMAIL_DOMAIN_WHITELIST=
+    ; Disallow registration, only allow admins to create accounts.
+    DISABLE_REGISTRATION = false
+    ; Allow registration only using third-party services, it works only when DISABLE_REGISTRATION is false
+    ALLOW_ONLY_EXTERNAL_REGISTRATION = false
+    ; User must sign in to view anything.
+    REQUIRE_SIGNIN_VIEW = false
+    ; Mail notification
+    ENABLE_NOTIFY_MAIL = false
+    ; More detail: https://github.com/gogits/gogs/issues/165
+    ENABLE_REVERSE_PROXY_AUTHENTICATION = false
+    ENABLE_REVERSE_PROXY_AUTO_REGISTRATION = false
+    ; Enable captcha validation for registration
+    ENABLE_CAPTCHA = false
+    ; Type of captcha you want to use. Options: image, recaptcha
+    CAPTCHA_TYPE = image
+    ; Enable recaptcha to use Google's recaptcha service
+    ; Go to https://www.google.com/recaptcha/admin to sign up for a key
+    RECAPTCHA_SECRET  =
+    RECAPTCHA_SITEKEY =
+    ; Default value for KeepEmailPrivate
+    ; Each new user will get the value of this setting copied into their profile
+    DEFAULT_KEEP_EMAIL_PRIVATE = false
+    ; Default value for AllowCreateOrganization
+    ; Every new user will have rights set to create organizations depending on this setting
+    DEFAULT_ALLOW_CREATE_ORGANIZATION = true
+    ; Default value for EnableDependencies
+    ; Repositories will use dependencies by default depending on this setting
+    DEFAULT_ENABLE_DEPENDENCIES = true
+    ; Enable heatmap on users profiles.
+    ENABLE_USER_HEATMAP = true
+    ; Enable Timetracking
+    ENABLE_TIMETRACKING = true
+    ; Default value for EnableTimetracking
+    ; Repositories will use timetracking by default depending on this setting
+    DEFAULT_ENABLE_TIMETRACKING = true
+    ; Default value for AllowOnlyContributorsToTrackTime
+    ; Only users with write permissions can track time if this is true
+    DEFAULT_ALLOW_ONLY_CONTRIBUTORS_TO_TRACK_TIME = true
+    ; Default value for the domain part of the user's email address in the git log
+    ; if he has set KeepEmailPrivate to true. The user's email will be replaced with a
+    ; concatenation of the user name in lower case, "@" and NO_REPLY_ADDRESS.
+    NO_REPLY_ADDRESS = noreply.example.org
+
+    [webhook]
+    ; Hook task queue length, increase if webhook shooting starts hanging
+    QUEUE_LENGTH = 1000
+    ; Deliver timeout in seconds
+    DELIVER_TIMEOUT = 5
+    ; Allow insecure certification
+    SKIP_TLS_VERIFY = false
+    ; Number of history information in each page
+    PAGING_NUM = 10
+
+    [mailer]
+    ENABLED = false
+    ; Buffer length of channel, keep it as it is if you don't know what it is.
+    SEND_BUFFER_LEN = 100
+    ; Name displayed in mail title
+    SUBJECT = %(APP_NAME)s
+    ; Mail server
+    ; Gmail: smtp.gmail.com:587
+    ; QQ: smtp.qq.com:465
+    ; Note, if the port ends with "465", SMTPS will be used. Using STARTTLS on port 587 is recommended per RFC 6409. If the server supports STARTTLS it will always be used.
+    HOST =
+    ; Disable HELO operation when hostnames are different.
+    DISABLE_HELO =
+    ; Custom hostname for HELO operation, if no value is provided, one is retrieved from system.
+    HELO_HOSTNAME =
+    ; Do not verify the certificate of the server. Only use this for self-signed certificates
+    SKIP_VERIFY =
+    ; Use client certificate
+    USE_CERTIFICATE = false
+    CERT_FILE = custom/mailer/cert.pem
+    KEY_FILE = custom/mailer/key.pem
+    ; Should SMTP connection use TLS
+    IS_TLS_ENABLED = false
+    ; Mail from address, RFC 5322. This can be just an email address, or the `"Name" <email@example.com>` format
+    FROM =
+    ; Mailer user name and password
+    USER =
+    ; Use PASSWD = `your password` for quoting if you use special characters in the password.
+    PASSWD =
+    ; Send mails as plain text
+    SEND_AS_PLAIN_TEXT = false
+    ; Enable sendmail (override SMTP)
+    USE_SENDMAIL = false
+    ; Specify an alternative sendmail binary
+    SENDMAIL_PATH = sendmail
+    ; Specify any extra sendmail arguments
+    SENDMAIL_ARGS =
+
+    [cache]
+    ; Either "memory", "redis", or "memcache", default is "memory"
+    ADAPTER = memcache
+    ; For "memory" only, GC interval in seconds, default is 60
+    INTERVAL = 60
+    ; For "redis" and "memcache", connection host address
+    ;redis: network=tcp,addr=:6379,password=macaron,db=0,pool_size=100,idle_timeout=180
+    HOST = 127.0.0.1:11211
+    ; Time to keep items in cache if not used, default is 16 hours.
+    ; Setting it to 0 disables caching
+    ITEM_TTL = 16h
+
+    [session]
+    ; Either "memory", "file", or "redis", default is "memory"
+    PROVIDER = memory
+    ; Provider config options
+    ; memory: doesn't have any config yet
+    ; file: session file path, e.g. `data/sessions`
+    ; redis: network=tcp,addr=:6379,password=macaron,db=0,pool_size=100,idle_timeout=180
+    ; mysql: go-sql-driver/mysql dsn config string, e.g. `root:password@/session_table`
+    PROVIDER_CONFIG = data/sessions
+    ; Session cookie name
+    COOKIE_NAME = i_like_gitea
+    ; If you use session in https only, default is false
+    COOKIE_SECURE = false
+    ; Enable set cookie, default is true
+    ENABLE_SET_COOKIE = true
+    ; Session GC time interval in seconds, default is 86400 (1 day)
+    GC_INTERVAL_TIME = 86400
+    ; Session life time in seconds, default is 86400 (1 day)
+    SESSION_LIFE_TIME = 86400
+
+    [picture]
+    AVATAR_UPLOAD_PATH = data/avatars
+    ; Max Width and Height of uploaded avatars. This is to limit the amount of RAM
+    ; used when resizing the image.
+    AVATAR_MAX_WIDTH = 4096
+    AVATAR_MAX_HEIGHT = 3072
+    ; Chinese users can choose "duoshuo"
+    ; or a custom avatar source, like: http://cn.gravatar.com/avatar/
+    GRAVATAR_SOURCE = gravatar
+    ; This value will always be true in offline mode.
+    DISABLE_GRAVATAR = false
+    ; Federated avatar lookup uses DNS to discover avatar associated
+    ; with emails, see https://www.libravatar.org
+    ; This value will always be false in offline mode or when Gravatar is disabled.
+    ENABLE_FEDERATED_AVATAR = false
+
+    [attachment]
+    ; Whether attachments are enabled. Defaults to `true`
+    ENABLED = true
+    ; Path for attachments. Defaults to `data/attachments`
+    PATH = data/attachments
+    ; One or more allowed types, e.g. image/jpeg|image/png
+    ALLOWED_TYPES = image/jpeg|image/png|application/zip|application/gzip
+    ; Max size of each file. Defaults to 4MB
+    MAX_SIZE = 4
+    ; Max number of files per upload. Defaults to 5
+    MAX_FILES = 5
+
+    [log]
+    ROOT_PATH =
+    ; Either "console", "file", "conn", "smtp" or "database", default is "console"
+    ; Use comma to separate multiple modes, e.g. "console, file"
+    MODE = console
+    ; Buffer length of the channel, keep it as it is if you don't know what it is.
+    BUFFER_LEN = 10000
+    ; Either "Trace", "Debug", "Info", "Warn", "Error", "Critical", default is "Trace"
+    LEVEL = Critical
+
+    ; For "console" mode only
+    [log.console]
+    LEVEL =
+
+    ; For "file" mode only
+    [log.file]
+    LEVEL =
+    ; This enables automated log rotate(switch of following options), default is true
+    LOG_ROTATE = true
+    ; Max number of lines in a single file, default is 1000000
+    MAX_LINES = 1000000
+    ; Max size shift of a single file, default is 28 means 1 << 28, 256MB
+    MAX_SIZE_SHIFT = 28
+    ; Segment log daily, default is true
+    DAILY_ROTATE = true
+    ; delete the log file after n days, default is 7
+    MAX_DAYS = 7
+
+    ; For "conn" mode only
+    [log.conn]
+    LEVEL =
+    ; Reconnect host for every single message, default is false
+    RECONNECT_ON_MSG = false
+    ; Try to reconnect when connection is lost, default is false
+    RECONNECT = false
+    ; Either "tcp", "unix" or "udp", default is "tcp"
+    PROTOCOL = tcp
+    ; Host address
+    ADDR =
+
+    ; For "smtp" mode only
+    [log.smtp]
+    LEVEL =
+    ; Name displayed in mail title, default is "Diagnostic message from server"
+    SUBJECT = Diagnostic message from server
+    ; Mail server
+    HOST =
+    ; Mailer user name and password
+    USER =
+    ; Use PASSWD = `your password` for quoting if you use special characters in the password.
+    PASSWD =
+    ; Receivers, can be one or more, e.g. 1@example.com,2@example.com
+    RECEIVERS =
+
+    ; For "database" mode only
+    [log.database]
+    LEVEL =
+    ; Either "mysql" or "postgres"
+    DRIVER =
+    ; Based on xorm, e.g.: root:root@localhost/gitea?charset=utf8
+    CONN =
+
+    [cron]
+    ; Enable running cron tasks periodically.
+    ENABLED = true
+    ; Run cron tasks when Gitea starts.
+    RUN_AT_START = false
+
+    ; Update mirrors
+    [cron.update_mirrors]
+    SCHEDULE = @every 10m
+
+    ; Repository health check
+    [cron.repo_health_check]
+    SCHEDULE = @every 24h
+    TIMEOUT = 60s
+    ; Arguments for command 'git fsck', e.g. "--unreachable --tags"
+    ; see more on http://git-scm.com/docs/git-fsck
+    ARGS =
+
+    ; Check repository statistics
+    [cron.check_repo_stats]
+    RUN_AT_START = true
+    SCHEDULE = @every 24h
+
+    ; Clean up old repository archives
+    [cron.archive_cleanup]
+    ; Whether to enable the job
+    ENABLED = true
+    ; Whether to always run at least once at start up time (if ENABLED)
+    RUN_AT_START = true
+    ; Time interval for job to run
+    SCHEDULE = @every 24h
+    ; Archives created more than OLDER_THAN ago are subject to deletion
+    OLDER_THAN = 24h
+
+    ; Synchronize external user data (only LDAP user synchronization is supported)
+    [cron.sync_external_users]
+    ; Synchronize external user data when starting server (default false)
+    RUN_AT_START = false
+    ; Interval as a duration between each synchronization (default every 24h)
+    SCHEDULE = @every 24h
+    ; Create new users, update existing user data and disable users that are not in external source anymore (default)
+    ;   or only create new users if UPDATE_EXISTING is set to false
+    UPDATE_EXISTING = true
+
+    [git]
+    ; Disables highlight of added and removed changes
+    DISABLE_DIFF_HIGHLIGHT = false
+    ; Max number of lines allowed in a single file in diff view
+    MAX_GIT_DIFF_LINES = 1000
+    ; Max number of allowed characters in a line in diff view
+    MAX_GIT_DIFF_LINE_CHARACTERS = 5000
+    ; Max number of files shown in diff view
+    MAX_GIT_DIFF_FILES = 100
+    ; Arguments for command 'git gc', e.g. "--aggressive --auto"
+    ; see more on http://git-scm.com/docs/git-gc/
+    GC_ARGS =
+
+    ; Operation timeout in seconds
+    [git.timeout]
+    MIGRATE = 600
+    MIRROR = 300
+    CLONE = 300
+    PULL = 300
+    GC = 60
+
+    [mirror]
+    ; Default interval as a duration between each check
+    DEFAULT_INTERVAL = 8h
+    ; Min interval as a duration must be > 1m
+    MIN_INTERVAL = 10m
+
+    [api]
+    ; Enables Swagger. True or false; default is true.
+    ENABLE_SWAGGER = true
+    ; Max number of items in a page
+    MAX_RESPONSE_ITEMS = 50
+
+    [i18n]
+    LANGS = en-US,zh-CN,zh-HK,zh-TW,de-DE,fr-FR,nl-NL,lv-LV,ru-RU,uk-UA,ja-JP,es-ES,pt-BR,pl-PL,bg-BG,it-IT,fi-FI,tr-TR,cs-CZ,sr-SP,sv-SE,ko-KR
+    NAMES = English,简体中文,繁體中文（香港）,繁體中文（台灣）,Deutsch,français,Nederlands,latviešu,русский,Українська,日本語,español,português do Brasil,polski,български,italiano,suomi,Türkçe,čeština,српски,svenska,한국어
+
+    ; Used for datetimepicker
+    [i18n.datelang]
+    en-US = en
+    zh-CN = zh
+    zh-HK = zh-HK
+    zh-TW = zh-TW
+    de-DE = de
+    fr-FR = fr
+    nl-NL = nl
+    lv-LV = lv
+    ru-RU = ru
+    uk-UA = uk
+    ja-JP = ja
+    es-ES = es
+    pt-BR = pt-BR
+    pl-PL = pl
+    bg-BG = bg
+    it-IT = it
+    fi-FI = fi
+    tr-TR = tr
+    cs-CZ = cs-CZ
+    sr-SP = sr
+    sv-SE = sv
+    ko-KR = ko
+
+    [U2F]
+    ; Two Factor authentication with security keys
+    ; https://developers.yubico.com/U2F/App_ID.html
+    ;APP_ID = %(PROTOCOL)s://%(DOMAIN)s:%(HTTP_PORT)s/
+    ; Comma seperated list of truisted facets
+    ;TRUSTED_FACETS = %(PROTOCOL)s://%(DOMAIN)s:%(HTTP_PORT)s/
+
+    ; Extension mapping to highlight class
+    ; e.g. .toml=ini
+    [highlight.mapping]
+
+    [other]
+    SHOW_FOOTER_BRANDING = false
+    ; Show version information about Gitea and Go in the footer
+    SHOW_FOOTER_VERSION = true
+    ; Show template execution time in the footer
+    SHOW_FOOTER_TEMPLATE_LOAD_TIME = true
+
+    [markup.asciidoc]
+    ENABLED = false
+    ; List of file extensions that should be rendered by an external command
+    FILE_EXTENSIONS = .adoc,.asciidoc
+    ; External command to render all matching extensions
+    RENDER_COMMAND = "asciidoc --out-file=- -"
+    ; Don't pass the file on STDIN, pass the filename as argument instead.
+    IS_INPUT_FILE = false
+
+    [metrics]
+    ; Enables metrics endpoint. True or false; default is false.
+    ENABLED = false
+    ; If you want to add authorization, specify a token here
+    TOKEN =
+---
+# Source: lunchbadger/charts/kubeless/templates/kubeless.yaml
+apiVersion: v1
+data:
+  builder-image: kubeless/function-image-builder:v1.0.0-alpha.6
+  builder-image-secret: ""
+  deployment: '{}'
+  enable-build-step: "false"
+  function-registry-tls-verify: "true"
+  ingress-enabled: "false"
+  provision-image: kubeless/unzip@sha256:f162c062973cca05459834de6ed14c039d45df8cdb76097f50b028a1621b3697
+  provision-image-secret: ""
+  runtime-images: |-
+    [
+      {
+        "ID": "python",
+        "compiled": false,
+        "versions": [
+          {
+            "name": "python27",
+            "version": "2.7",
+            "runtimeImage": "410240865662.dkr.ecr.us-west-2.amazonaws.com/kubeless-python-27:100a6",
+            "initImage": "python:2.7"
+          },
+          {
+            "name": "python34",
+            "version": "3.4",
+            "runtimeImage": "kubeless/python@sha256:f19640c547a3f91dbbfb18c15b5e624029b4065c1baf2892144e07c36f0a7c8f",
+            "initImage": "python:3.4"
+          },
+          {
+            "name": "python36",
+            "version": "3.6",
+            "runtimeImage": "410240865662.dkr.ecr.us-west-2.amazonaws.com/kubeless-python-36:100a6",
+            "initImage": "python:3.6"
+          }
+        ],
+        "depName": "requirements.txt",
+        "fileNameSuffix": ".py"
+      },
+      {
+        "ID": "nodejs",
+        "compiled": false,
+        "versions": [
+          {
+            "name": "node6",
+            "version": "6",
+            "runtimeImage": "410240865662.dkr.ecr.us-west-2.amazonaws.com/kubeless-node-6:100a6-3",
+            "initImage": "node:6.10"
+          },
+          {
+            "name": "node8",
+            "version": "8",
+            "runtimeImage": "410240865662.dkr.ecr.us-west-2.amazonaws.com/kubeless-node-8:100a6",
+            "initImage": "node:8"
+          }
+        ],
+        "depName": "package.json",
+        "fileNameSuffix": ".js"
+      },
+      {
+        "ID": "nodejs_distroless",
+        "compiled": false,
+        "versions": [
+          {
+            "name": "node8",
+            "version": "8",
+            "runtimeImage": "henrike42/kubeless/runtimes/nodejs/distroless:0.0.2",
+            "initImage": "node:8"
+          }
+        ],
+        "depName": "package.json",
+        "fileNameSuffix": ".js"
+      },
+      {
+        "ID": "ruby",
+        "compiled": false,
+        "versions": [
+          {
+            "name": "ruby24",
+            "version": "2.4",
+            "runtimeImage": "kubeless/ruby@sha256:01665f1a32fe4fab4195af048627857aa7b100e392ae7f3e25a44bd296d6f105",
+            "initImage": "bitnami/ruby:2.4"
+          }
+        ],
+        "depName": "Gemfile",
+        "fileNameSuffix": ".rb"
+      },
+      {
+        "ID": "php",
+        "compiled": false,
+        "versions": [
+          {
+            "name": "php72",
+            "version": "7.2",
+            "runtimeImage": "kubeless/php@sha256:9b86066b2640bedcd88acb27f43dfaa2b338f0d74d9d91131ea781402f7ec8ec",
+            "initImage": "composer:1.6"
+          }
+        ],
+        "depName": "composer.json",
+        "fileNameSuffix": ".php"
+      },
+      {
+        "ID": "go",
+        "compiled": true,
+        "versions": [
+          {
+            "name": "go1.10",
+            "version": "1.10",
+            "runtimeImage": "kubeless/go@sha256:e2fd49f09b6ff8c9bac6f1592b3119ea74237c47e2955a003983e08524cb3ae5",
+            "initImage": "kubeless/go-init@sha256:983b3f06452321a2299588966817e724d1a9c24be76cf1b12c14843efcdff502"
+          }
+        ],
+        "depName": "Gopkg.toml",
+        "fileNameSuffix": ".go"
+      },
+      {
+        "ID": "dotnetcore",
+        "compiled": true,
+        "versions": [
+          {
+            "name": "dotnetcore2.0",
+            "version": "2.0",
+            "runtimeImage": "allantargino/kubeless-dotnetcore@sha256:1699b07d9fc0276ddfecc2f823f272d96fd58bbab82d7e67f2fd4982a95aeadc",
+            "initImage": "allantargino/aspnetcore-build@sha256:0d60f845ff6c9c019362a68b87b3920f3eb2d32f847f2d75e4d190cc0ce1d81c"
+          }
+        ],
+        "depName": "project.csproj",
+        "fileNameSuffix": ".cs"
+      },
+      {
+        "ID": "java",
+        "compiled": true,
+        "versions": [
+          {
+            "name": "java1.8",
+            "version": "1.8",
+            "runtimeImage": "kubeless/java@sha256:debf9502545f4c0e955eb60fabb45748c5d98ed9365c4a508c07f38fc7fefaac",
+            "initImage": "kubeless/java-init@sha256:7e5e4376d3ab76c336d4830c9ed1b7f9407415feca49b8c2bf013e279256878f"
+          }
+        ],
+        "depName": "pom.xml",
+        "fileNameSuffix": ".java"
+      },
+      {
+         "ID": "ballerina",
+         "compiled": true,
+         "versions": [
+           {
+              "name": "ballerina0.975.0",
+              "version": "0.975.0",
+              "runtimeImage": "kubeless/ballerina@sha256:83e51423972f4b0d6b419bee0b4afb3bb87d2bf1b604ebc4366c430e7cc28a35",
+              "initImage": "kubeless/ballerina-init@sha256:05857ce439a7e290f9d86f8cb38ea3b574670c0c0e91af93af06686fa21ecf4f"
+           }
+         ],
+         "depName": "",
+         "fileNameSuffix": ".bal"
+      }
+    ]
+  service-type: ClusterIP
+kind: ConfigMap
+metadata:
+  name: kubeless-config
+  namespace: kubeless
+---
+# Source: lunchbadger/charts/redis/templates/health-configmap.yaml
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  labels:
+    app: redis
+    chart: redis-4.2.7
+    heritage: Tiller
+    release: lb
+  name: lb-redis-health
+data:
+  ping_local.sh: |-
+    response=$(
+      redis-cli \
+        -a $REDIS_PASSWORD \
+        -h localhost \
+        -p $REDIS_PORT \
+        ping
+    )
+    if [ "$response" != "PONG" ]; then
+      echo "$response"
+      exit 1
+    fi
+  ping_master.sh: |-
+    response=$(
+      redis-cli \
+        -a $REDIS_MASTER_PASSWORD \
+        -h $REDIS_MASTER_HOST \
+        -p $REDIS_MASTER_PORT_NUMBER \
+        ping
+    )
+    if [ "$response" != "PONG" ]; then
+      echo "$response"
+      exit 1
+    fi
+  ping_local_and_master.sh: |-
+    script_dir="$(dirname "$0")"
+    exit_status=0
+    "$script_dir/ping_local.sh" || exit_status=$?
+    "$script_dir/ping_master.sh" || exit_status=$?
+    exit $exit_status
+---
+# Source: lunchbadger/charts/gitea/templates/gitea/gitea-pvc.yaml
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: lb-gitea
+  labels:
+    app: postgres
+    chart: gitea
+    release: lb
+    heritage: Tiller
+  annotations:
+    helm.sh/resource-policy: keep
+    
+
+spec:
+  accessModes:
+    - "ReadWriteOnce"
+  resources:
+    requests:
+      storage: "40Gi"
+  storageClassName: "standard"
+---
+# Source: lunchbadger/charts/gitea/templates/postgres/postgres-pvc.yaml
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: lb-postgres
+  labels:
+    app: postgres
+    chart: gitea
+    release: lb
+    heritage: Tiller
+  annotations:
+    helm.sh/resource-policy: keep
+    
+spec:
+  accessModes:
+    - "ReadWriteOnce"
+  resources:
+    requests:
+      storage: "5Gi"
+  storageClassName: "standard"
+---
+# Source: lunchbadger/charts/actualizer/templates/rbac.yaml
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: actualizer-kubectl-proxy
+  namespace: default
+
+imagePullSecrets:
+  - name: awsecr-cred
+---
+# Source: lunchbadger/charts/actualizer/templates/rbac.yaml
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: sls-api
+  namespace: customer
+  
+imagePullSecrets:
+  - name: awsecr-cred
+---
+# Source: lunchbadger/charts/kube-watcher/templates/rbac.yaml
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: kube-watcher-kubectl-proxy
+  namespace: default
+
+imagePullSecrets:
+  - name: awsecr-cred
+---
+# Source: lunchbadger/charts/kubeless/templates/rbac.yaml
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: controller-acct
+  namespace: kubeless
+---
+# Source: lunchbadger/charts/kubeless/templates/kubeless.yaml
+apiVersion: apiextensions.k8s.io/v1beta1
+#description: Kubernetes Native Serverless Framework
+kind: CustomResourceDefinition
+metadata:
+  name: functions.kubeless.io
+spec:
+  group: kubeless.io
+  names:
+    kind: Function
+    plural: functions
+    singular: function
+  scope: Namespaced
+  version: v1beta1
+---
+# Source: lunchbadger/charts/kubeless/templates/kubeless.yaml
+apiVersion: apiextensions.k8s.io/v1beta1
+#description: CRD object for HTTP trigger type
+kind: CustomResourceDefinition
+metadata:
+  name: cronjobtriggers.kubeless.io
+spec:
+  group: kubeless.io
+  names:
+    kind: CronJobTrigger
+    plural: cronjobtriggers
+    singular: cronjobtrigger
+  scope: Namespaced
+  version: v1beta1
+---
+# Source: lunchbadger/charts/kubeless/templates/kubeless.yaml
+apiVersion: apiextensions.k8s.io/v1beta1
+#description: CRD object for HTTP trigger type
+kind: CustomResourceDefinition
+metadata:
+  name: httptriggers.kubeless.io
+spec:
+  group: kubeless.io
+  names:
+    kind: HTTPTrigger
+    plural: httptriggers
+    singular: httptrigger
+  scope: Namespaced
+  version: v1beta1
+---
+# Source: lunchbadger/charts/actualizer/templates/rbac.yaml
+kind: ClusterRole
+apiVersion: rbac.authorization.k8s.io/v1beta1
+metadata:
+  name: sls-api-role
+rules:
+  - apiGroups: 
+      - "kubeless.io"
+    resources: 
+      - "functions"
+    verbs: ["create", "get", "delete", "list", "update", "patch"]
+  - apiGroups:
+      - ""
+    resources:
+      - pods
+      - services
+      - configmaps
+      - pods/log
+    verbs:
+      - get
+      - list
+      - watch
+  -
+    apiGroups: 
+      - "autoscaling"
+    resources: 
+      - "horizontalpodautoscalers"
+    verbs: ["create", "get", "delete", "list", "update", "patch"]
+  - apiGroups:
+    - extensions
+    resources:
+    - ingresses
+    verbs:
+    - get
+    - list
+    - watch
+    - create
+    - update
+    - patch
+    - delete
+---
+# Source: lunchbadger/charts/actualizer/templates/rbac.yaml
+kind: ClusterRole
+apiVersion: rbac.authorization.k8s.io/v1beta1
+metadata:
+  name: actualizer-kubectl-proxy
+rules:
+  - apiGroups:
+      - ""
+    resources:
+      - ingresses
+      - deployments
+      - services
+      - configmaps
+      - pods
+    verbs:
+      - get
+      - list
+      - create
+      - update
+      - patch
+      - delete
+      - watch
+  - apiGroups:
+      - extensions
+    resources:
+      - ingresses
+    verbs:
+      - get
+      - list
+      - watch
+      - create
+      - update
+      - patch
+      - delete
+  - apiGroups:
+      - extensions
+      - apps
+    resources:
+      - deployments
+      - configmaps
+    verbs:
+      - get
+      - list
+      - create
+      - update
+      - patch
+      - delete
+      - watch
+---
+# Source: lunchbadger/charts/kube-watcher/templates/rbac.yaml
+kind: ClusterRole
+apiVersion: rbac.authorization.k8s.io/v1beta1
+metadata:
+  name: kube-watcher-kubectl-proxy
+rules:
+  - apiGroups:
+      - ""
+    resources:
+      - pods
+      - endpoints
+    verbs:
+      - get
+      - list
+      - watch
+---
+# Source: lunchbadger/charts/kubeless/templates/rbac.yaml
+apiVersion: rbac.authorization.k8s.io/v1beta1
+kind: ClusterRole
+metadata:
+  name: kubeless-controller-deployer
+rules:
+- apiGroups:
+  - ""
+  resources:
+  - services
+  - configmaps
+  verbs:
+  - create
+  - get
+  - delete
+  - list
+  - update
+  - patch
+- apiGroups:
+  - apps
+  - extensions
+  resources:
+  - deployments
+  verbs:
+  - create
+  - get
+  - delete
+  - list
+  - update
+  - patch
+- apiGroups:
+  - ""
+  resources:
+  - pods
+  verbs:
+  - list
+  - delete
+- apiGroups:
+  - ""
+  resourceNames:
+  - kubeless-registry-credentials
+  resources:
+  - secrets
+  verbs:
+  - get
+- apiGroups:
+  - kubeless.io
+  resources:
+  - functions
+  - httptriggers
+  - cronjobtriggers
+  verbs:
+  - get
+  - list
+  - watch
+  - update
+  - delete
+- apiGroups:
+  - batch
+  resources:
+  - cronjobs
+  - jobs
+  verbs:
+  - create
+  - get
+  - delete
+  - deletecollection
+  - list
+  - update
+  - patch
+- apiGroups:
+  - autoscaling
+  resources:
+  - horizontalpodautoscalers
+  verbs:
+  - create
+  - get
+  - delete
+  - list
+  - update
+  - patch
+- apiGroups:
+  - apiextensions.k8s.io
+  resources:
+  - customresourcedefinitions
+  verbs:
+  - get
+  - list
+- apiGroups:
+  - monitoring.coreos.com
+  resources:
+  - alertmanagers
+  - prometheuses
+  - servicemonitors
+  verbs:
+  - '*'
+- apiGroups:
+  - extensions
+  resources:
+  - ingresses
+  verbs:
+  - create
+  - get
+  - list
+  - update
+  - delete
+---
+# Source: lunchbadger/charts/actualizer/templates/rbac.yaml
+kind: ClusterRoleBinding
+apiVersion: rbac.authorization.k8s.io/v1beta1
+metadata:
+  name: sls-api-role-binding
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: sls-api-role
+subjects:
+- kind: ServiceAccount
+  name: sls-api
+  namespace: customer
+---
+# Source: lunchbadger/charts/actualizer/templates/rbac.yaml
+kind: ClusterRoleBinding
+apiVersion: rbac.authorization.k8s.io/v1beta1
+metadata:
+  name: actualizer-kubectl-proxy
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: actualizer-kubectl-proxy
+subjects:
+- kind: ServiceAccount
+  name: actualizer-kubectl-proxy
+  namespace: default
+---
+# Source: lunchbadger/charts/kube-watcher/templates/rbac.yaml
+kind: ClusterRoleBinding
+apiVersion: rbac.authorization.k8s.io/v1beta1
+metadata:
+  name: kube-watcher-kubectl-proxy
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: kube-watcher-kubectl-proxy
+subjects:
+- kind: ServiceAccount
+  name: kube-watcher-kubectl-proxy
+  namespace: default
+---
+# Source: lunchbadger/charts/kubeless/templates/rbac.yaml
+apiVersion: rbac.authorization.k8s.io/v1beta1
+kind: ClusterRoleBinding
+metadata:
+  name: kubeless-controller-deployer
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: kubeless-controller-deployer
+subjects:
+- kind: ServiceAccount
+  name: controller-acct
+  namespace: kubeless
+---
+# Source: lunchbadger/charts/configstore/templates/service.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: configstore
+  labels:
+    run: configstore
+spec:
+  ports:
+    - port: 80
+      targetPort: 3002
+      protocol: TCP
+  selector:
+    run: configstore
+  type: ClusterIP
+---
+# Source: lunchbadger/charts/git-api/templates/service.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: lb-git-api
+  labels:
+    app: git-api
+    chart: git-api-1.2.0
+    release: lb
+    heritage: Tiller
+spec:
+  type: ClusterIP
+  ports:
+    - port: 80
+      targetPort: 8080
+      protocol: TCP
+      name: git-api
+  selector:
+    app: git-api
+    release: lb
+---
+# Source: lunchbadger/charts/gitea/templates/gitea/gitea-http-svc.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: lb-gitea-http
+  labels:
+    app: lb-gitea
+    chart: "gitea-1.6.1"
+    release: "lb"
+    heritage: "Tiller"
+spec:
+  type: ClusterIP
+  ports:
+  - name: http
+    port: 3000
+    targetPort: 3000
+  selector:
+    app: lb-gitea
+---
+# Source: lunchbadger/charts/gitea/templates/gitea/gitea-ssh-svc.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: lb-gitea-ssh
+  labels:
+    app: lb-gitea
+    chart: "gitea-1.6.1"
+    release: "lb"
+    heritage: "Tiller"
+spec:
+  type: ClusterIP
+  ports:
+  - name: ssh
+    port: 22
+    targetPort: ssh
+  selector:
+    app: lb-gitea
+---
+# Source: lunchbadger/charts/kube-watcher/templates/service.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: kube-watcher
+  labels:
+    run: kube-watcher
+spec:
+  ports:
+    - port: 80
+      targetPort: 7788
+      protocol: TCP
+  selector:
+    run: kube-watcher
+  type: ClusterIP
+---
+# Source: lunchbadger/charts/redis/templates/redis-master-svc.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: lb-redis-master
+  labels:
+    app: redis
+    chart: redis-4.2.7
+    release: "lb"
+    heritage: "Tiller"
+spec:
+  type: ClusterIP
+  ports:
+  - name: redis
+    port: 6379
+    targetPort: redis
+  selector:
+    app: redis
+    release: "lb"
+    role: master
+---
+# Source: lunchbadger/charts/redis/templates/redis-slave-svc.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: lb-redis-slave
+  labels:
+    app: redis
+    chart: redis-4.2.7
+    release: "lb"
+    heritage: "Tiller"
+spec:
+  type: ClusterIP
+  ports:
+  - name: redis
+    port: 6379
+    targetPort: redis
+  selector:
+    app: redis
+    release: "lb"
+    role: slave
+---
+# Source: lunchbadger/charts/actualizer/templates/deployment.yaml
+apiVersion: apps/v1beta2
+kind: Deployment
+metadata:
+  name: actualizer
+spec:
+  replicas: 1
+  revisionHistoryLimit: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      run: actualizer
+  template:
+    metadata:
+      labels:
+        run: actualizer
+    spec:
+      serviceAccountName: actualizer-kubectl-proxy
+      containers:
+        - name: actualizer
+          image: '410240865662.dkr.ecr.us-west-2.amazonaws.com/actualizer:0.2.50'
+          imagePullPolicy: Always
+          env:
+            - name: GIT_API_URL
+              value: http://lb-git-api.default
+            - name: REDIS_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: "lb-redis"
+                  key: "redis-password"
+            - name: REDIS_HOST
+              value: lb-redis-master
+            - name: DEBUG
+              value: actualizer:*
+            - name: CONFIGSTORE_URL
+              value: http://configstore.default/api
+            - name: LBWS_VERSION
+              value: 0.2.6
+            - name: LBSLS_VERSION
+              value: validation
+            - name: GATEWAY_IMAGE
+              value: expressgateway/express-gateway
+            - name: GATEWAY_VERSION
+              value: latest
+            - name: SLEEP_TIME
+              value: "3000"
+            - name: WORKSPACE_API_URL_TEMPLATE
+              value: http://workspace-$PRODUCER-$ENV.customer:81/api
+            - name: CUSTOMER_DOMAIN
+              value: cluster.local
+            - name: ADMIN_CROSS_ORIGIN
+              value: 
+            - name: SLS_API_URL_TEMPLATE
+              value: http://sls-api-$PRODUCER-$ENV.customer
+            - name: GIT_API_HOST
+              value: lb-git-api.default
+            - name: GIT_REPO_HOST
+              value: lb-gitea-ssh.default
+        - name: kubectl-proxy
+          image: '410240865662.dkr.ecr.us-west-2.amazonaws.com/kubectl:1.4.6'
+          args: [proxy, --port, "8001", --logtostderr]
+---
+# Source: lunchbadger/charts/configstore/templates/deployment.yaml
+apiVersion: apps/v1beta2
+kind: Deployment
+metadata:
+  name: configstore
+  namespace: default
+spec:
+  replicas: 1
+  revisionHistoryLimit: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      run: configstore
+  template:
+    metadata:
+      labels:
+        run: configstore
+    spec:
+      containers:
+        - name: configstore
+          image: '410240865662.dkr.ecr.us-west-2.amazonaws.com/configstore:external_push'
+          imagePullPolicy: Always
+          env:
+            - name: GIT_API_URL
+              value: http://lb-git-api.default
+            - name: DEBUG
+              value: configstore:*
+          ports:
+            - containerPort: 3002
+          resources:
+            requests:
+              memory: "128Mi"
+            limits:
+              memory: "128Mi"
+---
+# Source: lunchbadger/charts/git-api/templates/deployment.yaml
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: lb-git-api
+  labels:
+    app: git-api
+    chart: git-api-1.2.0
+    release: lb
+    heritage: Tiller
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: git-api
+        release: lb
+    spec:
+      containers:
+        - name: git-api
+          image: "410240865662.dkr.ecr.us-west-2.amazonaws.com/git-api:latest"
+          imagePullPolicy: Always
+          env:
+            - name: GITEA_HOST
+              value: http://lb-gitea-http:3000
+            - name: GITEA_TOKEN
+              value: eefa9049f13b49b1e120d8b6a9e8b88917e60122
+          ports:
+            - containerPort: 8080
+          livenessProbe:
+            httpGet:
+              path: /ping
+              port: 8080
+          readinessProbe:
+            httpGet:
+              path: /ping
+              port: 8080
+          resources:
+            {}
+---
+# Source: lunchbadger/charts/gitea/templates/deployment.yaml
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: lb-gitea
+  labels:
+    app: lb-gitea
+    chart: "gitea-1.6.1"
+    release: "lb"
+    heritage: "Tiller"
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: lb-gitea
+  template:
+    metadata:
+      labels:
+        app: lb-gitea
+    spec:
+      containers:
+            
+      - name: postgres
+        image: "postgres:11"
+        imagePullPolicy: "Always"
+        args:
+        env:
+        - name: POSTGRES_USER
+          value: "postgres"
+        # Required for pg_isready in the health probes.
+        - name: PGUSER
+          value: "postgres"
+        - name: POSTGRES_DB
+          value: "gitea"
+        - name: POSTGRES_INITDB_ARGS
+          value: ""
+        - name: PGDATA
+          value: /var/lib/postgresql/data/pgdata
+        - name: POSTGRES_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: lb-db
+              key: dbPassword
+        - name: POD_IP
+          valueFrom: { fieldRef: { fieldPath: status.podIP } }
+        ports:
+        - name: postgresql
+          containerPort: 5432
+        livenessProbe:
+          exec:
+            command:
+            - sh
+            - -c
+            - exec pg_isready --host $POD_IP
+          initialDelaySeconds: 120
+          timeoutSeconds: 5
+          failureThreshold: 6
+        readinessProbe:
+          exec:
+            command:
+            - sh
+            - -c
+            - exec pg_isready --host $POD_IP
+          initialDelaySeconds: 5
+          timeoutSeconds: 3
+          periodSeconds: 5
+        resources:
+                limits:
+                  cpu: 1
+                  memory: 2Gi
+                requests:
+                  cpu: 200m
+                  memory: 200Mi
+                
+        volumeMounts:
+        - name: postgres-data
+          mountPath: /var/lib/postgresql/data/pgdata
+          subPath: postgresql-db      
+      - name: gitea
+        image: gitea/gitea:1.6.1
+        imagePullPolicy: 
+        env:
+        - name: POSTGRES_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: lb-db
+              key: dbPassword
+        ports:
+        - name: ssh
+          containerPort: 22
+        - name: http
+          containerPort: 3000
+        livenessProbe:
+          tcpSocket:
+            port: http
+          initialDelaySeconds: 200
+          timeoutSeconds: 1
+          periodSeconds: 10
+          successThreshold: 1
+          failureThreshold: 10
+        readinessProbe:
+          tcpSocket:
+            port: http
+          initialDelaySeconds: 5
+          periodSeconds: 10
+          successThreshold: 1
+          failureThreshold: 3
+        resources:
+                limits:
+                  cpu: 1
+                  memory: 2Gi
+                requests:
+                  cpu: 1000m
+                  memory: 500Mi
+                
+        volumeMounts:
+        - name: gitea-data
+          mountPath: /data
+        - name: gitea-config
+          mountPath: /etc/gitea
+            
+      - name: memcached
+        image: memcached:1.5.6-alpine
+        imagePullPolicy: 
+        command:
+          - memcached
+          - -m 64
+          - -o
+          - modern
+          - -v
+        ports:
+        - name: memcache
+          containerPort: 11211
+        livenessProbe:
+          tcpSocket:
+            port: memcache
+          initialDelaySeconds: 30
+          timeoutSeconds: 5
+        readinessProbe:
+          tcpSocket:
+            port: memcache
+          initialDelaySeconds: 5
+          timeoutSeconds: 1
+        resources:
+                requests:
+                  cpu: 50m
+                  memory: 64Mi
+                
+      initContainers:
+            
+      - name: init
+        image: gitea/gitea:1.6.1
+        imagePullPolicy: 
+        env:
+        - name: POSTGRES_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: lb-db
+              key: dbPassword
+        - name: SCRIPT
+          value: &script |-
+            mkdir -p /datatmp/gitea/conf
+            #if [ ! -f /datatmp/gitea/conf/app.ini ]; then
+              sed "s/POSTGRES_PASSWORD/${POSTGRES_PASSWORD}/g" < /etc/gitea/app.ini > /datatmp/gitea/conf/app.ini
+            #fi
+        command: ["/bin/sh",'-c', *script]
+        volumeMounts:
+        - name: gitea-data
+          mountPath: /datatmp
+        - name: gitea-config
+          mountPath: /etc/gitea
+            
+      
+      volumes:
+      - name: gitea-data
+        persistentVolumeClaim:
+         claimName: lb-gitea
+      
+      - name: postgres-data
+        persistentVolumeClaim:
+          claimName: lb-postgres
+      - name: gitea-config
+        configMap:
+          name: lb-gitea
+---
+# Source: lunchbadger/charts/kube-watcher/templates/deployment.yaml
+apiVersion: apps/v1beta2
+kind: Deployment
+metadata:
+  name: kube-watcher
+spec:
+  replicas: 1
+  revisionHistoryLimit: 1
+  selector:
+    matchLabels:
+      run: kube-watcher
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        run: kube-watcher
+    spec:
+      serviceAccountName: kube-watcher-kubectl-proxy
+      containers:
+        - name: kube-watcher 
+          image: '410240865662.dkr.ecr.us-west-2.amazonaws.com/kube-watcher:v2.0.2'
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 7788
+        - name: kubectl-proxy
+          image: '410240865662.dkr.ecr.us-west-2.amazonaws.com/kubectl:1.4.6'
+          args: [proxy, --port, "8001", --logtostderr]
+---
+# Source: lunchbadger/charts/kubeless/templates/kubeless.yaml
+apiVersion: apps/v1beta1
+kind: Deployment
+metadata:
+  labels:
+    kubeless: controller
+  name: kubeless-controller-manager
+  namespace: kubeless
+spec:
+  selector:
+    matchLabels:
+      kubeless: controller
+  template:
+    metadata:
+      labels:
+        kubeless: controller
+    spec:
+      containers:
+      - env:
+        - name: KUBELESS_INGRESS_ENABLED
+          valueFrom:
+            configMapKeyRef:
+              key: ingress-enabled
+              name: kubeless-config
+        - name: KUBELESS_SERVICE_TYPE
+          valueFrom:
+            configMapKeyRef:
+              key: service-type
+              name: kubeless-config
+        - name: KUBELESS_NAMESPACE
+          valueFrom:
+            fieldRef:
+              fieldPath: metadata.namespace
+        - name: KUBELESS_CONFIG
+          value: kubeless-config
+        image: bitnami/kubeless-controller-manager:v1.0.0-alpha.6
+        imagePullPolicy: IfNotPresent
+        name: kubeless-controller-manager
+      serviceAccountName: controller-acct
+---
+# Source: lunchbadger/charts/redis/templates/redis-slave-deployment.yaml
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: lb-redis-slave
+  labels:
+    app: redis
+    chart: redis-4.2.7
+    release: "lb"
+    heritage: "Tiller"
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+        release: "lb"
+        role: slave
+        app: redis
+  template:
+    metadata:
+      labels:
+        release: "lb"
+        chart: redis-4.2.7
+        role: slave
+        app: redis
+      annotations:
+        checksum/health: 70f71bbee01e2933c701e0c77ed34681383f1857bc541588b9c0df3717afcac5
+        checksum/configmap: 01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b
+        checksum/secret: 166e98cebaf976a94ae467b16a95daca6e708967e56f439601aa1c0c4cd78944
+    spec:      
+      securityContext:
+        fsGroup: 1001
+        runAsUser: 1001
+      serviceAccountName: "default"
+      containers:
+      - name: lb-redis
+        image: docker.io/bitnami/redis:4.0.11
+        imagePullPolicy: "Always"
+        env:
+        - name: REDIS_REPLICATION_MODE
+          value: slave
+        - name: REDIS_MASTER_HOST
+          value: lb-redis-master
+        - name: REDIS_PORT
+          value: "6379"
+        - name: REDIS_MASTER_PORT_NUMBER
+          value: "6379"
+        - name: REDIS_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: lb-redis
+              key: redis-password
+        - name: REDIS_MASTER_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: lb-redis
+              key: redis-password
+        - name: REDIS_DISABLE_COMMANDS
+          value: FLUSHDB,FLUSHALL
+        ports:
+        - name: redis
+          containerPort: 6379        
+        livenessProbe:
+          initialDelaySeconds: 30
+          periodSeconds: 10
+          timeoutSeconds: 5
+          successThreshold: 1
+          failureThreshold: 5
+          exec:
+            command:
+            - sh
+            - -c
+            - /health/ping_local_and_master.sh        
+        readinessProbe:
+          initialDelaySeconds: 5
+          periodSeconds: 10
+          timeoutSeconds: 1
+          successThreshold: 1
+          failureThreshold: 5
+          exec:
+            command:
+            - sh
+            - -c
+            - /health/ping_local_and_master.sh
+        resources:
+          null
+          
+        volumeMounts:
+        - name: health
+          mountPath: /health
+      volumes:
+      - name: health
+        configMap:
+          name: lb-redis-health
+          defaultMode: 0755
+---
+# Source: lunchbadger/charts/redis/templates/redis-master-statefulset.yaml
+apiVersion: apps/v1beta2
+kind: StatefulSet
+metadata:
+  name: lb-redis-master
+  labels:
+    app: redis
+    chart: redis-4.2.7
+    release: "lb"
+    heritage: "Tiller"
+spec:
+  selector:
+    matchLabels:
+      release: "lb"
+      role: master
+      app: redis
+  serviceName: "redis-master"
+  template:
+    metadata:
+      labels:
+        release: "lb"
+        chart: redis-4.2.7
+        role: master
+        app: redis
+      annotations:
+        checksum/health: 70f71bbee01e2933c701e0c77ed34681383f1857bc541588b9c0df3717afcac5
+        checksum/configmap: 01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b
+        checksum/secret: 83507dd7c62e71161822132eb254fa398d32a67b8016c22268b27e59d64af27c
+    spec:
+      securityContext:
+        fsGroup: 1001
+        runAsUser: 1001
+      serviceAccountName: "default"
+      containers:
+      - name: lb-redis
+        image: "docker.io/bitnami/redis:4.0.11"
+        imagePullPolicy: "Always"
+        env:
+        - name: REDIS_REPLICATION_MODE
+          value: master
+        - name: REDIS_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: lb-redis
+              key: redis-password
+        - name: REDIS_PORT
+          value: "6379"
+        - name: REDIS_DISABLE_COMMANDS
+          value: FLUSHDB,FLUSHALL
+        ports:
+        - name: redis
+          containerPort: 6379
+        livenessProbe:
+          initialDelaySeconds: 30
+          periodSeconds: 10
+          timeoutSeconds: 5
+          successThreshold: 1
+          failureThreshold: 5
+          exec:
+            command:
+            - sh
+            - -c
+            - /health/ping_local.sh
+        readinessProbe:
+          initialDelaySeconds: 5
+          periodSeconds: 10
+          timeoutSeconds: 1
+          successThreshold: 1
+          failureThreshold: 5
+          exec:
+            command:
+            - sh
+            - -c
+            - /health/ping_local.sh
+        resources:
+          null
+          
+        volumeMounts:
+        - name: health
+          mountPath: /health
+        - name: redis-data
+          mountPath: /bitnami/redis/data
+          subPath: 
+      initContainers:
+      - name: volume-permissions
+        image: "docker.io/bitnami/minideb:latest"
+        imagePullPolicy: "IfNotPresent"
+        command: ["/bin/chown", "-R", "1001:1001", "/bitnami/redis/data"]
+        securityContext:
+          runAsUser: 0
+        volumeMounts:
+        - name: redis-data
+          mountPath: /bitnami/redis/data
+          subPath: 
+      volumes:
+      - name: health
+        configMap:
+          name: lb-redis-health
+          defaultMode: 0755
+  volumeClaimTemplates:
+    - metadata:
+        name: redis-data
+        labels:
+          app: "redis"
+          component: "master"
+          release: "lb"
+          heritage: "Tiller"
+      spec:
+        accessModes:
+          - "ReadWriteOnce"
+        resources:
+          requests:
+            storage: "8Gi"
+        storageClassName: "standard"
+  updateStrategy:
+    type: RollingUpdate
+---
+# Source: lunchbadger/charts/configstore/templates/ingress.yaml
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: configstore
+spec:
+  rules:
+  - host: api.cluster.local
+    http:
+      paths:
+#     - backend:
+#         serviceName: soapdemo
+#         servicePort: 80
+#       path: /scSOAPService
+      - backend:
+          serviceName: graphql-gateway-service
+          servicePort: 80
+        path: /gql
+      - backend:
+          serviceName: git-api
+          servicePort: 80
+        path: /users
+      - backend:
+          serviceName: configstore
+          servicePort: 80
+---
+# Source: lunchbadger/charts/kube-watcher/templates/ingress.yaml
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: kube-watcher
+spec:
+  rules:
+  - host: kube-watcher.cluster.local
+    http:
+      paths:
+      - backend:
+          serviceName: kube-watcher
+          servicePort: 80

@@ -1,0 +1,128 @@
+customerNamespace:
+  enabled: true
+actualizer:
+  enabled: true
+  adminOrigin: ""
+  customerDomain: cluster.local
+  images:
+    actualizer:
+      tag: 0.2.50
+  rbac:
+    enabled: true
+    pullSecret: awsecr-cred
+  serverlessAPIURLTemplate: http://sls-api-$PRODUCER-$ENV.customer
+  versions:
+    gateway: master
+    serverless: validation
+    workspace: "0.2.6"
+  workspaceAPIURLTemplate: http://workspace-$PRODUCER-$ENV.customer:81/api
+configstore:
+  enabled: true
+  image:
+    tag: external_push
+  ingressHost: api.cluster.local
+
+# custom config need to be mounted in order to skip web install screen
+
+# create admin user:
+# gitea admin create-user --name=lunchbadger --password=lunchbadger --email=lunchbadger@xx.com --admin
+
+# generate token
+# curl -X POST "http://localhost:3000/api/v1/users/lunchbadger/tokens" -H "accept: application/x-www-form-urlencoded" -H "authorization: Basic bHVuY2hiYWRnZXI6bHVuY2hiYWRnZXI=" -F name=git-api
+
+# response sha1 is the access key
+# {"id":7,"name":"ttxxx","sha1":"2283d9f73439c7b34a644197875e1bf84923a960"}
+gitea:
+  enabled: true
+  persistence:
+    enabled: true
+    giteaSize: 40Gi
+    postgresSize: 5Gi
+    storageClass: standard
+    accessMode: ReadWriteOnce
+    annotations:
+      "helm.sh/resource-policy": keep
+#   existingGiteaClaim: lb-gitea
+#   existingPostgresClaim: lb-postgres
+  config:
+    disableInstaller: false
+  ## automatically creates admin user
+  ## requires config.disableInstaller:true and valid config.secretKey
+  adminUser:
+    enabled: true
+    username: test
+    password: test
+    email: test@test.com
+kubeless:
+  enabled: true
+
+gateway:
+  enabled: false
+  global: {}
+  image:
+    pullPolicy: Always
+    repository: expressgateway/express-gateway
+    tag: v1.9.1
+  jwtPublicKey: |
+    -----BEGIN PUBLIC KEY-----
+    MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA7ATrA/pvXdzabRID6pBA
+    A+i2zez6FG3SXw5peAV2oQUmd64JbO2vUMih4PIt5D/o6gHfzQDwI/5e8wpiNKKp
+    81dpvy3uYecyfGT4x+FYQ4xj0p7dnczPlp5t1ottCXYQyyB07UZ4UsOT063CRhgi
+    00HhlURBm+yjLwnlZv/VGDNzXNFX1+t+PbGC5Ab7R02Fsnp8TGfjUgzA6NDgerKi
+    Jcq/fSxRb5WSB/gscCGGWjvgIJrHOLI9ofaXFpoHCxePCsVkaR0JNz8Q89tIWvWv
+    5msm062aD7y1ThfP6I3HeGf3dT6IavLOVD6Wk82/WN+aaQ7BKOstglWqzjJvcEvU
+    OQIDAQAB
+    -----END PUBLIC KEY-----
+  origin: http://staging.lunchbadger.com
+  producersAPIKey: {}
+  production: false
+  ingressAddress: http://10.3.18.145
+grafana:
+  enabled: false
+kube-watcher:
+  enabled: true
+  images:
+    kubeWatcher:
+      pullPolicy: Always
+      repository: 410240865662.dkr.ecr.us-west-2.amazonaws.com/kube-watcher
+      tag: v2.0.2
+  ingressHost: kube-watcher.cluster.local
+  rbac:
+    enabled: true
+    pullSecret: awsecr-cred
+kubernetes-dashboard:
+  enabled: false
+prometheus:
+  enabled: false
+
+# check values here: https://github.com/helm/charts/tree/master/stable/redis
+redis:
+  enabled: true
+  master:
+    persistence:
+      storageClass: standard
+
+graphql:
+  enabled: true
+
+
+storageClass:
+  enabled: false
+
+storageClass2:
+  enabled: false
+
+storageClassCeph:
+  enabled: false
+  name: standard
+
+traefik:
+  enabled: false
+
+git-api:
+  enabled: true
+  pullSecret: awsecr-cred
+  giteaSecret: eefa9049f13b49b1e120d8b6a9e8b88917e60122
+
+mainIngress:
+  enabled: true
