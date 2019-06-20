@@ -1,7 +1,7 @@
 dependencies:
   - name: traefik
-    repository: file://./traefik
-    version: 1.0.0
+    repository: "@stable"
+    version: 1.69.1
     condition: traefik.enabled
   - name: configstore
     repository: file://./configstore
@@ -9,21 +9,21 @@ dependencies:
     condition: configstore.enabled
   - name: actualizer
     repository: file://./actualizer
-    version: 1.2.0
+    version: 1.2.1
     condition: actualizer.enabled
   - name: gitea
-    version: 1.6.0
-    repository: https://jfelten.github.io/helm-charts/charts
+    version: 1.6.1
+    repository: file://./gitea
     condition: gitea.enabled
   - name: kubeless
     repository: file://./kubeless
     version: 1.2.0
     condition: kubeless.enabled
-  - name: gateway 
+  - name: gateway
     repository: file://./gateway
     version: 1.2.0
     condition: gateway.enabled
-  - name: kube-watcher 
+  - name: kube-watcher
     repository: file://./kube-watcher
     version: 1.2.0
     condition: kube-watcher.enabled

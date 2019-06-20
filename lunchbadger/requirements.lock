@@ -1,16 +1,16 @@
 dependencies:
 - name: traefik
-  repository: file://./traefik
-  version: 1.0.0
+  repository: https://kubernetes-charts.storage.googleapis.com
+  version: 1.69.1
 - name: configstore
   repository: file://./configstore
   version: 1.2.0
 - name: actualizer
   repository: file://./actualizer
-  version: 1.2.0
+  version: 1.2.1
 - name: gitea
-  repository: https://jfelten.github.io/helm-charts/charts
-  version: 1.6.0
+  repository: file://./gitea
+  version: 1.6.1
 - name: kubeless
   repository: file://./kubeless
   version: 1.2.0
@@ -21,16 +21,16 @@ dependencies:
   repository: file://./kube-watcher
   version: 1.2.0
 - name: redis
-  repository: https://kubernetes-charts.storage.googleapis.com/
+  repository: https://kubernetes-charts.storage.googleapis.com
   version: 4.2.7
 - name: prometheus
-  repository: https://kubernetes-charts.storage.googleapis.com/
+  repository: https://kubernetes-charts.storage.googleapis.com
   version: 7.4.0
 - name: grafana
-  repository: https://kubernetes-charts.storage.googleapis.com/
+  repository: https://kubernetes-charts.storage.googleapis.com
   version: 1.17.3
 - name: kubernetes-dashboard
-  repository: https://kubernetes-charts.storage.googleapis.com/
+  repository: https://kubernetes-charts.storage.googleapis.com
   version: 1.2.0
 - name: git-api
   repository: file://./git-api
@@ -41,5 +41,5 @@ dependencies:
 - name: graphql-gateway
   repository: file://./graphql-gateway
   version: 1.2.0
-digest: sha256:6ce63fbb909da5753108820e58efdcf597e18acbe2828f86e233884d3f4e28ac
-generated: 2019-03-11T19:13:14.468424+02:00
+digest: sha256:d6f6d49de4b8fc88f0202b1fe7fcfda52275378b0bfcc8926e047d2452002fff
+generated: "2019-06-18T15:32:10.14735-07:00"

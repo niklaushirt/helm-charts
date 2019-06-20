@@ -38,7 +38,6 @@ storageClass:
   type: gp2
   zones: 'us-west-2a, us-west-2b'
   iopsPerGB: 10
-
 storageClass2:
   enabled: false
   name: zonec

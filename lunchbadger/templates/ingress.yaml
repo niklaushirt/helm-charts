@@ -7,13 +7,13 @@ metadata:
   name: {{ .Chart.Name }}
 spec:
   rules:
-  - host: {{ .Values.ingressHost }}
+  - host: {{ .Values.mainIngress.ingressHost }}
     http:
       paths:
       - backend:
-          serviceName: git-api
+          serviceName: {{ .Release.Name }}-git-api
           servicePort: 80
-        path: /users  
+        path: /users
       - backend:
           serviceName: kube-watcher
           servicePort: 80

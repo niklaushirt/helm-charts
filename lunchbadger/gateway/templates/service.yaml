@@ -26,3 +26,9 @@ spec:
     environment: dev
     producer: lunchbadger
   type: LoadBalancer
+  {{- if .Values.externalIPs }}
+  externalIPs:
+  {{- range.Values.externalIPs }}
+  - {{ . }}
+  {{- end }}
+  {{- end }}

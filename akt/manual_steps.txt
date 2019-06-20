@@ -1,0 +1,6 @@
+
+export POD_NAME=$(kubectl get po -n default -l"app=lb-gitea" -o jsonpath="{.items[0].metadata.name}") && kubectl exec $POD_NAME -c gitea -it -- gitea admin create-user --name=test --password=test --email=test@test.com --admin && \
+export POD_NAME=$(kubectl get po -n default -l"app=lb-gitea" -o jsonpath="{.items[0].metadata.name}") && kubectl exec $POD_NAME -c gitea -it -- curl -X POST "http://localhost:3000/api/v1/users/test/tokens" -H "accept: application/x-www-form-urlencoded" -H "authorization: Basic dGVzdDp0ZXN0" -F name=ttxxx | export GITEA_TOKEN=$(jq '.sha1'); echo $GITEA_TOKEN && \
+export DEPLOY_NAME=$(kubectl get deploy -n default -l"app=git-api" -o jsonpath="{.items[0].metadata.name}") && kubectl patch deploy $DEPLOY_NAME --type json -p '[ { "op": "replace", "path": "/spec/template/spec/containers/0/env/1/value", "value": '$GITEA_TOKEN'} ]'
+
+helm install stable/traefik --name traefik --set dashboard.enabled=true,serviceType=NodePort,dashboard.domain=traefik.lunchbadger.local,rbac.enabled=true --namespace kube-system

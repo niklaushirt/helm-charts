@@ -35,7 +35,7 @@ spec:
 {{- end -}}
 {{ $redisHost := or (.Values.redisHost) ( printf "%s-redis-master" .Release.Name) }}
             - name: REDIS_HOST
-              value: {{ $redisHost }}
+              value: {{ $redisHost }}.default
             - name: DEBUG
               value: {{ .Values.debugPattern }}
             - name: CONFIGSTORE_URL
