@@ -1,0 +1,11 @@
+# traefik deployment values for LunchBadger
+enabled: true
+imageTag: alpine
+gzip:
+  enabled: false
+serviceType: NodePort
+rbac:
+  enabled: true
+dashboard:
+  enabled: true
+  domain: traefik.lunchbadger.local
