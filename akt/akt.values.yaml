@@ -8,6 +8,8 @@
 #   there are bound to be kinks still
 # - certain limitations like LoadBalancer references needs to be manually externalized by patching the service and or setting up
 #   a bare metal loadbalancer like MetaLB or equivalent
+# - the environment is deployed as the `dev` environment for LunchBadger and prefixed accordingly through the Helm charts and the lunchbager-ui config files as well
+# - the local installation assumes you are installing to this domain which must be resolved on your host through dnsmasq or equivalent, many sub-domains are used like `api`, `kube-watch` etc
 
 # this creates the `customer` namespace where LunchBadger user microservices are deployed
 customerNamespace:
@@ -15,8 +17,8 @@ customerNamespace:
 actualizer:
   enabled: true
   adminOrigin: ""
-  # the local installation assumes you are installing to this domain which must be resolved on your host through dnsmasq or equivalent, many sub-domains are used like `api`, `kube-watch` etc
-  customerDomain: lunchbadger.local
+  # the user/customer environments are always deployed as their `dev` environments and subdomain prefixed accordingly as well
+  customerDomain: dev.lunchbadger.local
   images:
     actualizer:
       tag: 0.2.50
@@ -33,7 +35,7 @@ configstore:
   enabled: true
   image:
     tag: external_push
-  ingressHost: api.lunchbadger.local
+  ingressHost: dev-api.lunchbadger.local
 gitea:
   enabled: true
   service:
@@ -110,7 +112,7 @@ kube-watcher:
       pullPolicy: Always
       repository: 410240865662.dkr.ecr.us-west-2.amazonaws.com/kube-watcher
       tag: v2.0.2
-  ingressHost: kube-watcher.lunchbadger.local
+  ingressHost: dev-kube-watcher.lunchbadger.local
   rbac:
     enabled: true
     pullSecret: awsecr-cred
@@ -153,4 +155,4 @@ git-api:
   giteaSecret: eefa9049f13b49b1e120d8b6a9e8b88917e60122
 mainIngress:
   enabled: true
-  ingressHost: api.lunchbadger.local
+  ingressHost: dev-api.lunchbadger.local
