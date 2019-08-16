@@ -3,9 +3,9 @@ rbac:
 ingressHost: kube-watcher.dev-api.lunchbadger.com
 images:
   kubeWatcher:
-    repository: 410240865662.dkr.ecr.us-west-2.amazonaws.com/kube-watcher
-    tag: v2.0.2
+    repository: lunchbager/kube-watcher
+    tag: latest
     pullPolicy: Always
   kubectl:
-    repository: 410240865662.dkr.ecr.us-west-2.amazonaws.com/kubectl
-    tag: 1.4.6
+    repository: bitnami/kubectl
+    tag: latest

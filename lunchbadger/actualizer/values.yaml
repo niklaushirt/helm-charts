@@ -2,15 +2,15 @@ rbac:
   enabled: true
 images:
   actualizer:
-    repository: 410240865662.dkr.ecr.us-west-2.amazonaws.com/actualizer
+    repository: lunchbadger/actualizer
     tag: latest
     pullPolicy: Always
   eg:
     repository: 'expressgateway/express-gateway'
     tag: latest
   kubectl:
-    repository: 410240865662.dkr.ecr.us-west-2.amazonaws.com/kubectl
-    tag: 1.4.6
+    repository: bitnami/kubectl
+    tag: latest
 configStore:
   url: http://configstore.default/api
   sleepTime: 3000

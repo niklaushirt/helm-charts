@@ -21,20 +21,20 @@ actualizer:
   customerDomain: dev.lunchbadger.local
   images:
     actualizer:
-      tag: 0.2.50
+      tag: latest
   rbac:
     enabled: true
     pullSecret: awsecr-cred
   serverlessAPIURLTemplate: http://sls-api-$PRODUCER-$ENV.customer
   versions:
     gateway: master
-    serverless: validation
-    workspace: "0.2.6"
+    serverless: latest
+    workspace: latest
   workspaceAPIURLTemplate: http://workspace-$PRODUCER-$ENV.customer:81/api
 configstore:
   enabled: true
   image:
-    tag: external_push
+    tag: latest
   ingressHost: dev-api.lunchbadger.local
 gitea:
   enabled: true
@@ -110,8 +110,8 @@ kube-watcher:
   images:
     kubeWatcher:
       pullPolicy: Always
-      repository: 410240865662.dkr.ecr.us-west-2.amazonaws.com/kube-watcher
-      tag: v2.0.2
+      repository: lunchbadger/kube-watcher
+      tag: latest
   ingressHost: dev-kube-watcher.lunchbadger.local
   rbac:
     enabled: true

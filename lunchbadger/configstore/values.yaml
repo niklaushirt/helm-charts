@@ -2,6 +2,6 @@ namespace: default
 ingressHost: dev-api.lunchbadger.com
 debugPattern: 'configstore:*'
 image:
-  repository: 410240865662.dkr.ecr.us-west-2.amazonaws.com/configstore
-  tag: external_push
+  repository: lunchbadger/configstore
+  tag: latest
   pullPolicy: Always

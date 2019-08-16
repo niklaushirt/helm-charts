@@ -36,13 +36,13 @@ helm init --service-account tiller
 ```
 
 ### Helm Values.yaml
-There are three directories with sample Helm values.yaml files:
+There is a directory with sample Helm values.yaml files:
 - akt
-- sk
-- ks
 
 Use the `akt/akt.values.yaml` file to deploy locally to Minikube.
-!!!IMPORTANT!!!: go through the values.yaml and read through important comments to change values where necessary
+
+!!!IMPORTANT!!!
+go through the values.yaml and read through important comments to change values where necessary
 
 ### Traefik
 For a cleaner separation of concerns, Traefik is installed into the `kube-system` namespace instead of the `default` namespace where LunchBadger microservices are installed.
